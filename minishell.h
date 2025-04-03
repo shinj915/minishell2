@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/03 16:07:55 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/03 16:37:52 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 
 extern int	g_exit_status;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	int				token_type;
 	int				is_null;
@@ -60,14 +60,14 @@ typedef struct	s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct	s_cmd_redir
+typedef struct s_cmd_redir
 {
 	int					redir_type;
 	char				*file;
 	struct s_cmd_redir	*next;
 }	t_cmd_redir;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	int				cmd_type;
 	int				fd[2];
@@ -80,21 +80,21 @@ typedef struct	s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
-typedef struct	s_cmd_list
+typedef struct s_cmd_list
 {
 	int		cmd_status;
 	t_cmd	*head;
 	t_cmd	*tail;
 }	t_cmd_list;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*key;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
 
-typedef struct	s_state
+typedef struct s_state
 {
 	t_env		*env_list;
 	char		*cmd_line;
