@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/02 17:36:35 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/03 16:07:55 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct	s_token
 	int				token_type;
 	int				is_null;
 	char			*str;
-	char			*origin_str;	//original_str
+	char			*origin_str;
 	struct s_token	*next;
 }	t_token;
 
@@ -69,7 +69,7 @@ typedef struct	s_cmd_redir
 
 typedef struct	s_cmd
 {
-	int				cmd_type;	//type
+	int				cmd_type;
 	int				fd[2];
 	int				fd_in;
 	int				fd_out;
@@ -82,7 +82,7 @@ typedef struct	s_cmd
 
 typedef struct	s_cmd_list
 {
-	int		cmd_status;	//status
+	int		cmd_status;
 	t_cmd	*head;
 	t_cmd	*tail;
 }	t_cmd_list;
@@ -96,10 +96,12 @@ typedef struct	s_env
 
 typedef struct	s_state
 {
-	t_env		*env_list;	//env
+	t_env		*env_list;
 	char		*cmd_line;
 	char		*cmd_parse;
-	t_cmd_list	*cmd_list;	//ptr
+	t_cmd_list	*cmd_list;
 }	t_state;
+
+void	print_banner(void);
 
 #endif
