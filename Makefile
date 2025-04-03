@@ -2,6 +2,7 @@
 NAME = minishell
 
 CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g -I./
+LDFLAGS = -lreadline
 CC = cc
 
 RMFLAGS = -rf
@@ -18,7 +19,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C./libft all
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

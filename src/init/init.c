@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:04:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/03 16:41:05 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/03 17:11:55 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,16 @@ void	print_banner(void)
 	printf("/*        ###     ### ######### ###    ### #########         */\n");
 	printf("/*                                                           */\n");
 	printf("/* ********************************************************* */\n");
+}
+
+void	ft_sigint(int signo)
+{
+	if (signo == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		g_exit_status = 1;
+	}
 }

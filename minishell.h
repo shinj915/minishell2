@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/03 16:37:52 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/03 17:47:08 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ typedef struct s_state
 }	t_state;
 
 void	print_banner(void);
+void	ft_sigint(int signo);
 
 #endif
