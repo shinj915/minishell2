@@ -9,7 +9,9 @@ RMFLAGS = -rf
 RM = rm
 
 SRCS = main.c \
-		src/init/init.c
+		src/init/init.c \
+		src/init/env.c \
+		src/init/free.c
 
 OBJS = $(SRCS:.c=.o)
 

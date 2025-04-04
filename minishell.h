@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/03 17:47:08 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/04 16:15:56 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,9 @@ typedef struct s_state
 
 void	print_banner(void);
 void	ft_sigint(int signo);
+char	*ft_strndup(const char *s, size_t n);
+t_env	*add_env_list(t_env *env_list, char *key, char *value);
+t_env	*get_env_list(char **envp);
+void	free_state(t_state *state);
 
 #endif
