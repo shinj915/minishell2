@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 11:44:53 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 11:45:54 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 14:13:23 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,16 @@ char	*ft_strndup(const char *s, size_t n)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+void	ft_sigint(int signo)
+{
+	if (signo == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		g_exit_status = 1;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 11:47:14 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 14:36:58 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct s_state
 }	t_state;
 
 /* Init - Allocate, initialize, and clean up */
-void	ft_sigint(int signo);
+t_state	*init_minishell(int *argc, char ***argv, char **envp);
 void	free_state(t_state *state);
 
 /* Init - Environment variable control */
@@ -112,6 +112,7 @@ t_env	*get_env_list(char **envp);
 
 /* Init - Utils */
 void	print_banner(void);
+void	ft_sigint(int signo);
 char	*ft_strndup(const char *s, size_t n);
 
 #endif
