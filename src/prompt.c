@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:31:24 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 20:21:37 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 21:07:20 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void	prompt_excute(t_cmd_list *cmd_list, t_state *state, int *result)
 					cmd_list->head->exec_file_name);
 			g_exit_status = 1;
 		}
-		else
-			*result = 123456; //ft_execute(cmd_list, state);
+		//else
+		//	*result = ft_execute(cmd_list, state);
 	}
 	//unlink_tmp_file(cmd_list);
 	free_cmd_list(cmd_list);

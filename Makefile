@@ -13,7 +13,8 @@ SRCS = main.c \
 		src/init/env.c \
 		src/init/utils.c \
 		src/parse/parse_main.c \
-		src/free_struct.c \
+		src/free_state_cmd_list.c \
+		src/free_token.c \
 		src/free_utils.c \
 		src/prompt.c
 
