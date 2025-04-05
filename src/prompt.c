@@ -6,13 +6,13 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:31:24 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 17:21:41 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 20:21:37 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-int	is_full_of_space(char *cmd)
+static int	is_full_of_space(char *cmd)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	is_full_of_space(char *cmd)
 	return (1);
 }
 
-void	prompt_excute(t_cmd_list *cmd_list, t_state *state, int *result)
+static void	prompt_excute(t_cmd_list *cmd_list, t_state *state, int *result)
 {
 	state->cmd_parse = ft_strdup(state->cmd_line);
 	cmd_list = ft_parse(state->cmd_parse, state);

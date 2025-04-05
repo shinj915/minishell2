@@ -6,32 +6,15 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:39:09 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 17:21:34 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 20:24:22 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	free_state(t_state *state)
-{
-	t_env	*temp;
-
-	rl_clear_history();
-	while (state->env_list)
-	{
-		temp = state->env_list;
-		free(state->env_list->key);
-		free(state->env_list->value);
-		state->env_list = state->env_list->next;
-		free(temp);
-	}
-	free(state->env_list);
-	free(state);
-}
-
 void	free_cmd_redir(t_cmd *cmd)
 {
-	t_cmd_redir *ptr;
+	t_cmd_redir	*ptr;
 
 	while (cmd->redir_list != NULL)
 	{
@@ -59,9 +42,8 @@ void	free_cmd_node(t_cmd_list *cmd_list)
 	if (ptr->exec_file_name != NULL)
 		free(ptr->exec_file_name);
 	if (ptr->argv != NULL)
-		ft_free_2d_array(ptr->argv);
+		free_2d_array(ptr->argv);
 	free(ptr);
-
 }
 
 void	*free_cmd_list(t_cmd_list *cmd_list)
@@ -73,4 +55,21 @@ void	*free_cmd_list(t_cmd_list *cmd_list)
 	cmd_list->head = NULL;
 	free(cmd_list);
 	return (NULL);
+}
+
+void	free_state(t_state *state)
+{
+	t_env	*temp;
+
+	rl_clear_history();
+	while (state->env_list)
+	{
+		temp = state->env_list;
+		free(state->env_list->key);
+		free(state->env_list->value);
+		state->env_list = state->env_list->next;
+		free(temp);
+	}
+	free(state->env_list);
+	free(state);
 }

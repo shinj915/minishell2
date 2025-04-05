@@ -14,7 +14,7 @@ SRCS = main.c \
 		src/init/utils.c \
 		src/parse/parse_main.c \
 		src/free_struct.c \
-		src/free_utils \
+		src/free_utils.c \
 		src/prompt.c
 
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:04:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 17:21:38 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 20:22:08 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,3 @@ void	ft_sigint(int signo)
 		g_exit_status = 1;
 	}
 }
-
-

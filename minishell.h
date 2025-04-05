@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 17:21:44 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 20:23:27 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,14 @@ void	print_banner(void);
 void	ft_sigint(int signo);
 char	*ft_strndup(const char *s, size_t n);
 
+/* Prompt */
+void	prompt(t_cmd_list *cmd_list, t_state *state);
+
 /* Clean up */
+void	*free_2d_array(char **array);
+void	free_cmd_redir(t_cmd *cmd);
+void	free_cmd_node(t_cmd_list *cmd_list);
+void	*free_cmd_list(t_cmd_list *cmd_list);
 void	free_state(t_state *state);
 
 #endif
