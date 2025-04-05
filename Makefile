@@ -11,7 +11,11 @@ RM = rm
 SRCS = main.c \
 		src/init/init.c \
 		src/init/env.c \
-		src/init/utils.c
+		src/init/utils.c \
+		src/parse/parse_main.c \
+		src/free_struct.c \
+		src/free_utils \
+		src/prompt.c
 
 OBJS = $(SRCS:.c=.o)
 

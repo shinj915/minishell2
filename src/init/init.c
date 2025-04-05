@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:04:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 15:18:41 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 17:21:38 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,16 @@ t_state	*init_minishell(int *argc, char ***argv, char **envp)
 	return (state);
 }
 
-void	free_state(t_state *state)
+void	ft_sigint(int signo)
 {
-	t_env	*temp;
-
-	rl_clear_history();
-	while (state->env_list)
+	if (signo == SIGINT)
 	{
-		temp = state->env_list;
-		free(state->env_list->key);
-		free(state->env_list->value);
-		state->env_list = state->env_list->next;
-		free(temp);
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		g_exit_status = 1;
 	}
-	free(state->env_list);
-	free(state);
 }
+
+
