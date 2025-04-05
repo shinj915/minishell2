@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:13:21 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 11:35:55 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 11:47:30 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-char	*ft_strndup(const char *s, size_t n)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	str = (char *)malloc(sizeof(char) * (n + 1));
-	if (!str)
-		return (NULL);
-	while (i < n && s[i])
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
 
 t_env	*add_env_list(t_env *env_list, char *key, char *value)
 {

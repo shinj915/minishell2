@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/04 16:15:56 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/05 11:47:14 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,16 @@ typedef struct s_state
 	t_cmd_list	*cmd_list;
 }	t_state;
 
-void	print_banner(void);
+/* Init - Allocate, initialize, and clean up */
 void	ft_sigint(int signo);
-char	*ft_strndup(const char *s, size_t n);
+void	free_state(t_state *state);
+
+/* Init - Environment variable control */
 t_env	*add_env_list(t_env *env_list, char *key, char *value);
 t_env	*get_env_list(char **envp);
-void	free_state(t_state *state);
+
+/* Init - Utils */
+void	print_banner(void);
+char	*ft_strndup(const char *s, size_t n);
 
 #endif
