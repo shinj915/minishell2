@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:04:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 21:07:18 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/07 11:34:27 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,25 @@ t_state	*init_minishell(int *argc, char ***argv, char **envp)
 	state->cmd_list = cmd_list;
 	state->env_list = get_env_list(envp);
 	return (state);
+}
+
+t_env	*get_env_list(char **envp)
+{
+	t_env	*env_list;
+	char	*key;
+	char	*value;
+	int		i;
+
+	env_list = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		key = ft_strndup(envp[i], ft_strchr(envp[i], '=') - envp[i]);
+		value = ft_strdup(ft_strchr(envp[i], '=') + 1);
+		env_list = add_env(env_list, key, value);
+		i++;
+	}
+	return (env_list);
 }
 
 void	ft_sigint(int signo)

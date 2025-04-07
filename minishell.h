@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 21:07:23 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/07 11:32:18 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ typedef struct s_state
 /* Init */
 t_state	*init_minishell(int *argc, char ***argv, char **envp);
 
-/* Init - Environment variable control */
-t_env	*add_env_list(t_env *env_list, char *key, char *value);
+/* Init - Environment variable */
+t_env	*add_env(t_env *env_list, char *key, char *value);
 t_env	*get_env_list(char **envp);
 
 /* Init - Utils */
