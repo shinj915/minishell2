@@ -1,14 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_token.c                                       :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: donjung <donjung@student.42gyeongsan.kr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 21:00:03 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 21:07:14 by jishin           ###   ########.fr       */
+/*   Created: 2024/03/02 21:21:14 by donjung           #+#    #+#             */
+/*   Updated: 2024/03/02 21:25:13 by donjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "libft.h"
 
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
+{
+	if (!lst || !del)
+		return ;
+	(del)(lst->content);
+	free(lst);
+	lst = NULL;
+}

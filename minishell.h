@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 21:07:23 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/10 19:44:26 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_cmd
 	int				fd[2];
 	int				fd_in;
 	int				fd_out;
-	char			**exec_file_name;
+	char			*exec_file_name;
 	char			**argv;
 	t_cmd_redir		*redir_list;
 	struct s_cmd	*prev;
@@ -102,26 +102,6 @@ typedef struct s_state
 	t_cmd_list	*cmd_list;
 }	t_state;
 
-/* Init */
-t_state	*init_minishell(int *argc, char ***argv, char **envp);
-
-/* Init - Environment variable control */
-t_env	*add_env_list(t_env *env_list, char *key, char *value);
-t_env	*get_env_list(char **envp);
-
-/* Init - Utils */
-void	print_banner(void);
-void	ft_sigint(int signo);
-char	*ft_strndup(const char *s, size_t n);
-
-/* Prompt */
-void	prompt(t_cmd_list *cmd_list, t_state *state);
-
-/* Clean up */
-void	*free_2d_array(char **array);
-void	free_cmd_redir(t_cmd *cmd);
-void	free_cmd_node(t_cmd_list *cmd_list);
-void	*free_cmd_list(t_cmd_list *cmd_list);
-void	free_state(t_state *state);
+void print_toklist(t_token *tok_list);
 
 #endif

@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donjung <donjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: donjung <donjung@student.42gyeongsan.kr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 13:45:01 by donjung           #+#    #+#             */
-/*   Updated: 2024/03/01 22:10:43 by donjung          ###   ########.fr       */
+/*   Created: 2024/03/02 20:45:52 by donjung           #+#    #+#             */
+/*   Updated: 2024/03/02 21:09:30 by donjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	if (!lst || !new)
+		return ;
+	new -> next = *lst;
+	*lst = new;
 }

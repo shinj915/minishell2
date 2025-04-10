@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: donjung <donjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 17:26:19 by jishin            #+#    #+#             */
-/*   Updated: 2024/03/13 18:55:22 by jishin           ###   ########.fr       */
+/*   Created: 2024/02/26 14:16:00 by donjung           #+#    #+#             */
+/*   Updated: 2024/03/01 22:11:14 by donjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_tolower(int c)
 {
-	if (c > 64 && c < 91)
-		c = c + 32;
+	if ('A' <= c && c <= 'Z')
+		c += 32;
 	return (c);
 }

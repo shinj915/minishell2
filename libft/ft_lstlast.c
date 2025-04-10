@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: donjung <donjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 17:01:17 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/05 21:07:16 by jishin           ###   ########.fr       */
+/*   Created: 2024/03/02 21:15:02 by donjung           #+#    #+#             */
+/*   Updated: 2024/03/03 17:05:33 by donjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "libft.h"
 
-void	*free_2d_array(char **array)
+t_list	*ft_lstlast(t_list *lst)
 {
-	int	i;
-
-	i = 0;
-	if (!array)
+	if (!lst)
 		return (NULL);
-	while (array[i] != NULL)
-		free(array[i++]);
-	free(array);
-	return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }

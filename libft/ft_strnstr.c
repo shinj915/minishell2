@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: donjung <donjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 13:59:08 by jishin            #+#    #+#             */
-/*   Updated: 2024/09/09 11:10:18 by jishin           ###   ########.fr       */
+/*   Created: 2024/02/27 17:04:17 by donjung           #+#    #+#             */
+/*   Updated: 2024/03/05 17:01:20 by donjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t	needle_len;
+	size_t	j;
 
-	needle_len = ft_strlen(needle);
-	if (!*needle)
-		return ((char *)haystack);
-	while (*haystack && len >= needle_len)
+	if (!big && !len)
+		return (NULL);
+	if (!*little || little == big)
+		return ((char *)big);
+	while (*big && len--)
 	{
-		if (*haystack == *needle && !ft_memcmp(haystack, needle, needle_len))
-			return ((char *)haystack);
-		haystack++;
-		len--;
+		j = 0;
+		while (*(big + j) == *(little + j) && *(little + j) && j <= len)
+		{
+			if (!*(little + j + 1))
+				return ((char *)big);
+			j++;
+		}
+		big++;
 	}
-	return (0);
+	return (NULL);
 }

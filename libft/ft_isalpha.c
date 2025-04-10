@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: donjung <donjung@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 14:43:37 by jishin            #+#    #+#             */
-/*   Updated: 2024/03/13 18:54:58 by jishin           ###   ########.fr       */
+/*   Created: 2024/02/26 11:04:44 by donjung           #+#    #+#             */
+/*   Updated: 2024/03/01 22:08:16 by donjung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 int	ft_isalpha(int c)
 {
-	return ((64 < c && 91 > c) || (96 < c && 123 > c));
+	if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'))
+		return (c);
+	return (0);
 }
