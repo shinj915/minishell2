@@ -3,7 +3,9 @@ CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g -I./
 LDFLAGS = -lreadline
 CC = cc
 SRCS = main.c \
-		test.c
+		test.c \
+		src/parse/parse_main.c \
+		src/parse/token_utils.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a

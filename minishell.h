@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/10 19:44:26 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/11 14:24:17 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,15 @@ typedef struct s_state
 	t_cmd_list	*cmd_list;
 }	t_state;
 
+/* Parse - main */
+t_token	*parse(char *cmd, t_state *state);
+t_token	*tokenize(char *cmd, t_state *state);
+
+/* Parse - tokenize */
+t_token	*create_token(int token_type, const char *str);
+void	free_token(t_token *token);
+
+/* Test */
 void print_toklist(t_token *tok_list);
 
 #endif
