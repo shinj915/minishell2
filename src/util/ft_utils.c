@@ -1,39 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 19:04:13 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 20:36:45 by jishin           ###   ########.fr       */
+/*   Created: 2025/04/13 22:09:51 by jishin            #+#    #+#             */
+/*   Updated: 2025/04/13 22:10:50 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	*free_2d_array(char **array)
+char	*ft_strndup(const char *s, size_t n)
 {
-	int	idx;
+	char	*str;
+	size_t	i;
 
-	idx = 0;
-	if (!array)
+	i = 0;
+	str = (char *)malloc(sizeof(char) * (n + 1));
+	if (!str)
 		return (NULL);
-	while (array[idx] != NULL)
-		free(array[idx++]);
-	free(array);
-	return (NULL);
+	while (i < n && s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
 
-void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4)
+int	ft_strcmp(char const *s1, char const *s2)
 {
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-	if (s3)
-		free(s3);
-	if (s4)
-		free(s4);
-	return (NULL);
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return (((unsigned char)(*s1) - (unsigned char)(*s2)));
 }

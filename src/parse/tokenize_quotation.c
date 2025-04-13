@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 18:55:54 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 19:21:19 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/13 21:21:06 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**extract_double_quotes(char *str, int start, int end, t_state *state)
 	if (!result[0])
 		return (free_2d_array(result));
 	result[1] = ft_substr(str, start + 1, end - start - 1);
-	//result[1] = ft_tokenize_interpret_env_str(result[1], state);
+	result[1] = handle_double_quoted_sequence(result[1], state);
 	if (!result[1])
 		return (free_2d_array(result));
 	result[2] = ft_substr(str, end + 1, ft_strlen(str));

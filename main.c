@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 19:02:00 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/13 22:17:04 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	g_exit_status;
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
 	t_token	*token_list;
 
-	state = (t_state *)malloc(sizeof(t_state));
+	state = init_minishell(&argc, &argv, envp);
 	if (!state)
-		return (1);
+		return (TYPE_FAIL);
 	while (1)
 	{
 		state->cmd_line = readline("minishell$ ");

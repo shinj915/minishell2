@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 19:09:02 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/13 22:17:42 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,36 @@ typedef struct s_state
 t_token	*parse(char *cmd, t_state *state);
 t_token	*tokenize(char *cmd, t_state *state);
 
-/* Parse - token utils */
-t_token	*create_token(int token_type, const char *str);
-t_token	*add_token(t_token **token_list, size_t idx, int type, char *str);
-void	free_token(t_token *token);
+/* Environment variables */
+t_env	*create_new_env(char *key, char *value);
+t_env	*add_env(t_env *env, char *key, char *value);
+char	*ft_getenv(t_state *state, char *key);
 
 /* Parse - tokenize quotation */
 void	tokenize_quotation(t_token *token_list, t_state *state);
+char	*handle_double_quoted_sequence(char *str, t_state *state);
+
+/* Parse - utils */
+t_token	*create_token(int token_type, const char *str);
+t_token	*add_token(t_token **token_list, size_t idx, int type, char *str);
+void	free_token(t_token *token);
+char	**parse_split(char const *s, char c);
+
+/* Minishell ft_utils */
+char	*ft_strndup(const char *s, size_t n);
+int	ft_strcmp(char const *s1, char const *s2);
+
+/*Init minishell */
+t_state	*init_minishell(int *argc, char ***argv, char **envp);
+t_env	*get_env_list(char **envp);
+void	ft_sigint(int signo);
+void	print_banner(void);
 
 /* Clean up - memory free functions */
 void	*free_2d_array(char **array);
+void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
 
-/* Test */
-void	print_toklist(t_token *tok_list);
+/* Test - 삭제 필요 */
+void print_toklist(t_token *tok_list);
 
 #endif
