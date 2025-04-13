@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/11 14:24:43 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/13 19:02:00 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	g_exit_status;
 
 int	main(void)
 {
-	t_state *state;
-	t_token *token_list;
+	t_state	*state;
+	t_token	*token_list;
 
 	state = (t_state *)malloc(sizeof(t_state));
 	if (!state)
@@ -32,7 +32,6 @@ int	main(void)
 				token_list = parse(state->cmd_line, state);
 				print_toklist(token_list);
 			}
-
 		}
 		else
 		{

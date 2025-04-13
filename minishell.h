@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/11 14:24:17 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/13 19:09:02 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,18 @@ typedef struct s_state
 t_token	*parse(char *cmd, t_state *state);
 t_token	*tokenize(char *cmd, t_state *state);
 
-/* Parse - tokenize */
+/* Parse - token utils */
 t_token	*create_token(int token_type, const char *str);
+t_token	*add_token(t_token **token_list, size_t idx, int type, char *str);
 void	free_token(t_token *token);
 
+/* Parse - tokenize quotation */
+void	tokenize_quotation(t_token *token_list, t_state *state);
+
+/* Clean up - memory free functions */
+void	*free_2d_array(char **array);
+
 /* Test */
-void print_toklist(t_token *tok_list);
+void	print_toklist(t_token *tok_list);
 
 #endif

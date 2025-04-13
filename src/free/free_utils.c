@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main.c                                       :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 14:20:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 19:12:10 by jishin           ###   ########.fr       */
+/*   Created: 2025/04/13 19:04:13 by jishin            #+#    #+#             */
+/*   Updated: 2025/04/13 19:08:26 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_token	*tokenize(char *cmd, t_state *state)
+void	*free_2d_array(char **array)
 {
-	t_token	*result;
+	int	idx;
 
-	(void)state;
-	result = create_token(TYPE_TOKEN_CHUNK, cmd);
-	if (!result)
+	idx = 0;
+	if (!array)
 		return (NULL);
-	tokenize_quotation(result, state);
-	return (result);
-}
-
-t_token	*parse(char *cmd, t_state *state)
-{
-	t_token		*tok_list;
-
-	(void)state;
-	tok_list = tokenize(cmd, state);
-	if (!tok_list)
-		return (NULL);
-	return (tok_list);
+	while (array[idx] != NULL)
+		free(array[idx++]);
+	free(array);
+	return (NULL);
 }

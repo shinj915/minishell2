@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:23:13 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/11 14:23:43 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/13 18:52:00 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,40 @@ t_token	*create_token(int token_type, const char *str)
 		return (NULL);
 	new_token->origin_str = NULL;
 	new_token->next = NULL;
+	return (new_token);
+}
+
+static t_token	*add_token_at_head(t_token **token_list, t_token *new_token)
+{
+	new_token->next = *token_list;
+	*token_list = new_token;
+	return (new_token);
+}
+
+t_token	*add_token(t_token **token_list, size_t idx, int type, char *str)
+{
+	t_token	*new_token;
+	t_token	*prev;
+	t_token	*current;
+
+	if (!token_list)
+		return (NULL);
+	new_token = create_token(type, str);
+	if (!new_token)
+		return (NULL);
+	if (idx == 0 || *token_list == NULL)
+		return (add_token_at_head(token_list, new_token));
+	current = *token_list;
+	prev = NULL;
+	while (current != NULL && idx > 0)
+	{
+		prev = current;
+		current = current->next;
+		idx--;
+	}
+	new_token->next = current;
+	if (prev != NULL)
+		prev->next = new_token;
 	return (new_token);
 }
 
