@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donjung <donjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:27:11 by donjung           #+#    #+#             */
-/*   Updated: 2024/03/03 21:58:36 by donjung          ###   ########.fr       */
+/*   Updated: 2025/04/13 22:28:53 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	check_digits(int n)
 	if (n == -2147483648)
 	{
 		return (11);
-	}	
+	}
 	if (n < 0)
 	{
 		count++;

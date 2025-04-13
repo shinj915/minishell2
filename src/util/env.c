@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 21:50:21 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 22:11:28 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/13 23:17:18 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ t_env	*add_env(t_env *env, char *key, char *value)
 
 char	*ft_getenv(t_state *state, char *key)
 {
-	t_env	*tmp;
+	t_env	*env;
 
-	tmp = state->env_list;
-	while (tmp)
+	env = state->env_list;
+	while (env)
 	{
-		if (!ft_strcmp(tmp->key, key))
+		if (!ft_strcmp(env->key, key))
 		{
-			if (tmp->value)
-				return (tmp->value);
+			if (env->value)
+				return (env->value);
 			else
 				return ("");
 		}
-		tmp = tmp->next;
+		env = env->next;
 	}
 	return (NULL);
 }

@@ -1,49 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util_split.c                                       :+:      :+:    :+:   */
+/*   tokenize_env_var_util.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 20:04:32 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 00:14:50 by jishin           ###   ########.fr       */
+/*   Created: 2025/04/14 00:01:12 by jishin            #+#    #+#             */
+/*   Updated: 2025/04/14 00:25:28 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static size_t	get_split_size(char const *s, char c)
+static size_t	get_split_size_with_delim(char const *s, char c)
 {
 	size_t	size;
+	int		flag;
 
 	size = 1;
 	if (*s != c)
 		size++;
+	flag = 0;
 	while (*s)
 	{
 		if (*s == c)
+		{
+			if (!flag)
+				size++;
+			flag = 1;
+		}
+		else if (flag)
+		{
 			size++;
+			flag = 0;
+		}
 		s++;
 	}
 	return (size);
 }
-
-static char	*split_str(const char **s, char c)
+static char	*split_str_with_delim(char const **s, char c)
 {
 	size_t		size;
 	char		*result;
-	const char	*ptr_s;
+	char const	*ptr_s;
 	char		*ptr_result;
 
 	size = 1;
 	ptr_s = *s;
 	if (**s == c)
-	{
-		(*s)++;
-		size++;
-	}
-	while (**s != '\0' && **s != c && size++)
-		(*s)++;
+		while (**s != '\0' && **s == c && size++)
+			(*s)++;
+	else
+		while (**s != '\0' && **s != c && size++)
+			(*s)++;
 	result = (char *)malloc(sizeof(char) * size);
 	if (!result)
 		return (NULL);
@@ -74,7 +83,7 @@ static void	free_split(char **s, char **ptr)
 	free(s);
 }
 
-char	**parse_split(const char *s, char c)
+char	**split_with_delim(const char *s, char c)
 {
 	char	**result;
 	char	**ptr;
@@ -83,14 +92,14 @@ char	**parse_split(const char *s, char c)
 
 	if (!s)
 		return (NULL);
-	size = get_split_size(s, c);
+	size = get_split_size_with_delim(s, c);
 	result = (char **)malloc(sizeof(char *) * size);
 	if (!result)
 		return (NULL);
 	ptr = result;
 	while (--size)
 	{
-		str = split_str(&s, c);
+		str = split_str_with_delim(&s, c);
 		if (!str)
 		{
 			free_split(result, ptr);
@@ -100,4 +109,25 @@ char	**parse_split(const char *s, char c)
 	}
 	*ptr = NULL;
 	return (result);
+}
+
+void	retokenize_expanded_token(t_token *token)
+{
+	char	**arr;
+	int		idx;
+
+	arr = split_with_delim(token->str, ' ');
+	if (!arr)
+		return ;
+	free (token->str);
+	token->str = ft_strdup(arr[0]);
+	idx = 0;
+	while (arr[++idx] != NULL)
+	{
+		if (arr[idx][0] == ' ')
+			add_token(&token, idx, TYPE_TOKEN_SPACE, arr[idx]);
+		else
+			add_token(&token, idx, token->token_type, arr[idx]);
+	}
+	free_2d_array(arr);
 }

@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 22:17:42 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 00:25:05 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,12 @@ t_env	*create_new_env(char *key, char *value);
 t_env	*add_env(t_env *env, char *key, char *value);
 char	*ft_getenv(t_state *state, char *key);
 
-/* Parse - tokenize quotation */
+/* Parse - tokenize */
 void	tokenize_quotation(t_token *token_list, t_state *state);
 char	*handle_double_quoted_sequence(char *str, t_state *state);
+char	*expand_env_in_str(char *str, int idx, t_state *state);
+void	tokenize_env_var(t_token *token_list, t_state *state);
+void	retokenize_expanded_token(t_token *token);
 
 /* Parse - utils */
 t_token	*create_token(int token_type, const char *str);
@@ -123,7 +126,7 @@ char	**parse_split(char const *s, char c);
 
 /* Minishell ft_utils */
 char	*ft_strndup(const char *s, size_t n);
-int	ft_strcmp(char const *s1, char const *s2);
+int		ft_strcmp(char const *s1, char const *s2);
 
 /*Init minishell */
 t_state	*init_minishell(int *argc, char ***argv, char **envp);
