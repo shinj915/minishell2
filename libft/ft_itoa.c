@@ -5,73 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 17:27:11 by donjung           #+#    #+#             */
-/*   Updated: 2025/04/13 22:28:53 by jishin           ###   ########.fr       */
+/*   Created: 2024/09/07 14:58:00 by jishin            #+#    #+#             */
+/*   Updated: 2024/09/07 14:58:11 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	check_digits(int n)
+static size_t	get_num_len(int n)
 {
-	int	count;
+	size_t	len;
 
-	count = 0;
-	if (n == -2147483648)
-	{
-		return (11);
-	}
+	len = 1;
 	if (n < 0)
 	{
-		count++;
+		len++;
 		n = -n;
 	}
 	while (n >= 10)
 	{
+		len++;
 		n /= 10;
-		count++;
 	}
-	return (count + 1);
+	return (len);
 }
 
-static char	*fill_itoa(int n, int digits, char *array)
+static char	*itoa_except(int *p_n, char *result)
 {
-	int	flag;
-
-	flag = 0;
-	array[digits] = '\0';
-	digits--;
-	if (n < 0)
+	if (*p_n == 0)
+		result[0] = '0';
+	if (*p_n < 0)
 	{
-		flag = 1;
-		n = -n;
+		result[0] = '-';
+		*p_n = -(*p_n);
 	}
-	while (digits >= 0)
-	{
-		array[digits] = n % 10 + '0';
-		n /= 10;
-		digits--;
-	}
-	if (flag == 1)
-		array[0] = '-';
-	return (array);
+	return (result);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*array;
-	int		digits;
+	char	*result;
+	int		*p_n;
+	size_t	len;
+	size_t	i;
 
+	p_n = &n;
 	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	len = get_num_len(n);
+	result = (char *)malloc(sizeof(char) * len + 1);
+	if (!result)
+		return (0);
+	itoa_except(p_n, result);
+	i = len - 1;
+	while (n > 0)
 	{
-		array = (char *)malloc(sizeof(char) * 12);
-		ft_memmove(array, "-2147483648", 12);
-		return (array);
+		result[i] = n % 10 + '0';
+		n = n / 10;
+		i--;
 	}
-	digits = check_digits(n);
-	array = (char *)malloc(sizeof(char) * (digits + 1));
-	if (!array)
-		return (NULL);
-	fill_itoa(n, digits, array);
-	return (array);
+	result[len] = '\0';
+	return (result);
 }

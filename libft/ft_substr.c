@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donjung <donjung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 19:15:39 by donjung           #+#    #+#             */
-/*   Updated: 2024/03/03 20:49:47 by donjung          ###   ########.fr       */
+/*   Created: 2024/09/07 14:27:11 by jishin            #+#    #+#             */
+/*   Updated: 2024/09/07 14:45:35 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,19 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*dest;
-	char	*ptr;
+	char	*result;
+	size_t	s_len;
 
 	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
-		len = 0;
-	else if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	dest = (char *)malloc(sizeof(char) * len + 1);
-	if (!dest)
-		return (NULL);
-	ptr = dest;
-	s += start;
-	while (len--)
-	{
-		*dest = *s;
-		dest++;
-		s++;
-	}
-	*dest = '\0';
-	return (ptr);
+		return (0);
+	s_len = ft_strlen(s);
+	if (start >= s_len)
+		return (ft_strdup(""));
+	if (s_len - start < len)
+		len = s_len - start;
+	result = (char *)malloc(len + 1);
+	if (!result)
+		return (0);
+	ft_strlcpy(result, s + start, len + 1);
+	return (result);
 }

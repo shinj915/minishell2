@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donjung <donjung@student.42gyeongsan.kr>   +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:14:58 by donjung           #+#    #+#             */
-/*   Updated: 2024/03/02 17:55:43 by donjung          ###   ########.fr       */
+/*   Created: 2024/09/07 14:01:19 by jishin            #+#    #+#             */
+/*   Updated: 2024/09/07 14:05:42 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 
 int	ft_atoi(const char *str)
 {
-	int	result;
-	int	sign;
+	int		sign;
+	long	result;
 
-	result = 0;
 	sign = 1;
-	while (*str == ' ' || (9 <= *str && *str <= 13))
+	result = 0;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
-			sign = -sign;
+			sign = -1;
 		str++;
 	}
-	while ('0' <= *str && *str <= '9')
+	while (ft_isdigit(*str))
 	{
 		result = result * 10 + *str - '0';
 		str++;
 	}
+	if (result * sign > 2147483647 || result * sign < -2147483648)
+		return (0);
 	return (result * sign);
 }
