@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 12:57:13 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 13:49:22 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ char	**split_with_delim(const char *s, char c);
 void	tokenize_space(t_token *token_list);
 void	delete_empty_token(t_token **token_list);
 void	tokenize_pipe(t_token *token_list);
+void	tokenize_redirect(t_token *token_list);
+char	**split_with_two_delim(char const *s, char l, char r);
 
 /* Parse - utils */
 t_token	*create_token(int token_type, const char *str);
