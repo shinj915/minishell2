@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_env_var_util.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 00:01:12 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 00:25:28 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 09:57:02 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static size_t	get_split_size_with_delim(char const *s, char c)
 	}
 	return (size);
 }
+
 static char	*split_str_with_delim(char const **s, char c)
 {
 	size_t		size;
@@ -113,21 +114,21 @@ char	**split_with_delim(const char *s, char c)
 
 void	retokenize_expanded_token(t_token *token)
 {
-	char	**arr;
+	char	**split;
 	int		idx;
 
-	arr = split_with_delim(token->str, ' ');
-	if (!arr)
+	split = split_with_delim(token->str, ' ');
+	if (!split)
 		return ;
-	free (token->str);
-	token->str = ft_strdup(arr[0]);
+	free(token->str);
+	token->str = ft_strdup(split[0]);
 	idx = 0;
-	while (arr[++idx] != NULL)
+	while (split[++idx] != NULL)
 	{
-		if (arr[idx][0] == ' ')
-			add_token(&token, idx, TYPE_TOKEN_SPACE, arr[idx]);
+		if (split[idx][0] == ' ')
+			add_token(&token, idx, TYPE_TOKEN_SPACE, split[idx]);
 		else
-			add_token(&token, idx, token->token_type, arr[idx]);
+			add_token(&token, idx, token->token_type, split[idx]);
 	}
-	free_2d_array(arr);
+	free_2d_array(split);
 }

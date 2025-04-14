@@ -12,6 +12,7 @@ SRCS = main.c \
 		src/parse/tokenize_env_var.c \
 		src/parse/tokenize_quotation_util.c \
 		src/parse/tokenize_quotation.c \
+		src/parse/tokenize_space.c \
 		src/parse/util_split.c \
 		src/parse/util_token.c \
 		src/util/env.c \
