@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/07 11:32:18 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:11:17 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_cmd
 	int				fd[2];
 	int				fd_in;
 	int				fd_out;
-	char			**exec_file_name;
+	char			*exec_file_name;
 	char			**argv;
 	t_cmd_redir		*redir_list;
 	struct s_cmd	*prev;
@@ -102,26 +102,52 @@ typedef struct s_state
 	t_cmd_list	*cmd_list;
 }	t_state;
 
-/* Init */
+/*Init minishell */
 t_state	*init_minishell(int *argc, char ***argv, char **envp);
-
-/* Init - Environment variable */
-t_env	*add_env(t_env *env_list, char *key, char *value);
 t_env	*get_env_list(char **envp);
-
-/* Init - Utils */
-void	print_banner(void);
 void	ft_sigint(int signo);
+void	print_banner(void);
+
+/* Parse - main */
+t_token	*parse(char *cmd, t_state *state);
+t_token	*tokenize(char *cmd, t_state *state);
+
+/* Environment variables */
+t_env	*create_new_env(char *key, char *value);
+t_env	*add_env(t_env *env, char *key, char *value);
+char	*ft_getenv(t_state *state, char *key);
+
+/* Parse - tokenize */
+void	tokenize_quotation(t_token *token_list, t_state *state);
+char	*handle_double_quoted_sequence(char *str, t_state *state);
+char	*expand_env_in_str(char *str, int idx, t_state *state);
+void	tokenize_env_var(t_token *token_list, t_state *state);
+void	tokenize_space(t_token *token_list);
+void	delete_empty_token(t_token **token_list);
+void	tokenize_pipe(t_token *token_list);
+void	tokenize_redirect(t_token *token_list);
+void	tokenize_chunk_to_argv(t_token *token_list);
+
+/* Parse - utils */
+t_token	*create_token(int token_type, const char *str);
+t_token	*add_token(t_token **token_list, size_t idx, int type, char *str);
+void	free_token(t_token *token);
+char	**parse_split(char const *s, char c);
+void	retokenize_expanded_token(t_token *token);
+char	**split_with_delim(const char *s, char c);
+char	**split_with_two_delim(char const *s, char l, char r);
+
+/* Minishell ft_utils */
 char	*ft_strndup(const char *s, size_t n);
+int		ft_strcmp(char const *s1, char const *s2);
 
-/* Prompt */
-void	prompt(t_cmd_list *cmd_list, t_state *state);
-
-/* Clean up */
+/* Clean up - memory free functions */
 void	*free_2d_array(char **array);
-void	free_cmd_redir(t_cmd *cmd);
-void	free_cmd_node(t_cmd_list *cmd_list);
-void	*free_cmd_list(t_cmd_list *cmd_list);
+void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
 void	free_state(t_state *state);
+void	free_token_list(t_token *token_list);
+
+/* Test - 삭제 필요 */
+void print_toklist(t_token *tok_list);
 
 #endif

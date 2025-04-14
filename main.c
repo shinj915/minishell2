@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/07 11:34:51 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:10:35 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,34 @@ int	g_exit_status;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_state		*state;
-	t_cmd_list	*cmd_list;
+	t_state	*state;
+	t_token	*token_list;
 
 	state = init_minishell(&argc, &argv, envp);
 	if (!state)
 		return (TYPE_FAIL);
-	cmd_list = state->cmd_list;
-	prompt(cmd_list, state);
-	free(state->cmd_list);
+	while (1)
+	{
+		state->cmd_line = readline("minishell$ ");
+		if (state->cmd_line)
+		{
+			if (state->cmd_line[0] != '\0')
+			{
+				token_list = parse(state->cmd_line, state);
+				print_toklist(token_list);
+			}
+		}
+		else
+		{
+			printf("Ctrl+D exit\n");
+			free(state->cmd_line);
+			g_exit_status = 130;
+			break ;
+		}
+		free(state->cmd_line);
+		free_token_list(token_list);
+		state->cmd_line = NULL;
+	}
 	free_state(state);
-	return (g_exit_status);
+	return (0);
 }
