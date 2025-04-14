@@ -8,6 +8,7 @@ SRCS = main.c \
 		test.c \
 		src/free/free_utils.c \
 		src/free/free.c \
+		src/parse/check_syntax_error.c \
 		src/parse/delete_empty_token.c \
 		src/parse/parse_main.c \
 		src/parse/tokenize_chunk_to_argv.c \
