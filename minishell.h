@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 11:25:22 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 11:34:45 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int		ft_strcmp(char const *s1, char const *s2);
 void	*free_2d_array(char **array);
 void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
 void	free_state(t_state *state);
+void	free_token_list(t_token *token_list);
 
 /* Test - 삭제 필요 */
 void print_toklist(t_token *tok_list);

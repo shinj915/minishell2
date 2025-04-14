@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:23:13 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 20:08:31 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 11:34:19 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,21 @@ void	free_token(t_token *token)
 	if (token->origin_str != NULL)
 		free(token->origin_str);
 	free(token);
+}
+
+void	free_token_list(t_token *token_list)
+{
+	t_token	*ptr;
+
+	ptr = token_list;
+	while (ptr != NULL)
+	{
+		if (ptr->str != NULL)
+			free(ptr->str);
+		if(ptr->origin_str != NULL)
+			free(ptr->origin_str);
+		token_list = ptr;
+		ptr = ptr->next;
+		free(token_list);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 11:25:36 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 11:34:26 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		free(state->cmd_line);
-		free_token(token_list);
+		free_token_list(token_list);
 		state->cmd_line = NULL;
 	}
 	free_state(state);

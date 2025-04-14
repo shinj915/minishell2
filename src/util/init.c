@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:04:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/13 22:20:33 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 11:30:40 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_state	*init_minishell(int *argc, char ***argv, char **envp)
 {
 	t_state		*state;
-	t_cmd_list	*cmd_list;
+	//t_cmd_list	*cmd_list;
 
 	(void)argc;
 	(void)argv;
@@ -26,13 +26,13 @@ t_state	*init_minishell(int *argc, char ***argv, char **envp)
 	state = (t_state *)malloc(sizeof(t_state));
 	if (!state)
 		return (NULL);
-	cmd_list = (t_cmd_list *)malloc(sizeof(t_cmd_list));
-	if (!cmd_list)
-	{
-		free(state);
-		return (NULL);
-	}
-	state->cmd_list = cmd_list;
+	//cmd_list = (t_cmd_list *)malloc(sizeof(t_cmd_list));
+	//if (!cmd_list)
+	//{
+	//	free(state);
+	//	return (NULL);
+	//}
+	//state->cmd_list = cmd_list;
 	state->env_list = get_env_list(envp);
 	return (state);
 }
