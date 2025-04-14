@@ -24,8 +24,8 @@ t_token	*tokenize(char *cmd, t_state *state)
 	tokenize_space(result);
 	tokenize_pipe(result);
 	tokenize_redirect(result);
-	tokenize_chunk_to_argv(result);
 	delete_empty_token(&result);
+	tokenize_chunk_to_argv(result);	
 	return (result);
 }
 
