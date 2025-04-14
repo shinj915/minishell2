@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:20:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 09:55:02 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 10:46:17 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ t_token	*tokenize(char *cmd, t_state *state)
 {
 	t_token	*result;
 
-	(void)state;
 	result = create_token(TYPE_TOKEN_CHUNK, cmd);
 	if (!result)
 		return (NULL);
 	tokenize_quotation(result, state);
 	tokenize_env_var(result, state);
 	tokenize_space(result);
+	delete_empty_token(&result);
 	return (result);
 }
 

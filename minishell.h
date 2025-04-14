@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 10:27:50 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 11:25:22 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ void	tokenize_env_var(t_token *token_list, t_state *state);
 void	retokenize_expanded_token(t_token *token);
 char	**split_with_delim(const char *s, char c);
 void	tokenize_space(t_token *token_list);
+void	delete_empty_token(t_token **token_list);
+
 
 /* Parse - utils */
 t_token	*create_token(int token_type, const char *str);
@@ -139,6 +141,7 @@ int		ft_strcmp(char const *s1, char const *s2);
 /* Clean up - memory free functions */
 void	*free_2d_array(char **array);
 void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
+void	free_state(t_state *state);
 
 /* Test - 삭제 필요 */
 void print_toklist(t_token *tok_list);

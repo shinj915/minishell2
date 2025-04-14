@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 19:04:13 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 11:07:32 by jishin           ###   ########.fr       */
+/*   Created: 2025/04/14 11:22:31 by jishin            #+#    #+#             */
+/*   Updated: 2025/04/14 11:25:08 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	*free_2d_array(char **array)
+void	free_state(t_state *state)
 {
-	int	idx;
+	t_env	*ptr;
 
-	idx = 0;
-	if (!array)
-		return (NULL);
-	while (array[idx] != NULL)
-		free(array[idx++]);
-	free(array);
-	return (NULL);
-}
-
-void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4)
-{
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-	if (s3)
-		free(s3);
-	if (s4)
-		free(s4);
-	return (NULL);
+	//rl_clear_history();
+	while (state->env_list)
+	{
+		ptr = state->env_list;
+		free(state->env_list->key);
+		free(state->env_list->value);
+		state->env_list = state->env_list->next;
+		free(ptr);
+	}
+	free(state->env_list);
+	free(state);
 }

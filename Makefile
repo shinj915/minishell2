@@ -7,6 +7,8 @@ CC = cc
 SRCS = main.c \
 		test.c \
 		src/free/free_utils.c \
+		src/free/free.c \
+		src/parse/delete_empty_token.c \
 		src/parse/parse_main.c \
 		src/parse/tokenize_env_var_util.c \
 		src/parse/tokenize_env_var.c \
