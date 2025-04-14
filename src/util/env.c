@@ -6,11 +6,11 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:13:21 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 17:20:52 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:33:34 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 t_env	*create_new_env(char *key, char *value)
 {
