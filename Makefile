@@ -10,6 +10,7 @@ SRCS = main.c \
 		src/free/free.c \
 		src/parse/delete_empty_token.c \
 		src/parse/parse_main.c \
+		src/parse/tokenize_chunk_to_argv.c \
 		src/parse/tokenize_env_var_util.c \
 		src/parse/tokenize_env_var.c \
 		src/parse/tokenize_pipe.c \
