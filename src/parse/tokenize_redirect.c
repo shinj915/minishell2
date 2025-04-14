@@ -6,30 +6,30 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:56 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 13:45:40 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:25:56 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	ft_detach_sign(t_token *token, int idx)
+static void	retokenize_single_redirect(t_token *token, int idx)
 {
-	char	*sign;
-	char	*tmp;
-	char	*tmp2;
+	char	*str;
+	char	*single_redir;
+	char	*remainer;
 
-	tmp = token->str;
-	sign = ft_substr(tmp, 0, 1);
-	tmp2 = ft_substr(tmp, idx, ft_strlen(tmp));
-	if (!sign || !tmp2)
+	str = token->str;
+	single_redir = ft_substr(str, 0, 1);
+	remainer = ft_substr(str, idx, ft_strlen(str));
+	if (!single_redir || !remainer)
 		return ;
-	token->str = sign;
+	token->str = single_redir;
 	if (token->str[0] == '<')
 		token->token_type = TYPE_TOKEN_IO_L;
 	else if (token->str[0] == '>')
 		token->token_type = TYPE_TOKEN_IO_R;
-	add_token(&token, 1, TYPE_TOKEN_CHUNK, tmp2);
-	free_multiple_array(tmp, tmp2, NULL, NULL);
+	add_token(&token, 1, TYPE_TOKEN_CHUNK, remainer);
+	free_multiple_array(str, remainer, NULL, NULL);
 }
 
 static void	retokenize_heredoc(t_token *token)
@@ -80,7 +80,6 @@ static void	retokenize_appending_output(t_token *token)
 	}
 }
 
-
 static void	split_redirect_token(t_token *token)
 {
 	t_token	*next;
@@ -100,7 +99,7 @@ static void	split_redirect_token(t_token *token)
 	{
 		next = token->next;
 		if (token->str[0] == '<' || token->str[0] == '>')
-			ft_detach_sign(token, 1);
+			retokenize_single_redirect(token, 1);
 		token = next;
 	}
 }
@@ -118,6 +117,7 @@ void	tokenize_redirect(t_token *token_list)
 			split_redirect_token(token_list);
 		token_list = next;
 	}
+	delete_empty_token(&ptr);
 	retokenize_heredoc(ptr);
 	retokenize_appending_output(ptr);
 }
