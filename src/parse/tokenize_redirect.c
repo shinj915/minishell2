@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:37:56 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 15:25:56 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 12:16:08 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

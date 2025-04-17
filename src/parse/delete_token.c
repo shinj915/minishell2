@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delete_empty_token.c                               :+:      :+:    :+:   */
+/*   delete_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:45:37 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 15:26:01 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 11:54:25 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,30 @@ void	delete_empty_token(t_token **token_list)
 			prev = ptr;
 			ptr = ptr->next;
 		}
+	}
+}
+
+void	delete_space_token(t_token **token)
+{
+	t_token	*ptr;
+	t_token	*prev;
+	t_token	*next;
+
+	ptr = *token;
+	prev = NULL;
+	while (ptr != NULL)
+	{
+		next = ptr->next;
+		if (ptr->token_type == TYPE_TOKEN_SPACE)
+		{
+			if (prev != NULL)
+				prev->next = next;
+			else
+				*token = next;
+			free_token(ptr);
+		}
+		else
+			prev = ptr;
+		ptr = next;
 	}
 }

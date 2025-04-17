@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 18:19:25 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 11:54:56 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	tokenize_pipe(t_token *token_list);
 void	tokenize_redirect(t_token *token_list);
 void	delete_empty_token(t_token **token_list);
 void	tokenize_chunk_to_argv(t_token *token_list);
+void	delete_space_token(t_token **token);
 void	check_syntax_error(t_token *token_list);
 
 /* Parse - utils */
