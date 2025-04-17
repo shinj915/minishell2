@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:20:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 13:35:50 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 18:27:33 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_token	*tokenize(char *cmd, t_state *state)
+static t_token	*tokenize(char *cmd, t_state *state)
 {
 	t_token	*result;
 
