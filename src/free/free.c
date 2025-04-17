@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:22:31 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 17:14:28 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 13:30:51 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_state(t_state *state)
 {
 	t_env	*ptr;
 
-	//rl_clear_history();
+	rl_clear_history();
 	while (state->env_list)
 	{
 		ptr = state->env_list;

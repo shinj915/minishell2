@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 17:10:35 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 12:37:41 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	g_exit_status;
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
-	t_token	*token_list;
+	t_cmd_list	*cmd_list;
 
 	state = init_minishell(&argc, &argv, envp);
 	if (!state)
@@ -29,9 +29,12 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (state->cmd_line[0] != '\0')
 			{
-				token_list = parse(state->cmd_line, state);
-				print_toklist(token_list);
+				state->cmd_parse = ft_strdup(state->cmd_line);
+				cmd_list = parse(state->cmd_line, state);
 			}
+			free_cmd_list(cmd_list);
+			free(state->cmd_parse);
+			add_history(state->cmd_line);
 		}
 		else
 		{
@@ -41,7 +44,6 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		free(state->cmd_line);
-		free_token_list(token_list);
 		state->cmd_line = NULL;
 	}
 	free_state(state);

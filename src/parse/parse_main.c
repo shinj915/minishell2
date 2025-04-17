@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:20:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 12:21:30 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 13:23:41 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,20 @@ t_token	*tokenize(char *cmd, t_state *state)
 	return (result);
 }
 
-t_token	*parse(char *cmd, t_state *state)
+t_cmd_list	*parse(char *cmd, t_state *state)
 {
 	t_token		*token_list;
+	t_cmd_list	*result;
 
 	token_list = tokenize(cmd, state);
 	if (!token_list)
 		return (NULL);
-	return (token_list);
+	print_toklist(token_list);
+	if (token_list->token_type == TYPE_SYNTAX_ERROR || \
+		token_list->token_type == TYPE_AMBIGOUS_ERROR)
+		return (handle_syntax_error(token_list));
+	result = tokens_to_cmd_list(token_list);
+	traverse_and_print(result);
+	free_token_list(token_list);
+	return (result);
 }

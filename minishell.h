@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 11:54:56 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 13:23:58 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,20 +102,16 @@ typedef struct s_state
 	t_cmd_list	*cmd_list;
 }	t_state;
 
-/*Init minishell */
+/* Init minishell */
 t_state	*init_minishell(int *argc, char ***argv, char **envp);
 t_env	*get_env_list(char **envp);
 void	ft_sigint(int signo);
 void	print_banner(void);
 
 /* Parse - main */
-t_token	*parse(char *cmd, t_state *state);
-t_token	*tokenize(char *cmd, t_state *state);
-
-/* Environment variables */
-t_env	*create_new_env(char *key, char *value);
-t_env	*add_env(t_env *env, char *key, char *value);
-char	*ft_getenv(t_state *state, char *key);
+t_cmd_list	*parse(char *cmd, t_state *state);
+t_token		*tokenize(char *cmd, t_state *state);
+t_cmd_list	*tokens_to_cmd_list(t_token *token_list);
 
 /* Parse - tokenize */
 void	tokenize_quotation(t_token *token_list, t_state *state);
@@ -127,19 +123,31 @@ void	tokenize_redirect(t_token *token_list);
 void	delete_empty_token(t_token **token_list);
 void	tokenize_chunk_to_argv(t_token *token_list);
 void	delete_space_token(t_token **token);
-void	check_syntax_error(t_token *token_list);
+
+/* Parse - Error handling */
+void		check_syntax_error(t_token *token_list);
+t_cmd_list	*handle_syntax_error(t_token *token_list);
 
 /* Parse - utils */
-t_token	*create_token(int token_type, const char *str);
-t_token	*add_token(t_token **token_list, size_t idx, int type, char *str);
-void	free_token(t_token *token);
-char	**parse_split(char const *s, char c);
-char	*expand_env_in_str(char *str, int idx, t_state *state);
-void	retokenize_expanded_token(t_token *token);
-char	**split_with_delim(const char *s, char c);
-char	**split_with_two_delim(char const *s, char l, char r);
+char		**parse_split(char const *s, char c);
+char		**split_with_delim(const char *s, char c);
+char		**split_with_two_delim(char const *s, char l, char r);
+char		*expand_env_in_str(char *str, int idx, t_state *state);
+void		retokenize_expanded_token(t_token *token);
+t_token		*create_token(int token_type, const char *str);
+t_token		*add_token(t_token **token_list, size_t idx, int type, char *str);
+t_cmd_list	*create_cmd_list(void);
+t_cmd		*create_cmd(void);
+t_cmd		*add_cmd_to_cmd_list(t_cmd_list *cmd_list);
+t_cmd_redir	*add_cmd_redir(t_cmd *cmd, int type, char *file);
+void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 
-/* Minishell ft_utils */
+/* Util - Environment variables */
+t_env	*create_new_env(char *key, char *value);
+t_env	*add_env(t_env *env, char *key, char *value);
+char	*ft_getenv(t_state *state, char *key);
+
+/* Util - Minishell ft_utils */
 char	*ft_strndup(const char *s, size_t n);
 int		ft_strcmp(char const *s1, char const *s2);
 
@@ -147,9 +155,14 @@ int		ft_strcmp(char const *s1, char const *s2);
 void	*free_2d_array(char **array);
 void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
 void	free_state(t_state *state);
+void	free_token(t_token *token);
 void	free_token_list(t_token *token_list);
+void	free_cmd_node(t_cmd_list *cmd_list);
+void	*free_cmd_list(t_cmd_list *cmd_list);
+void	free_cmd_redir(t_cmd *cmd);
 
 /* Test - 삭제 필요 */
 void print_toklist(t_token *tok_list);
+void traverse_and_print(t_cmd_list *cmd_list);
 
 #endif
