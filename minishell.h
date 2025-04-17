@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 13:23:58 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 13:36:03 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,9 +160,5 @@ void	free_token_list(t_token *token_list);
 void	free_cmd_node(t_cmd_list *cmd_list);
 void	*free_cmd_list(t_cmd_list *cmd_list);
 void	free_cmd_redir(t_cmd *cmd);
-
-/* Test - 삭제 필요 */
-void print_toklist(t_token *tok_list);
-void traverse_and_print(t_cmd_list *cmd_list);
 
 #endif

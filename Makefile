@@ -3,9 +3,7 @@ CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g -I./
 LDFLAGS = -lreadline
 CC = cc
 
-# test.c = 파싱 테스트를 위한 소스 파일, 추후 제거 필요
 SRCS = main.c \
-		test.c \
 		src/free/free_utils.c \
 		src/free/free.c \
 		src/parse/delete_token.c \
