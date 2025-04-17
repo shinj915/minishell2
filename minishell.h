@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 13:36:03 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 18:17:27 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,26 +103,26 @@ typedef struct s_state
 }	t_state;
 
 /* Init minishell */
-t_state	*init_minishell(int *argc, char ***argv, char **envp);
-t_env	*get_env_list(char **envp);
-void	ft_sigint(int signo);
-void	print_banner(void);
-
-/* Parse - main */
-t_cmd_list	*parse(char *cmd, t_state *state);
-t_token		*tokenize(char *cmd, t_state *state);
-t_cmd_list	*tokens_to_cmd_list(t_token *token_list);
+t_state		*init_minishell(int *argc, char ***argv, char **envp);
+t_env		*get_env_list(char **envp);
+void		ft_sigint(int signo);
+void		print_banner(void);
 
 /* Parse - tokenize */
-void	tokenize_quotation(t_token *token_list, t_state *state);
-char	*handle_double_quoted_sequence(char *str, t_state *state);
-void	tokenize_env_var(t_token *token_list, t_state *state);
-void	tokenize_space(t_token *token_list);
-void	tokenize_pipe(t_token *token_list);
-void	tokenize_redirect(t_token *token_list);
-void	delete_empty_token(t_token **token_list);
-void	tokenize_chunk_to_argv(t_token *token_list);
-void	delete_space_token(t_token **token);
+void		tokenize_quotation(t_token *token_list, t_state *state);
+char		*handle_double_quoted_sequence(char *str, t_state *state);
+void		tokenize_env_var(t_token *token_list, t_state *state);
+void		tokenize_space(t_token *token_list);
+void		tokenize_pipe(t_token *token_list);
+void		tokenize_redirect(t_token *token_list);
+void		delete_empty_token(t_token **token_list);
+void		tokenize_chunk_to_argv(t_token *token_list);
+void		delete_space_token(t_token **token);
+
+/* Parse - main */
+t_token		*tokenize(char *cmd, t_state *state);
+t_cmd_list	*parse(char *cmd, t_state *state);
+t_cmd_list	*tokens_to_cmd_list(t_token *token_list);
 
 /* Parse - Error handling */
 void		check_syntax_error(t_token *token_list);
@@ -143,22 +143,22 @@ t_cmd_redir	*add_cmd_redir(t_cmd *cmd, int type, char *file);
 void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 
 /* Util - Environment variables */
-t_env	*create_new_env(char *key, char *value);
-t_env	*add_env(t_env *env, char *key, char *value);
-char	*ft_getenv(t_state *state, char *key);
+t_env		*create_new_env(char *key, char *value);
+t_env		*add_env(t_env *env, char *key, char *value);
+char		*ft_getenv(t_state *state, char *key);
 
 /* Util - Minishell ft_utils */
-char	*ft_strndup(const char *s, size_t n);
-int		ft_strcmp(char const *s1, char const *s2);
+char		*ft_strndup(const char *s, size_t n);
+int			ft_strcmp(char const *s1, char const *s2);
 
 /* Clean up - memory free functions */
-void	*free_2d_array(char **array);
-void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
-void	free_state(t_state *state);
-void	free_token(t_token *token);
-void	free_token_list(t_token *token_list);
-void	free_cmd_node(t_cmd_list *cmd_list);
-void	*free_cmd_list(t_cmd_list *cmd_list);
-void	free_cmd_redir(t_cmd *cmd);
+void		*free_2d_array(char **array);
+void		*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
+void		free_state(t_state *state);
+void		free_token(t_token *token);
+void		free_token_list(t_token *token_list);
+void		free_cmd_node(t_cmd_list *cmd_list);
+void		*free_cmd_list(t_cmd_list *cmd_list);
+void		free_cmd_redir(t_cmd *cmd);
 
 #endif

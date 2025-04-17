@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 12:37:41 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/17 18:10:40 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	g_exit_status;
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_state	*state;
+	t_state		*state;
 	t_cmd_list	*cmd_list;
 
 	state = init_minishell(&argc, &argv, envp);
