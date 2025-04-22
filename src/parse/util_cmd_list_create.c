@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util_cmd_list_create.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:44:21 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 13:26:21 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/22 17:29:25 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ t_cmd	*create_cmd(void)
 	argv[0] = NULL;
 	result->argv = argv;
 	result->exec_file_name = NULL;
-	result->fd[0] = -1;
-	result->fd[1] = -1;
-	result->fd_in = 0;
-	result->fd_out = 0;
+	result->pipe_fd[0] = -1;
+	result->pipe_fd[1] = -1;
+	result->redir_fd_in = 0;
+	result->redir_fd_out = 0;
 	result->cmd_type = 0;
 	result->redir_list = NULL;
 	result->prev = NULL;

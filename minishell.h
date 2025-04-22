@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 18:27:40 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/22 17:28:34 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ typedef struct s_cmd_redir
 typedef struct s_cmd
 {
 	int				cmd_type;
-	int				fd[2];
-	int				fd_in;
-	int				fd_out;
+	int				pipe_fd[2];
+	int				redir_fd_in;
+	int				redir_fd_out;
 	char			*exec_file_name;
 	char			**argv;
 	t_cmd_redir		*redir_list;

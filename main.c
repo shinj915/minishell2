@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/22 16:25:46 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/22 16:53:01 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_exit_status;
 
-void	prompt_execute(t_cmd_list *cmd_list, t_state *state, int *result)
+void	execute_command(t_cmd_list *cmd_list, t_state *state, int *result)
 {
 	state->cmd_parse = ft_strdup(state->cmd_line);
 	cmd_list = parse(state->cmd_line, state);
@@ -35,7 +35,7 @@ void	prompt(t_cmd_list *cmd_list, t_state *state)
 		if (state->cmd_line)
 		{
 			if (state->cmd_line[0] != '\0')
-				prompt_execute(cmd_list, state, &result);
+				execute_command(cmd_list, state, &result);
 		}
 		else
 		{
