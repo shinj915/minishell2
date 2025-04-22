@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/19 15:52:22 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/22 16:25:46 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,28 @@
 
 int	g_exit_status;
 
+void	prompt_execute(t_cmd_list *cmd_list, t_state *state, int *result)
+{
+	state->cmd_parse = ft_strdup(state->cmd_line);
+	cmd_list = parse(state->cmd_line, state);
+	free_cmd_list(cmd_list);
+	free(state->cmd_parse);
+	add_history(state->cmd_line);
+	*result = 1;
+}
+
 void	prompt(t_cmd_list *cmd_list, t_state *state)
 {
+	int	result;
+
+	result = 0;
 	while (1)
 	{
 		state->cmd_line = readline("minishell$ ");
 		if (state->cmd_line)
 		{
 			if (state->cmd_line[0] != '\0')
-			{
-				state->cmd_parse = ft_strdup(state->cmd_line);
-				cmd_list = parse(state->cmd_line, state);
-				free_cmd_list(cmd_list);
-				free(state->cmd_parse);
-				add_history(state->cmd_line);
-			}
+				prompt_execute(cmd_list, state, &result);
 		}
 		else
 		{
