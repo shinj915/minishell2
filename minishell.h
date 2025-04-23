@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/23 15:14:51 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/23 15:39:15 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,9 @@ t_cmd		*create_cmd(void);
 t_cmd		*add_cmd_to_cmd_list(t_cmd_list *cmd_list);
 t_cmd_redir	*add_cmd_redir(t_cmd *cmd, int type, char *file);
 void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
+
+/* Exec */
+void		prompt(t_cmd_list *cmd_list, t_state *state);
 
 /* Util - Environment variables */
 t_env		*create_new_env(char *key, char *value);

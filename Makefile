@@ -5,6 +5,7 @@ CC = cc
 
 SRCS = main.c \
 		test.c \
+		src/exec/exec_main.c \
 		src/free/free_utils.c \
 		src/free/free.c \
 		src/parse/delete_token.c \
