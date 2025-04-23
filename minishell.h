@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/22 17:28:34 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/23 15:14:51 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define TYPE_TOKEN_IO_LL 102
 # define TYPE_TOKEN_IO_R 103
 # define TYPE_TOKEN_IO_RR 104
-# define TYPE_AFTER_HD 105
+# define TYPE_AFTER_HEREDOC 105
 
 extern int	g_exit_status;
 
@@ -159,5 +159,12 @@ void		free_token_list(t_token *token_list);
 void		free_cmd_node(t_cmd_list *cmd_list);
 void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
+
+
+void print_toklist(t_token *tok_list);
+void print_toklist_ori(t_token *tok_list);
+void print_redir_list(t_cmd_redir *redir_list);
+void print_cmd(t_cmd *cmd);
+void traverse_and_print(t_cmd_list *cmd_list);
 
 #endif
