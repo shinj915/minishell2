@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_quotation_util.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 19:56:39 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/14 00:08:05 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:11:42 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

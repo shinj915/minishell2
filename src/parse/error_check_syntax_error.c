@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_check_syntax_error.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.co.k    +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:58:25 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 13:01:08 by jishin           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:11:34 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
