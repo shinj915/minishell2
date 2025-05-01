@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:44:21 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/23 16:12:00 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/01 13:40:22 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_cmd	*create_cmd(void)
 	result->pipe_fd[0] = -1;
 	result->pipe_fd[1] = -1;
 	result->redir_fd_in = 0;
-	result->redir_fd_out = 0;
+	result->redir_fd_out = 1;
 	result->cmd_type = 0;
 	result->redir_list = NULL;
 	result->prev = NULL;
