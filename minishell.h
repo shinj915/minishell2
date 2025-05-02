@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/23 15:39:15 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/02 17:33:27 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void		prompt(t_cmd_list *cmd_list, t_state *state);
 t_env		*create_new_env(char *key, char *value);
 t_env		*add_env(t_env *env, char *key, char *value);
 char		*ft_getenv(t_state *state, char *key);
+char		**get_envp(t_env *env_list);
 
 /* Util - Minishell ft_utils */
 char		*ft_strndup(const char *s, size_t n);

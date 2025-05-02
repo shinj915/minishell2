@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:13:21 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/23 16:12:11 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/02 17:22:31 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,33 @@ char	*ft_getenv(t_state *state, char *key)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+char	**get_envp(t_env *env_list)
+{
+	int		i;
+	char	**envp;
+	t_env	*temp_env;
+	char	*temp_str;
+
+	i = 0;
+	temp_env = env_list;
+	while (temp_env)
+	{
+		i++;
+		temp_env = temp_env->next;
+	}
+	envp = (char **)malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	temp_env = env_list;
+	while (temp_env)
+	{
+		temp_str = ft_strjoin(temp_env->key, "=");
+		envp[i] = ft_strjoin(temp_str, temp_env->value);
+		temp_env = temp_env->next;
+		free(temp_str);
+		i++;
+	}
+	envp[i] = NULL;
+	return (envp);
 }
