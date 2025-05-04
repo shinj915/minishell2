@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/04 16:37:08 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/04 18:37:56 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,15 @@ int	ft_execute(t_cmd_list *cmd_list, t_state *state)
 	{
 		signal(SIGINT, ft_sigint);
 		signal(SIGQUIT, SIG_IGN);
+		path = cmd_list->head->exec_file_name;
 		if (ft_strchr(cmd_list->head->exec_file_name, '/'))
 		{
-			if (access(cmd_list->head->exec_file_name, X_OK) == 0)
-				path = ft_strdup(cmd_list->head->exec_file_name);
+			if (access(cmd_list->head->exec_file_name, X_OK))
+			{
+				perror("minishell");
+				exit(126);
+			}
+				
 		}
 		else
 			path = get_exec_path(cmd_list->head, state);
