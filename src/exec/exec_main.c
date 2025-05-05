@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/05 15:03:59 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/05 15:28:51 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	execute_external_cmd(t_cmd *cmd, t_state *state)
 			if (stat(cmd->exec_file_name, &st) == 0 && S_ISDIR(st.st_mode))
 				print_error_external(cmd, ERROR_ISDIR);
 			if (access(cmd->exec_file_name, X_OK))
-				print_error_external(cmd, ERROR_NORMAL);
+				print_error_external(cmd, ERROR_SYSTEM);
 		}
 		else
 			path = get_exec_path(cmd, state);

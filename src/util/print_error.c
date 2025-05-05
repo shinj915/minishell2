@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:34:17 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/05 15:05:10 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/05 15:29:44 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	print_error_external(t_cmd *cmd, int err)
 		ft_putendl_fd(": command not found", 2);
 		exit(127);
 	}
-	if (err == ERROR_NORMAL)
+	if (err == ERROR_SYSTEM)
 	{
-		perror(": ");
+		perror("");
 		if (errno == ENOENT)
 			exit(127);
 		if (errno == EACCES)
