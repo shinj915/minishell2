@@ -1,7 +1,7 @@
 NAME = minishell
 CFLAGS = -Wall -Werror -Wextra -g -I./ #-fsanitize=address
 LDFLAGS = -lreadline
-CC = cc
+CC = gcc
 
 SRCS = main.c \
 		src/free/free_utils.c \
@@ -26,7 +26,9 @@ SRCS = main.c \
 		src/parse/util_token.c \
 		src/util/env.c \
 		src/util/ft_utils.c \
-		src/util/init.c
+		src/util/init.c \
+		src/builtin/builtin_main.c \
+		src/builtin/builtin_execute.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
