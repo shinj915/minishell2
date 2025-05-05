@@ -1,16 +1,5 @@
 #include "minishell.h"
 
-// utils
-int find_argc(char **argv)
-{
-	int	argc;
-
-	argc = 0;
-	while (argv[argc])
-		argc++;
-	return (argc);
-}
-
 int builtin_execute_echo(t_cmd *cmd, t_state *state)
 {
 	(void)state;
@@ -82,19 +71,6 @@ int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 	return (0);
 }
 
-// utils
-t_env	*find_tail_env(t_env *env_list)
-{
-	t_env	*env;
-
-	if (env_list == NULL)
-		return (NULL);
-	env = env_list;
-	while (env->next != NULL)
-		env = env->next;
-	return (env);
-}
-
 int builtin_execute_export(t_cmd *cmd, t_state *state)
 {
 	int		i;
@@ -117,18 +93,6 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 		free(temp);
 	}
 	return (0);
-}
-
-// utils
-void	delete_env_node(t_env **env_list, t_env *pre, t_env *curr)
-{
-	if (pre == NULL)
-		*env_list = curr->next;
-	else
-		pre->next = curr->next;
-	free(curr->key);
-	free(curr->value);
-	free(curr);
 }
 
 // utils?
@@ -166,20 +130,6 @@ int builtin_execute_unset(t_cmd *cmd, t_state *state)
 		i++;
 	}
 	return (0);
-}
-
-// utils
-char	*make_envchar(t_env *env)
-{
-	char	*temp;
-	char	*envchar;
-
-	envchar = ft_strdup(env->key);
-	temp = ft_strjoin(envchar, "=");
-	free(envchar);
-	envchar = ft_strjoin(temp, env->value);
-	free(temp);
-	return (envchar);
 }
 
 int builtin_execute_env(t_cmd *cmd, t_state *state)
