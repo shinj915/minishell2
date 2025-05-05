@@ -28,7 +28,8 @@ SRCS = main.c \
 		src/parse/util_token.c \
 		src/util/env.c \
 		src/util/ft_utils.c \
-		src/util/init.c
+		src/util/init.c \
+		src/util/print_error.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a

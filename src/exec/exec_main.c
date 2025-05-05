@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/04 18:37:56 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/05 15:03:59 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ char	*get_exec_path(t_cmd *cmd, t_state *state)
 	return (NULL);
 }
 
-int	ft_execute(t_cmd_list *cmd_list, t_state *state)
+int	execute_external_cmd(t_cmd *cmd, t_state *state)
 {
-	pid_t	pid;
-	int		status;
-	char	*path;
-	char	**envp;
+	pid_t		pid;
+	int			status;
+	char		*path;
+	char		**envp;
+	struct stat	st;
 
 	path = NULL;
 	envp = get_envp(state->env_list);
@@ -59,36 +60,46 @@ int	ft_execute(t_cmd_list *cmd_list, t_state *state)
 	{
 		signal(SIGINT, ft_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		path = cmd_list->head->exec_file_name;
-		if (ft_strchr(cmd_list->head->exec_file_name, '/'))
+		path = cmd->exec_file_name;
+		if (ft_strchr(cmd->exec_file_name, '/'))
 		{
-			if (access(cmd_list->head->exec_file_name, X_OK))
-			{
-				perror("minishell");
-				exit(126);
-			}
-				
+			if (stat(cmd->exec_file_name, &st) == 0 && S_ISDIR(st.st_mode))
+				print_error_external(cmd, ERROR_ISDIR);
+			if (access(cmd->exec_file_name, X_OK))
+				print_error_external(cmd, ERROR_NORMAL);
 		}
 		else
-			path = get_exec_path(cmd_list->head, state);
+			path = get_exec_path(cmd, state);
 		if (!path)
-		{
-			ft_putendl_fd("minishell: command not found", 2);
-			free_2d_array(envp);
-			return (127);
-		}
-		execve(path, cmd_list->head->argv, envp);
-		perror("execve failed");
+			print_error_external(cmd, ERROR_CMD_NOT_FOUND);
+		execve(path, cmd->argv, envp);
+		perror("minishell: execve failed");
 		exit(127);
 	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		g_exit_status = WEXITSTATUS(status);
 		signal(SIGINT, ft_sigint);
 	}
 	free_2d_array(envp);
 	return (WEXITSTATUS(status));
+}
+
+int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
+{
+	t_cmd	*cmd;
+	int		result;
+
+	cmd = cmd_list->head;
+	result = 0;
+	while (cmd != NULL)
+	{
+		result = execute_external_cmd(cmd, state);
+		cmd = cmd->next;
+	}
+	return (result);
 }
 
 int	is_full_of_space(char *str)
@@ -105,24 +116,18 @@ int	is_full_of_space(char *str)
 	return (1);
 }
 
-void	execute_command(t_cmd_list *cmd_list, t_state *state, int *result)
+void	execute_prompt(t_cmd_list *cmd_list, t_state *state, int *result)
 {
 	state->cmd_parse = ft_strdup(state->cmd_line);
 	cmd_list = parse(state->cmd_line, state);
 	if (cmd_list && !is_full_of_space(state->cmd_parse))
 	{
 		if (cmd_list->cmd_status == TYPE_SYNTAX_ERROR)
-		{
-			ft_putendl_fd("minishell: syntax error near unexpected token\n", 2);
-			g_exit_status = 2;
-		}
-		else if (cmd_list->cmd_status == TYPE_AMBIGOUS_ERROR)
-		{
-			ft_putendl_fd("minishell: ambiguous redirect\n", 2);
-			g_exit_status = 1;
-		}
+			print_error_syntax(cmd_list->head, TYPE_SYNTAX_ERROR);
+		else if (cmd_list->cmd_status == TYPE_AMBIGUOUS_ERROR)
+			print_error_syntax(cmd_list->head, TYPE_AMBIGUOUS_ERROR);
 		else
-			*result = ft_execute(cmd_list, state);
+			*result = execute_cmd(cmd_list, state);
 	}
 	free_cmd_list(cmd_list);
 	free(state->cmd_parse);
@@ -140,7 +145,7 @@ void	prompt(t_cmd_list *cmd_list, t_state *state)
 		if (state->cmd_line)
 		{
 			if (state->cmd_line[0] != '\0')
-				execute_command(cmd_list, state, &result);
+				execute_prompt(cmd_list, state, &result);
 		}
 		else
 		{

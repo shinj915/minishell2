@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/02 17:33:27 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/05 14:27:33 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define TYPE_INITIAL_STATUS 0
 # define TYPE_ARGV_NULL 1
 # define TYPE_SYNTAX_ERROR 99
-# define TYPE_AMBIGOUS_ERROR 999
+# define TYPE_AMBIGUOUS_ERROR 999
 # define TYPE_TOKEN_CHUNK 11
 # define TYPE_TOKEN_ARGV 22
 # define TYPE_TOKEN_SPACE 33
@@ -48,7 +48,9 @@
 # define TYPE_TOKEN_IO_R 103
 # define TYPE_TOKEN_IO_RR 104
 # define TYPE_AFTER_HEREDOC 105
-
+# define ERROR_ISDIR 0
+# define ERROR_CMD_NOT_FOUND 1
+# define ERROR_NORMAL 2
 extern int	g_exit_status;
 
 typedef struct s_token
@@ -153,6 +155,10 @@ char		**get_envp(t_env *env_list);
 /* Util - Minishell ft_utils */
 char		*ft_strndup(const char *s, size_t n);
 int			ft_strcmp(char const *s1, char const *s2);
+
+/* Util - Print error message*/
+void		print_error_external(t_cmd *cmd, int err);
+void		print_error_syntax(t_cmd *cmd, int err);
 
 /* Clean up - memory free functions */
 void		*free_2d_array(char **array);

@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:58:25 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/23 16:11:34 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/05 14:23:34 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	set_ambiguous_error(t_token *token_list, t_token *ptr)
 {
 	char	*str;
 
-	token_list->token_type = TYPE_AMBIGOUS_ERROR;
+	token_list->token_type = TYPE_AMBIGUOUS_ERROR;
 	str = ft_strdup(ptr->next->origin_str);
 	if (str == NULL)
 		return ;
