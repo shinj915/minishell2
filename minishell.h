@@ -161,13 +161,19 @@ void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
 
 /* Builtin */
-void	is_builtin_command(t_cmd_list *cmd_list, t_state *state);
-int 	builtin_execute_echo(t_cmd *cmd, t_state *state);
-int 	builtin_execute_cd(t_cmd *cmd, t_state *state);
-int		builtin_execute_pwd(t_cmd *cmd, t_state *state);
-int		builtin_execute_export(t_cmd *cmd, t_state *state);
-int		builtin_execute_unset(t_cmd *cmd, t_state *state);
-int 	builtin_execute_env(t_cmd *cmd, t_state *state);
-int		builtin_execute_exit(t_cmd *cmd, t_state *state);
+void		is_builtin_command(t_cmd_list *cmd_list, t_state *state);
+int 		builtin_execute_echo(t_cmd *cmd, t_state *state);
+int 		builtin_execute_cd(t_cmd *cmd, t_state *state);
+int			builtin_execute_pwd(t_cmd *cmd, t_state *state);
+int			builtin_execute_export(t_cmd *cmd, t_state *state);
+int			builtin_execute_unset(t_cmd *cmd, t_state *state);
+int 		builtin_execute_env(t_cmd *cmd, t_state *state);
+int			builtin_execute_exit(t_cmd *cmd, t_state *state);
+
+/* Builtin - utils */
+int			find_argc(char **argv);
+t_env		*find_tail_env(t_env *env_list);
+void		delete_env_node(t_env **env_list, t_env *pre, t_env *curr);
+char		*make_envchar(t_env *env);
 
 #endif
