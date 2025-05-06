@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_execute.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eunam <eunam@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/06 13:27:46 by eunam             #+#    #+#             */
+/*   Updated: 2025/05/06 13:32:02 by eunam            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int builtin_execute_echo(t_cmd *cmd, t_state *state)
 {
-	(void)state;
 	int	i;
 	int	n_flag;
 
+	(void)state;
 	i = 1;
 	n_flag = 0;
 	if (!cmd->argv[1])
@@ -54,20 +66,20 @@ int builtin_execute_cd(t_cmd *cmd, t_state *state)
 int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 {
 	int		argc;
-    char    *cwd;
+	char	*cwd;
 
 	(void)state;
 	argc = find_argc(cmd->argv);
 	if (argc != 1)
 		return (1);
-    printf("in builtin_excute_pwd\n");
-    cwd = getcwd(NULL, 0);
-    if (cwd == NULL)
-    {
-        // error
-    }
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+	{
+		perror("getcwd failed");
+		ft_putendl_fd("getcwd: cannot access current directory", cmd->fd_out);
+	}
 	ft_putendl_fd(cwd, cmd->fd_out);
-    free(cwd);
+	free(cwd);
 	return (0);
 }
 
@@ -85,6 +97,8 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 	tail = find_tail_env(state->env_list);
 	while (i < argc)
 	{
+		// if (state in argv[i])
+		// if (argv[i] can not find '=')
 		temp = ft_split(cmd->argv[i], '=');
 		add_env(tail, temp[0], temp[1]);
 		i++;
@@ -96,7 +110,7 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 }
 
 // utils?
-void	unset_env(t_env **env_list, char *input)
+static void	unset_env(t_env **env_list, char *input)
 {
 	t_env	*pre;
 	t_env	*curr;
@@ -121,8 +135,8 @@ int builtin_execute_unset(t_cmd *cmd, t_state *state)
 	argc = find_argc(cmd->argv);
 	if (argc < 2)
 	{
-        ft_putendl_fd("unset: not enough arguments", cmd->fd_out);
-        return (1);
+		ft_putendl_fd("unset: not enough arguments", cmd->fd_out);
+		return (1);
     }
 	while (i < argc)
 	{
@@ -163,13 +177,13 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 	if (argc == 2)
 	{
 		printf("argc = 2\n");
-		// if (is_digit(cmd->argv[1])) // 범위도 확인
-		// 	exit(ft_atoi(cmd->argv[1]));
-		// else
-		// {
-		// 	// 오류 메시지 출력력
-		// 	exit(225);
-		// }
+		if (!is_digit(cmd->argv[1]))
+			exit(ft_atoi(cmd->argv[1]));
+		else
+		{
+			// 오류 메시지 출력?
+			exit(225);
+		}
 	}
 	else if (argc > 2)
 	{

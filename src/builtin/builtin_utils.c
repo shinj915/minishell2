@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eunam <eunam@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/06 13:27:42 by eunam             #+#    #+#             */
+/*   Updated: 2025/05/06 13:27:42 by eunam            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int find_argc(char **argv)
@@ -38,10 +50,30 @@ char	*make_envchar(t_env *env)
 	char	*temp;
 	char	*envchar;
 
+	if (!env->key || !env->value)
+		return (ft_strdup(""));
 	envchar = ft_strdup(env->key);
 	temp = ft_strjoin(envchar, "=");
 	free(envchar);
 	envchar = ft_strjoin(temp, env->value);
 	free(temp);
 	return (envchar);
+}
+
+int	is_exitnumber(char *input)
+{
+	int			i;
+	long long	number;
+
+	i = 0;
+	while (input[i])
+	{
+		if (!ft_isdigit(input[i]))
+			return (0);
+		i++;
+	}
+	number = ft_atoll(input);
+	if (number < INT_MIN || number > INT_MAX)
+		return (0);
+	return (1);
 }
