@@ -6,7 +6,7 @@
 /*   By: eunam <eunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/06 13:32:02 by eunam            ###   ########.fr       */
+/*   Updated: 2025/05/06 21:18:21 by eunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int builtin_execute_echo(t_cmd *cmd, t_state *state)
 	n_flag = 0;
 	if (!cmd->argv[1])
 		return (1);
-	if (ft_strcmp(cmd->argv[1], "-n") == 0)
+	if (ft_strcmp(cmd->argv[1], "-n") == 0) // -n 옵션 중복 처리리
 	{
 		i++;
 		n_flag = 1;
@@ -60,6 +60,7 @@ int builtin_execute_cd(t_cmd *cmd, t_state *state)
 		ft_putendl_fd(": No such file or directory", cmd->fd_out);
 		return (1);
 	}
+	// cd 후 환경변수 업데이트트
 	return (0);
 }
 
@@ -70,7 +71,7 @@ int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 
 	(void)state;
 	argc = find_argc(cmd->argv);
-	if (argc != 1)
+	if (argc != 1) // 뒷 인자 무시시
 		return (1);
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
@@ -87,7 +88,6 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 {
 	int		i;
 	int		argc;
-	char	**temp;
 	t_env	*tail;
 
 	i = 1;
@@ -97,14 +97,12 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 	tail = find_tail_env(state->env_list);
 	while (i < argc)
 	{
-		// if (state in argv[i])
-		// if (argv[i] can not find '=')
-		temp = ft_split(cmd->argv[i], '=');
-		add_env(tail, temp[0], temp[1]);
+		if (ft_strchr(cmd->argv[i], '='))
+		{
+			if (!ft_find_env(cmd->argv[i], state->env_list))
+				tail = for_export_funtion(tail, cmd->argv[i]);
+		}
 		i++;
-		free(temp[0]);
-		free(temp[1]);
-		free(temp);
 	}
 	return (0);
 }
@@ -177,9 +175,9 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 	if (argc == 2)
 	{
 		printf("argc = 2\n");
-		if (!is_digit(cmd->argv[1]))
+		if (!is_exitdigit(cmd->argv[1]))
 			exit(ft_atoi(cmd->argv[1]));
-		else
+		else // 범위를 넘은 숫자 error 처리
 		{
 			// 오류 메시지 출력?
 			exit(225);

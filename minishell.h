@@ -32,6 +32,8 @@
 # include <readline/history.h>
 # include "libft/libft.h"
 
+# define INT_MIN -2147483648
+# define INT_MAX 2147483647
 # define TYPE_FAIL 1
 # define TYPE_SUCCESS 0
 # define TYPE_INITIAL_STATUS 0
@@ -149,6 +151,7 @@ char		*ft_getenv(t_state *state, char *key);
 /* Util - Minishell ft_utils */
 char		*ft_strndup(const char *s, size_t n);
 int			ft_strcmp(char const *s1, char const *s2);
+long long	ft_atoll(const char *str);
 
 /* Clean up - memory free functions */
 void		*free_2d_array(char **array);
@@ -175,5 +178,8 @@ int			find_argc(char **argv);
 t_env		*find_tail_env(t_env *env_list);
 void		delete_env_node(t_env **env_list, t_env *pre, t_env *curr);
 char		*make_envchar(t_env *env);
+int			is_exitdigit(char *input);
+t_env		*for_export_funtion(t_env *tail, char *env_str);
+t_env		*ft_find_env(char *env_str, t_env *env_list);
 
 #endif

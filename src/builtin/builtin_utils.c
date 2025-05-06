@@ -60,7 +60,7 @@ char	*make_envchar(t_env *env)
 	return (envchar);
 }
 
-int	is_exitnumber(char *input)
+int	is_exitdigit(char *input)
 {
 	int			i;
 	long long	number;
@@ -76,4 +76,38 @@ int	is_exitnumber(char *input)
 	if (number < INT_MIN || number > INT_MAX)
 		return (0);
 	return (1);
+}
+
+t_env	*for_export_funtion(t_env *tail, char *env_str)
+{
+	char	*key;
+	char	*value;
+
+	if (!env_str)
+		return (NULL);
+	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
+	value = ft_strdup(ft_strchr(env_str, '=') + 1);
+	// if (is valid key)
+	tail = add_env(tail, key, value);
+	return (tail);
+}
+
+t_env	*ft_find_env(char *env_str, t_env *env_list)
+{
+	t_env	*curr;
+	char	*key;
+	char	*value;
+
+	if (!env_str)
+		return (NULL);
+	curr = env_list;
+	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
+	value = ft_strdup(ft_strchr(env_str, '=') + 1);
+	while (curr && ft_strcmp(curr->key, key))
+		curr = curr->next;
+	if (curr)
+		curr->value = value;
+	// free(key);
+	// free(value);
+	return (curr);
 }
