@@ -164,7 +164,7 @@ void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
 
 /* Builtin */
-void		is_builtin_command(t_cmd_list *cmd_list, t_state *state);
+void		is_builtin_command(t_cmd *cmd, t_state *state);
 int 		builtin_execute_echo(t_cmd *cmd, t_state *state);
 int 		builtin_execute_cd(t_cmd *cmd, t_state *state);
 int			builtin_execute_pwd(t_cmd *cmd, t_state *state);
