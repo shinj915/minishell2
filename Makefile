@@ -27,8 +27,11 @@ SRCS = main.c \
 		src/util/env.c \
 		src/util/ft_utils.c \
 		src/util/init.c \
+		src/util/ft_atoll.c \
 		src/builtin/builtin_main.c \
-		src/builtin/builtin_execute.c
+		src/builtin/builtin_execute.c \
+		src/builtin/builtin_execute_echo.c \
+		src/builtin/builtin_utils.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a

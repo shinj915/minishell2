@@ -6,38 +6,11 @@
 /*   By: eunam <eunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/06 21:18:21 by eunam            ###   ########.fr       */
+/*   Updated: 2025/05/07 14:07:30 by eunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int builtin_execute_echo(t_cmd *cmd, t_state *state)
-{
-	int	i;
-	int	n_flag;
-
-	(void)state;
-	i = 1;
-	n_flag = 0;
-	if (!cmd->argv[1])
-		return (1);
-	if (ft_strcmp(cmd->argv[1], "-n") == 0) // -n 옵션 중복 처리리
-	{
-		i++;
-		n_flag = 1;
-	}
-	while(cmd->argv[i])
-	{
-		ft_putstr_fd(cmd->argv[i], cmd->fd_out);
-		if (cmd->argv[i + 1])
-			ft_putstr_fd(" ", cmd->fd_out);
-		i++;
-	}
-	if (!n_flag)
-		ft_putstr_fd("\n", cmd->fd_out);
-	return (0);
-}
 
 int builtin_execute_cd(t_cmd *cmd, t_state *state)
 {

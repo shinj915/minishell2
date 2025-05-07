@@ -4,17 +4,17 @@
 
 ### 1. echo
 
-* [ ] echo
+* [X] echo
 * [X] echo aaa
 * [X] echo bbb
 * [X] echo a b c d e
 * [X] echo $
 * [X] echo -n
-* [ ] echo -nnnnnn -nnnnnn
-* [ ] echo -nnn -nn -na abc
+* [X] echo -nnnnnn -nnnnnn
+* [X] echo -nnn -nn -na abc
 * [X] echo -n aaa
-* [ ] echo -nnnnnn -nn b
-* [ ] echo $?
+* [X] echo -nnnnnn -nn b
+* [X] echo $?
 
   *(히어독 사용 시)5. echo -n 123 >> a (printf() 사용시 화면에 출력되고, 파일에 안들어감. write() 사용시 정상 작동)*
 
