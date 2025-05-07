@@ -78,6 +78,25 @@ int	is_exitdigit(char *input)
 	return (1);
 }
 
+// static int is_valid_key(char *key)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (ft_isalpha(key[i]) || key[i] == '_')
+// 	{
+// 		if (!ft_is특수문자(key + 1))
+// 		{
+
+// 		}
+// 		else
+// 			return (1);
+// 	}
+// 	else
+// 		return (1);
+// 	return (0);
+// }
+
 t_env	*for_export_funtion(t_env *tail, char *env_str)
 {
 	char	*key;
@@ -110,4 +129,18 @@ t_env	*ft_find_env(char *env_str, t_env *env_list)
 	// free(key);
 	// free(value);
 	return (curr);
+}
+
+void	ft_update_pwdenv(t_state *state)
+{
+	char	*cwd;
+	char	*pwd_env_char;
+
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		perror("getcwd failed");
+	pwd_env_char = ft_strjoin("PWD=", cwd);
+	ft_find_env(pwd_env_char, state->env_list);
+	free(pwd_env_char);
+	free(cwd);
 }

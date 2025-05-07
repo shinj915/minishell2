@@ -6,7 +6,7 @@
 /*   By: eunam <eunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/07 14:07:30 by eunam            ###   ########.fr       */
+/*   Updated: 2025/05/07 15:04:29 by eunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int builtin_execute_cd(t_cmd *cmd, t_state *state)
 {
 	int	argc;
 
-	(void)state;
 	argc = find_argc(cmd->argv);
 	if (argc != 2)
 	{
@@ -33,26 +32,22 @@ int builtin_execute_cd(t_cmd *cmd, t_state *state)
 		ft_putendl_fd(": No such file or directory", cmd->fd_out);
 		return (1);
 	}
-	// cd 후 환경변수 업데이트트
+	ft_update_pwdenv(state);
 	return (0);
 }
 
 int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 {
-	int		argc;
 	char	*cwd;
 
-	(void)state;
-	argc = find_argc(cmd->argv);
-	if (argc != 1) // 뒷 인자 무시시
-		return (1);
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 	{
 		perror("getcwd failed");
-		ft_putendl_fd("getcwd: cannot access current directory", cmd->fd_out);
+		ft_putendl_fd("getcwd: cannot access current directory", 2);
 	}
 	ft_putendl_fd(cwd, cmd->fd_out);
+	ft_update_pwdenv(state);
 	free(cwd);
 	return (0);
 }

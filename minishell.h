@@ -181,5 +181,6 @@ char		*make_envchar(t_env *env);
 int			is_exitdigit(char *input);
 t_env		*for_export_funtion(t_env *tail, char *env_str);
 t_env		*ft_find_env(char *env_str, t_env *env_list);
+void		ft_update_pwdenv(t_state *state);
 
 #endif
