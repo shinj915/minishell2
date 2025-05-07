@@ -70,7 +70,7 @@
   * [X] 정상적인 환경변수만 삽입하고
   * [ ] 그 외에는 에러 메시지를 출력함
 * [X] export e e (에러 메시지를 출력하진 않지만 아무 동작도 하지 않음)
-* [ ] export f 후 export f
+* [X] export f 후 export f
 * [ ] ~~export z=a 후 export z+=b (z의 값이 ab가 됨)~~
   -> mandatory 구현사항 아닌 듯 합니다...
   -> +는 허용되는 key 값이 아니므로 valid key에서 걸러저야 할 것 같습니다.
@@ -81,6 +81,8 @@
 ### 5. unset
 
 * [ ] unset -> 아무 동작 하지 않음
+
+  **-> 현재 `unset: not enough arguments` error message 뜨는 중.**
 * [X] unset NOTEXIST (없는 환경변수를 unset하려 할 때) -> 아무 동작 하지 않음
 * [ ] unset PATH(external 명령어는 실행 안되고, 빌트인은 실행 됨)
 
@@ -88,21 +90,27 @@
 * [ ] unset _ 이후
 
   1) env 해도 env 출력은 변경 X
-     * **_ 없어짐.**
+     * **현재 _ 없어짐.**
   2) unset _ 해도 명령어 실행과 동시에 _가 다시 설정되어 무의미
 * [ ] export a b c 이후 unset a _ c d e
-* [ ] export a -> unset a -> export a -> export a
+
+  **-> 현재 _ 함께 없어짐, 이외 문제 없음!**
+* [X] export a -> unset a -> export a -> export a
 * [ ] 일반적인 No such file or directory 는 echo \$?가 127 but cd에서의 No such file or directory은 echo $?가 1
 
 ### 6. cd
 
 * [ ] cd 사용하면서 프롬프트에 표시된 현재 디렉토리 항목이 변경됨을 보임
 * [ ] echo \$OLDPWD \$PWD 로 환경변수 값 변경 수시로 확인
-* [ ] cd a b (2개 이상의 인자가 주어질 때)
+  **-> $PWD 출력됨 but 현재 위치와 동일하지 않음.**
+  **-> $PWD 갱신 필요성!!**
+  **-> $OLDPWD 출력 안 됨!!**
+* [X] cd a b (2개 이상의 인자가 주어질 때)
 * [ ] cd NOTEXIST (없는 디렉토리로 이동하려 할 때)
+  **-> error message 출력 필요**
 
   ***(아래 사항들은 mandatory에서 요구하지 않은 사항이라 생각해서 따로 빼둡니다..)***
-  5. cd, cd -, cd ~ 설명
+  ~~5. cd, cd -, cd ~ 설명
   6. HOME 값으로 이동하면 프롬프트 표시 경로가 ~로 바뀜
   7. HOME 경로에서 특정 디렉토리(mkdir a 후 cd a 등)로 이동했을 시, ~/a 등으로 표시됨을 보임
   8. HOME 값 바꾼 뒤 그 경로로 들어가서 그 경로에서 프롬프트 표시 경로가 ~로 뜨는 것을 보임
@@ -115,21 +123,21 @@
   14. PWD, OLDPWD는 unset 하더라도, 그 바로 다음 디렉토리 이동시 환경변수가 아닌 일반 쉘 변수로 생성됨
   (그러나 쉘 변수 구현은 pdf 구현 사항이 아니므로 미구현)
   15. 파싱)
-  ~는 따옴표로 둘러쌓이지 않았고 토큰 첫 글자가 ~이며, 바로 다음글자로 따옴표가 오지 않고, 다음 글자가 '/' 이거나 공백인 경우만 치환됨. (~~, ~'', ''~ 같은 경우는 치환 X)
+  ~는 따옴표로 둘러쌓이지 않았고 토큰 첫 글자가 ~이며, 바로 다음글자로 따옴표가 오지 않고, 다음 글자가 '/' 이거나 공백인 경우만 치환됨. (~~, '', '' 같은 경우는 치환 X)
   ~는 cd에서 치환되는것이 아니라 파싱 단계에서 치환됨
   HOME이 존재하고, value가 NULL이 아닐 경우에만 ~가 HOME 환경변수 값으로 치환되고,
   그 외에는 getent passwd uid에 있는 homedir로 이동
   단, heredoc(<<)의 limiter에 ~가 오는 경우는 치환 안됨
-  16. 심볼릭 링크로 이동 후 cd ..
+  16. 심볼릭 링크로 이동 후 cd ..~~
 
-  1) cd goinfree -> cd ..
-  2) / 에서 cd bin (/usr/bin 심볼릭 링크) -> cd .. 했을 때, /usr로 이동하지 않고, /로 이동.
-     PWD 값은 cd bin 이후에 /usr/bin이 아닌 /bin이 됨. cd .. 이후에는 /usr이 아닌 /가 됨.
-  3) 정제되지 않은 디렉토리 문자열(////bin////../bin/usr 등)을 전달한 chdir() 실행 이후의 getcwd() 결과를       PWD에 넣는 것이 아니라, 디렉토리 문자열을 정제한 이후에 chdir()에 전달하고, chdir()이 성공하면 이 정제   된 디렉토리 문자열을 PWD에 넣는것이 이 때문. 또한 PWD에 저장함과 동시에 별도의 멤버 변수에도 따로     저장(pwd 명령어에 사용).
+  1) ~~cd goinfree -> cd ..~~
+  2) ~~/ 에서 cd bin (/usr/bin 심볼릭 링크) -> cd .. 했을 때, /usr로 이동하지 않고, /로 이동.
+     PWD 값은 cd bin 이후에 /usr/bin이 아닌 /bin이 됨. cd .. 이후에는 /usr이 아닌 /가 됨.~~
+  3) ~~정제되지 않은 디렉토리 문자열(////bin////../bin/usr 등)을 전달한 chdir() 실행 이후의 getcwd() 결과를       PWD에 넣는 것이 아니라, 디렉토리 문자열을 정제한 이후에 chdir()에 전달하고, chdir()이 성공하면 이 정제   된 디렉토리 문자열을 PWD에 넣는것이 이 때문. 또한 PWD에 저장함과 동시에 별도의 멤버 변수에도 따로     저장(pwd 명령어에 사용).~~
 
 ### 7. pwd
 
-* [ ] 심볼릭 링크로 이동 후 pwd -> cd .. 이후 pwd
-* [ ] PWD에 저장된 값을 출력하는 것이 아님
-* [ ] PWD와 무관함. 삭제해도 pwd로는 현재 경로가 정상 출력됨.
+* [X] 심볼릭 링크로 이동 후 pwd -> cd .. 이후 pwd
+* [X] PWD에 저장된 값을 출력하는 것이 아님
+* [X] PWD와 무관함. 삭제해도 pwd로는 현재 경로가 정상 출력됨.
   -> cd 할 때, PWD외에도 별도의 멤버변수에도 경로를 저장한 이유. pwd에서는 이 멤버 변수 값을 출력.
