@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/05 15:28:49 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/06 16:41:31 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define ERROR_ISDIR 0
 # define ERROR_CMD_NOT_FOUND 1
 # define ERROR_SYSTEM 2
+
 extern int	g_exit_status;
 
 typedef struct s_token

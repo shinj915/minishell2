@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/05 15:28:51 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/07 14:07:18 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	execute_external_cmd(t_cmd *cmd, t_state *state)
 	char		*path;
 	char		**envp;
 	struct stat	st;
+	int			result;
 
 	path = NULL;
 	envp = get_envp(state->env_list);
@@ -81,10 +82,11 @@ int	execute_external_cmd(t_cmd *cmd, t_state *state)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		g_exit_status = WEXITSTATUS(status);
+		result = g_exit_status;
 		signal(SIGINT, ft_sigint);
 	}
 	free_2d_array(envp);
-	return (WEXITSTATUS(status));
+	return (result);
 }
 
 int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
@@ -149,7 +151,7 @@ void	prompt(t_cmd_list *cmd_list, t_state *state)
 		}
 		else
 		{
-			write(1, "Ctrl+D exit\n", 12);
+			ft_putendl_fd("Ctrl+D exit", 1);
 			g_exit_status = 0;
 			break ;
 		}
