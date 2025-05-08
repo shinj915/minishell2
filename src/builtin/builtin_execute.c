@@ -6,7 +6,7 @@
 /*   By: eunam <eunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/07 15:04:29 by eunam            ###   ########.fr       */
+/*   Updated: 2025/05/08 19:11:54 by eunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ int builtin_execute_cd(t_cmd *cmd, t_state *state)
 	if (argc != 2)
 	{
 		if (argc == 1)
-			ft_putendl_fd("cd : too few arguments", cmd->fd_out);
+			print_error(cmd, NULL, ERROR_TOO_FEW_ARGS);
 		else
-			ft_putendl_fd("cd : too many arguments", cmd->fd_out);
+			print_error(cmd, NULL, ERROR_TOO_MANY_ARGS);
 		return (1);
 	}
 	if (chdir(cmd->argv[1]) != 0)
 	{
-		ft_putstr_fd("cd: ", cmd->fd_out);
-		ft_putstr_fd(cmd->argv[1], cmd->fd_out);
-		ft_putendl_fd(": No such file or directory", cmd->fd_out);
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(cmd->argv[1], 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		return (1);
 	}
-	ft_update_pwdenv(state);
+	ft_update_pwdenv(state); // PWD 환경변수를 지우면 변수를 새로 생성하지 않음... bash에서는 새로 생성됨...
 	return (0);
 }
 
@@ -45,33 +45,11 @@ int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 	{
 		perror("getcwd failed");
 		ft_putendl_fd("getcwd: cannot access current directory", 2);
+		// 더 필요 없나...?
 	}
 	ft_putendl_fd(cwd, cmd->fd_out);
 	ft_update_pwdenv(state);
 	free(cwd);
-	return (0);
-}
-
-int builtin_execute_export(t_cmd *cmd, t_state *state)
-{
-	int		i;
-	int		argc;
-	t_env	*tail;
-
-	i = 1;
-	argc = find_argc(cmd->argv);
-	if (argc < 2)
-		return (builtin_execute_env(cmd, state));
-	tail = find_tail_env(state->env_list);
-	while (i < argc)
-	{
-		if (ft_strchr(cmd->argv[i], '='))
-		{
-			if (!ft_find_env(cmd->argv[i], state->env_list))
-				tail = for_export_funtion(tail, cmd->argv[i]);
-		}
-		i++;
-	}
 	return (0);
 }
 
@@ -99,11 +77,6 @@ int builtin_execute_unset(t_cmd *cmd, t_state *state)
 
 	i = 1;
 	argc = find_argc(cmd->argv);
-	if (argc < 2)
-	{
-		ft_putendl_fd("unset: not enough arguments", cmd->fd_out);
-		return (1);
-    }
 	while (i < argc)
 	{
 		unset_env(&state->env_list, cmd->argv[i]);
@@ -119,10 +92,11 @@ int builtin_execute_env(t_cmd *cmd, t_state *state)
 	t_env	*env;
 	
 	argc = find_argc(cmd->argv);
-	if (argc != 1)
-		return (1);
-	if (!state)
-		return (1);
+	if (argc > 1)
+	{
+		print_error(cmd, cmd->argv[1], ERROR_CMD_NOT_FOUND);
+		return (127);
+	}
 	env = state->env_list;
 	while (env)
 	{
@@ -131,32 +105,5 @@ int builtin_execute_env(t_cmd *cmd, t_state *state)
 		free(env_char);
 		env = env->next;
 	}
-	return (0);
-}
-
-int	builtin_execute_exit(t_cmd *cmd, t_state *state)
-{
-	int	argc;
-
-	(void)state;
-	argc = find_argc(cmd->argv);
-	if (argc == 2)
-	{
-		printf("argc = 2\n");
-		if (!is_exitdigit(cmd->argv[1]))
-			exit(ft_atoi(cmd->argv[1]));
-		else // 범위를 넘은 숫자 error 처리
-		{
-			// 오류 메시지 출력?
-			exit(225);
-		}
-	}
-	else if (argc > 2)
-	{
-		ft_putstr_fd("exit: too many arguments", cmd->fd_out);
-		return (1);
-	}
-	else
-		exit(0);
 	return (0);
 }

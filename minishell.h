@@ -50,6 +50,11 @@
 # define TYPE_TOKEN_IO_R 103
 # define TYPE_TOKEN_IO_RR 104
 # define TYPE_AFTER_HD 105
+# define ERROR_INVALID_IDENTIFIER 500
+# define ERROR_NO_SUCH_FILE_OF_DIR 50
+# define ERROR_TOO_MANY_ARGS 51
+# define ERROR_TOO_FEW_ARGS 52
+# define ERROR_CMD_NOT_FOUND 127
 
 extern int	g_exit_status;
 
@@ -164,7 +169,8 @@ void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
 
 /* Builtin */
-void		is_builtin_command(t_cmd *cmd, t_state *state);
+int			is_builtin_command(t_cmd *cmd);
+int			ft_exec_builtin(t_cmd *cmd, t_state *state);
 int 		builtin_execute_echo(t_cmd *cmd, t_state *state);
 int 		builtin_execute_cd(t_cmd *cmd, t_state *state);
 int			builtin_execute_pwd(t_cmd *cmd, t_state *state);
@@ -174,12 +180,11 @@ int 		builtin_execute_env(t_cmd *cmd, t_state *state);
 int			builtin_execute_exit(t_cmd *cmd, t_state *state);
 
 /* Builtin - utils */
+void		print_error(t_cmd *cmd, char *env_str, int error);
 int			find_argc(char **argv);
 t_env		*find_tail_env(t_env *env_list);
 void		delete_env_node(t_env **env_list, t_env *pre, t_env *curr);
 char		*make_envchar(t_env *env);
-int			is_exitdigit(char *input);
-t_env		*for_export_funtion(t_env *tail, char *env_str);
 t_env		*ft_find_env(char *env_str, t_env *env_list);
 void		ft_update_pwdenv(t_state *state);
 

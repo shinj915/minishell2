@@ -31,6 +31,9 @@ SRCS = main.c \
 		src/builtin/builtin_main.c \
 		src/builtin/builtin_execute.c \
 		src/builtin/builtin_execute_echo.c \
+		src/builtin/builtin_execute_export.c \
+		src/builtin/builtin_execute_exit.c \
+		src/builtin/builtin_error.c \
 		src/builtin/builtin_utils.c
 
 OBJS = $(SRCS:.c=.o)

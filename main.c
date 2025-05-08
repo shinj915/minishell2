@@ -18,7 +18,8 @@ void	prompt_execute(t_cmd_list *cmd_list, t_state *state, int *result)
 {
 	state->cmd_parse = ft_strdup(state->cmd_line);
 	cmd_list = parse(state->cmd_line, state);
-	is_builtin_command(cmd_list->head, state);
+	if (is_builtin_command(cmd_list->head))
+		g_exit_status = ft_exec_builtin(cmd_list->head, state);
 	free_cmd_list(cmd_list);
 	free(state->cmd_parse);
 	add_history(state->cmd_line);

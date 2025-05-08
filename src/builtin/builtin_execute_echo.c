@@ -40,7 +40,7 @@ int builtin_execute_echo(t_cmd *cmd, t_state *state)
 	i = 1;
 	n_flag = 0;
 	if (!cmd->argv[1])
-		return (1);
+		return (0);
 	while (ft_isnflag(cmd->argv[i]))
 	{
 		i++;

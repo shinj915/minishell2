@@ -60,57 +60,6 @@ char	*make_envchar(t_env *env)
 	return (envchar);
 }
 
-int	is_exitdigit(char *input)
-{
-	int			i;
-	long long	number;
-
-	i = 0;
-	while (input[i])
-	{
-		if (!ft_isdigit(input[i]))
-			return (0);
-		i++;
-	}
-	number = ft_atoll(input);
-	if (number < INT_MIN || number > INT_MAX)
-		return (0);
-	return (1);
-}
-
-// static int is_valid_key(char *key)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (ft_isalpha(key[i]) || key[i] == '_')
-// 	{
-// 		if (!ft_is특수문자(key + 1))
-// 		{
-
-// 		}
-// 		else
-// 			return (1);
-// 	}
-// 	else
-// 		return (1);
-// 	return (0);
-// }
-
-t_env	*for_export_funtion(t_env *tail, char *env_str)
-{
-	char	*key;
-	char	*value;
-
-	if (!env_str)
-		return (NULL);
-	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
-	value = ft_strdup(ft_strchr(env_str, '=') + 1);
-	// if (is valid key)
-	tail = add_env(tail, key, value);
-	return (tail);
-}
-
 t_env	*ft_find_env(char *env_str, t_env *env_list)
 {
 	t_env	*curr;
@@ -126,8 +75,8 @@ t_env	*ft_find_env(char *env_str, t_env *env_list)
 		curr = curr->next;
 	if (curr)
 		curr->value = value;
-	// free(key);
-	// free(value);
+	free(key);
+	free(value);
 	return (curr);
 }
 

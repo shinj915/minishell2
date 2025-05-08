@@ -20,7 +20,7 @@
 
 ### 2. exit
 
-1. long long 범위 내의 숫자값이 입력되면 (unsigned int)ft_atoi(cmd->argv[1]) % 256 값이 들어감
+1. long long 범위 내의 숫자값이 입력되면 ~~(unsigned int)ft_atoi(cmd->argv[1]) % 256 값이 들어감~~ 마지막 byte 값만 가져옴(exit 이 알아서 함!)
    * [ ] ./minishell -> exit(마지막 명령 성공/실패 경우 이후 각각 테스트)
    * [ ] exit -1 (return: 255)
    * [ ] exit -2 (return: 254)
@@ -55,34 +55,39 @@
    _ 환경변수는 출력 X
    declare -x 의미?
 
-* [ ] export 1=a (bash: export: `1=a': not a valid identifier, return: 1)
+* [X] export 1=a (bash: export: `1=a': not a valid identifier, return: 1)
+
+  * [X] return 값 설정이 되어있지 않음!
 * [X] export _a=a (환경변수 목록에 _a가 추가되며, 그 값은 a임)
 * [X] export a (value가 NULL) : 에러 메시지가 출력되지는 않으나(return: 0) 환경변수에 추가되지도 않음
 * [X] export a=b (환경변수 목록에 a가 추가되며, 그 값은 b임)
 * [X] export a (이미 value가 존재하는 환경변수라면, = 없이 export 했을 때 값이 변하지 않음)
-* [ ] export = (bash: export: `=': not a valid identifier, return: 1)
-* [ ] export $=a (bash: export: $1=a': not a valid identifier, return: 1)
+* [X] export = (bash: export: `=': not a valid identifier, return: 1)
+
+  * [X] return 값 설정이 되어있지 않음!
+* [X] export $=a (bash: export: $1=a': not a valid identifier, return: 1)
+
+  * [X] return 값 설정이 되어있지 않음!
 * [ ] ~~export $LOGNAME=111 (에러 메시지를 출력하진 않으나, LOGNAME 환경변수 값이 변경되지도 않음)~~
   -> 이것도 mandatory 요구사항은 아닌 것 같습니다...
 * [X] export b= (value가 빈문자열) (없던 환경변수라면 환경변수에 추가되며, 값이 없음. value가 존재하던 환경변수라면 그 값이 NULL로 대체됨)
-* [ ] export 1=a _a=a a=b b= = =111 c
+* [X] export 1=a _a=a a=b b= = =111 c
 
   * [X] 정상적인 환경변수만 삽입하고
-  * [ ] 그 외에는 에러 메시지를 출력함
+  * [X] 그 외에는 에러 메시지를 출력함
 * [X] export e e (에러 메시지를 출력하진 않지만 아무 동작도 하지 않음)
 * [X] export f 후 export f
 * [ ] ~~export z=a 후 export z+=b (z의 값이 ab가 됨)~~
   -> mandatory 구현사항 아닌 듯 합니다...
-  -> +는 허용되는 key 값이 아니므로 valid key에서 걸러저야 할 것 같습니다.
 * [ ] unset z 후 export z+=a 후 export z+=b
 
   * [X] unset z 후 export z=a 후 export z=b
 
 ### 5. unset
 
-* [ ] unset -> 아무 동작 하지 않음
+* [X] unset -> 아무 동작 하지 않음
 
-  **-> 현재 `unset: not enough arguments` error message 뜨는 중.**
+  ~~-> 현재 `unset: not enough arguments` error message 뜨는 중.~~
 * [X] unset NOTEXIST (없는 환경변수를 unset하려 할 때) -> 아무 동작 하지 않음
 * [ ] unset PATH(external 명령어는 실행 안되고, 빌트인은 실행 됨)
 
@@ -96,7 +101,7 @@
 
   **-> 현재 _ 함께 없어짐, 이외 문제 없음!**
 * [X] export a -> unset a -> export a -> export a
-* [ ] 일반적인 No such file or directory 는 echo \$?가 127 but cd에서의 No such file or directory은 echo $?가 1
+* [X] 일반적인 No such file or directory 는 echo \$?가 127 but cd에서의 No such file or directory은 echo $?가 1
 
 ### 6. cd
 

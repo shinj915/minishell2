@@ -29,14 +29,14 @@ static int is_valid_key(char *key)
 	}
 	return (1);
 }
-
-static t_env	*for_export_funtion(t_cmd *cmd, t_env *tail, char *env_str)
+// export_env_vals
+static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 {
 	char	*key;
 	char	*value;
+	t_env	*tail;
 
-	if (!env_str)
-		return (NULL);
+	tail = find_tail_env(env_list);
 	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
 	value = ft_strdup(ft_strchr(env_str, '=') + 1);
 	if (!is_valid_key(key))
@@ -44,33 +44,34 @@ static t_env	*for_export_funtion(t_cmd *cmd, t_env *tail, char *env_str)
 		print_error(cmd, env_str, ERROR_INVALID_IDENTIFIER);
 		free(key);
 		free(value);
-		return (tail);
+		return (1);
 	}
 	tail = add_env(tail, key, value);
-	// free(key);
-	// free(value); // double free
-	return (tail);
+	return (0);
 }
 
 int builtin_execute_export(t_cmd *cmd, t_state *state)
 {
 	int		i;
 	int		argc;
-	t_env	*tail;
+	int		res;
 
 	i = 1;
+	res = 0;
 	argc = find_argc(cmd->argv);
 	if (argc < 2)
 		return (builtin_execute_env(cmd, state));
-	tail = find_tail_env(state->env_list);
 	while (i < argc)
 	{
 		if (ft_strchr(cmd->argv[i], '='))
 		{
 			if (!ft_find_env(cmd->argv[i], state->env_list))
-				tail = for_export_funtion(cmd, tail, cmd->argv[i]);
+				res += for_export_funtion(cmd, cmd->argv[i], state->env_list);
 		}
 		i++;
 	}
-	return (0);
+	if (res > 0)
+		return (1);
+	else
+		return (0);
 }
