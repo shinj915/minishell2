@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/07 15:22:24 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/08 13:25:31 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	execute_external_cmd(t_cmd *cmd, t_state *state)
 	}
 	if (pid == 0)
 	{
-		signal(SIGINT, ft_sigint);
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_IGN);
 		path = cmd->exec_file_name;
 		if (ft_strchr(cmd->exec_file_name, '/'))
@@ -82,7 +82,10 @@ int	execute_external_cmd(t_cmd *cmd, t_state *state)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		if (WIFSIGNALED(status))
+		{
+			write(1, "\n", 1);
 			g_exit_status = 128 + WTERMSIG(status); //result는 각 명령어의 종료 코드, g_exit_status는 전체 쉘의 상태와 종료 코드임. 추후 구분하여 수정
+		}
 		else
 			g_exit_status = WEXITSTATUS(status);
 		result = g_exit_status;
