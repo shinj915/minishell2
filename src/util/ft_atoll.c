@@ -30,6 +30,13 @@ static int	is_negative(char *str, int *sign, int index)
 	return (index);
 }
 
+static int is_zero(char *str, int index)
+{
+	while (str[index] == '0')
+		index++;
+	return (index);
+}
+
 static long long	atoi_converter(char *str, int index)
 {
 	long long	res;
@@ -55,6 +62,7 @@ long long	ft_atoll(const char *str)
 	s = (char *)str;
 	i = is_space(s, i);
 	i = is_negative(s, &sign, i);
+	i = is_zero(s, i);
 	result = atoi_converter(s, i);
 	return (result * sign);
 }

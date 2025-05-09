@@ -21,17 +21,17 @@
 ### 2. exit
 
 1. long long 범위 내의 숫자값이 입력되면 ~~(unsigned int)ft_atoi(cmd->argv[1]) % 256 값이 들어감~~ 마지막 byte 값만 가져옴(exit 이 알아서 함!)
-   * [ ] ./minishell -> exit(마지막 명령 성공/실패 경우 이후 각각 테스트)
-   * [ ] exit -1 (return: 255)
-   * [ ] exit -2 (return: 254)
-   * [ ] exit 0  (return: 0)
-   * [ ] exit 1  (return: 1)
+   * [X] ./minishell -> exit(마지막 명령 성공/실패 경우 이후 각각 테스트)
+   * [X] exit -1 (return: 255)
+   * [X] exit -2 (return: 254)
+   * [X] exit 0  (return: 0)
+   * [X] exit 1  (return: 1)
 2. 숫자가 아니거나 long long 범위 넘어가면 에러 메시지 발생(numeric argument required), 리턴 값은 2
-   * [ ] ./minishell -> exit 9223372036854775807(LLMAX) (return: 255)
-   * [ ] -> exit 9223372036854775808     (numeric error, return: 2)
-   * [ ] -> exit -9223372036854775808    (return: 0)
-   * [ ] -> exit -9223372036854775809    (numeric error, return: 2)
-   * [ ] ./minishell -> exit a (numeric error, return: 2)
+   * [X] ./minishell -> exit 9223372036854775807(LLMAX) (return: 255)
+   * [X] -> exit 9223372036854775808     (numeric error, return: 2)
+   * [X] -> exit -9223372036854775808    (return: 0)
+   * [X] -> exit -9223372036854775809    (numeric error, return: 2)
+   * [X] ./minishell -> exit a (numeric error, return: 2)
 3. 여러 개의 인자가 있을 때: 첫 번째 인자부터 검사 시작. 첫 번째 인자가 오류가 아니면 다음 인자가 있는지 보고, 다음 인자 있으면 에러 메시지 발생(too many arguments), 리턴 값은 1
    * [X] ./minishell -> exit 2 b c
    * [X] -> exit 1 a

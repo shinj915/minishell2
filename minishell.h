@@ -32,8 +32,6 @@
 # include <readline/history.h>
 # include "libft/libft.h"
 
-# define INT_MIN -2147483648
-# define INT_MAX 2147483647
 # define TYPE_FAIL 1
 # define TYPE_SUCCESS 0
 # define TYPE_INITIAL_STATUS 0
@@ -55,6 +53,7 @@
 # define ERROR_TOO_MANY_ARGS 51
 # define ERROR_TOO_FEW_ARGS 52
 # define ERROR_CMD_NOT_FOUND 127
+# define ERROR_NUMERIC_REQUIRED 255
 
 extern int	g_exit_status;
 
