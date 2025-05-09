@@ -6,7 +6,7 @@
 /*   By: eunam <eunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/08 19:11:54 by eunam            ###   ########.fr       */
+/*   Updated: 2025/05/09 12:45:52 by eunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,6 @@ int builtin_execute_unset(t_cmd *cmd, t_state *state)
 	{
 		unset_env(&state->env_list, cmd->argv[i]);
 		i++;
-	}
-	return (0);
-}
-
-int builtin_execute_env(t_cmd *cmd, t_state *state)
-{
-	int		argc;
-	char	*env_char;
-	t_env	*env;
-	
-	argc = find_argc(cmd->argv);
-	if (argc > 1)
-	{
-		print_error(cmd, cmd->argv[1], ERROR_CMD_NOT_FOUND);
-		return (127);
-	}
-	env = state->env_list;
-	while (env)
-	{
-		env_char = make_envchar(env);
-		ft_putendl_fd(env_char, cmd->fd_out);
-		free(env_char);
-		env = env->next;
 	}
 	return (0);
 }
