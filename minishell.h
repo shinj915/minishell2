@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/06 16:41:31 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/09 11:21:37 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,12 @@ void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 /* Exec */
 void		prompt(t_cmd_list *cmd_list, t_state *state);
 
+/* Heredoc */
+int			has_heredoc(t_cmd_list *cmd_list, t_state *state);
+void		heredoc_prompt(char *del, int fd, char *line, t_state *state);
+char		*get_heredoc_delimeter(t_cmd_redir *red, int idx);
+int			is_fd_valid(int fd);
+
 /* Util - Environment variables */
 t_env		*create_new_env(char *key, char *value);
 t_env		*add_env(t_env *env, char *key, char *value);
@@ -170,6 +176,7 @@ void		free_token_list(t_token *token_list);
 void		free_cmd_node(t_cmd_list *cmd_list);
 void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
+void		unlink_tmp_file(t_cmd_list *cmd_lists);
 
 
 void print_toklist(t_token *tok_list);

@@ -6,6 +6,8 @@ CC = cc
 SRCS = main.c \
 		test.c \
 		src/exec/exec_main.c \
+		src/exec/heredoc_util.c \
+		src/exec/heredoc.c \
 		src/free/free_utils.c \
 		src/free/free.c \
 		src/parse/delete_token.c \
