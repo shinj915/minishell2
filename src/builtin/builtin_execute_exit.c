@@ -21,36 +21,39 @@ static int	is_exitdigit(char *input)
 	while (input[i])
 	{
 		if (!ft_isdigit(input[i]))
-			return (0);
+			return (1);
 		i++;
 	}
 	number = ft_atoll(input);
 	if (number < INT_MIN || number > INT_MAX)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 {
 	int	argc;
+	int	value;
 
 	(void)state;
 	argc = find_argc(cmd->argv);
-	if (argc == 2)
+	if (argc > 1)
 	{
-		printf("argc = 2\n");
-		if (!is_exitdigit(cmd->argv[1]))
-			exit(ft_atoi(cmd->argv[1]));
-		else // 범위를 넘은 숫자 error 처리
+		value = is_exitdigit(cmd->argv[1]);
+		if (argc == 2 && value == 0)
+			exit(ft_atoll(cmd->argv[1]));
+		else if (value == 1) // 범위를 넘은 숫자 error 처리
 		{
-			// 오류 메시지 출력?
-			exit(225);
+			print_error(cmd, cmd->argv[1], ERROR_NUMERIC_REQUIRED);
+			// 오류 메시지 출력?numeric argument required
+			exit(2);
 		}
-	}
-	else if (argc > 2)
-	{
-		ft_putstr_fd("exit: too many arguments", 2);
-		return (1);
+		else
+		{
+			print_error(cmd, NULL, ERROR_TOO_MANY_ARGS);
+			// ft_putstr_fd("exit: too many arguments", 2);
+			return (1);
+		}
 	}
 	else
 		exit(0);

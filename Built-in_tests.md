@@ -33,9 +33,9 @@
    * [ ] -> exit -9223372036854775809    (numeric error, return: 2)
    * [ ] ./minishell -> exit a (numeric error, return: 2)
 3. 여러 개의 인자가 있을 때: 첫 번째 인자부터 검사 시작. 첫 번째 인자가 오류가 아니면 다음 인자가 있는지 보고, 다음 인자 있으면 에러 메시지 발생(too many arguments), 리턴 값은 1
-   * [ ] ./minishell -> exit 2 b c
-   * [ ] -> exit 1 a
-   * [ ] -> exit 9223372036854775808 2 3
+   * [X] ./minishell -> exit 2 b c
+   * [X] -> exit 1 a
+   * [X] -> exit 9223372036854775808 2 3
 
 ### 3. env
 
@@ -50,11 +50,10 @@
 
   환경변수 이름은 숫자로 시작할 수 없음. _ 외의 특수문자는 사용할 수 없음
 
-1. export (declare -x 어쩌고 출력됨)
-   export 출력은 env와 달리 각 줄마다 declare -x가 붙고, value가 큰따옴표로 감싸짐
-   _ 환경변수는 출력 X
-   declare -x 의미?
-
+* [X] export (declare -x 어쩌고 출력됨)
+  export 출력은 env와 달리 각 줄마다 declare -x가 붙고, value가 큰따옴표로 감싸짐
+  _ 환경변수는 출력 X
+  declare -x 의미?
 * [X] export 1=a (bash: export: `1=a': not a valid identifier, return: 1)
 
   * [X] return 값 설정이 되어있지 않음!
