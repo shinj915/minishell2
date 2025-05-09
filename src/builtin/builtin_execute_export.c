@@ -50,6 +50,23 @@ static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 	return (0);
 }
 
+static int	print_export_env(t_cmd *cmd, t_state *state)
+{
+	t_env	*env;
+
+	env = state->env_list;
+	while (env)
+	{
+		ft_putstr_fd("declare -x ", cmd->fd_out);
+		ft_putstr_fd(env->key, cmd->fd_out);
+		ft_putstr_fd("=\"", cmd->fd_out);
+		ft_putstr_fd(env->value, cmd->fd_out);
+		ft_putendl_fd("\"", cmd->fd_out);
+		env = env->next;
+	}
+	return (0);
+}
+
 int builtin_execute_export(t_cmd *cmd, t_state *state)
 {
 	int		i;
@@ -60,7 +77,7 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 	res = 0;
 	argc = find_argc(cmd->argv);
 	if (argc < 2)
-		return (builtin_execute_env(cmd, state));
+		return (print_export_env(cmd, state));
 	while (i < argc)
 	{
 		if (ft_strchr(cmd->argv[i], '='))
