@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/09 11:21:37 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/11 19:16:30 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,15 @@
 # define TYPE_TOKEN_IO_R 103
 # define TYPE_TOKEN_IO_RR 104
 # define TYPE_AFTER_HEREDOC 105
+
 # define ERROR_ISDIR 0
-# define ERROR_CMD_NOT_FOUND 1
 # define ERROR_SYSTEM 2
+# define ERROR_INVALID_IDENTIFIER 500
+# define ERROR_NO_SUCH_FILE_OF_DIR 50
+# define ERROR_TOO_MANY_ARGS 51
+# define ERROR_TOO_FEW_ARGS 52
+# define ERROR_CMD_NOT_FOUND 127
+# define ERROR_NUMERIC_REQUIRED 255
 
 extern int	g_exit_status;
 
@@ -146,6 +152,29 @@ void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 
 /* Exec */
 void		prompt(t_cmd_list *cmd_list, t_state *state);
+int			set_pids(t_cmd_list *cmd_list, pid_t **pids);
+void		wait_for_processes(pid_t *pids, int cmd_count);
+int			is_full_of_space(char *str);
+
+/* Exec - Builtin */
+int			is_builtin_command(t_cmd *cmd);
+int			ft_exec_builtin(t_cmd *cmd, t_state *state);
+int 		builtin_execute_echo(t_cmd *cmd, t_state *state);
+int 		builtin_execute_cd(t_cmd *cmd, t_state *state);
+int			builtin_execute_pwd(t_cmd *cmd, t_state *state);
+int			builtin_execute_export(t_cmd *cmd, t_state *state);
+int			builtin_execute_unset(t_cmd *cmd, t_state *state);
+int 		builtin_execute_env(t_cmd *cmd, t_state *state);
+int			builtin_execute_exit(t_cmd *cmd, t_state *state);
+
+/* Exec - Builtin utils */
+void		print_error(t_cmd *cmd, char *env_str, int error);
+int			find_argc(char **argv);
+t_env		*find_tail_env(t_env *env_list);
+void		delete_env_node(t_env **env_list, t_env *pre, t_env *curr);
+char		*make_envchar(t_env *env);
+t_env		*ft_find_env(char *env_str, t_env *env_list);
+void		ft_update_pwdenv(t_state *state);
 
 /* Heredoc */
 int			has_heredoc(t_cmd_list *cmd_list, t_state *state);
@@ -162,6 +191,7 @@ char		**get_envp(t_env *env_list);
 /* Util - Minishell ft_utils */
 char		*ft_strndup(const char *s, size_t n);
 int			ft_strcmp(char const *s1, char const *s2);
+long long	ft_atoll(const char *str);
 
 /* Util - Print error message*/
 void		print_error_external(t_cmd *cmd, int err);

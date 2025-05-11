@@ -5,7 +5,16 @@ CC = cc
 
 SRCS = main.c \
 		test.c \
+		src/builtin/builtin_main.c \
+		src/builtin/builtin_execute.c \
+		src/builtin/builtin_execute_echo.c \
+		src/builtin/builtin_execute_export.c \
+		src/builtin/builtin_execute_exit.c \
+		src/builtin/builtin_execute_env.c \
+		src/builtin/builtin_error.c \
+		src/builtin/builtin_utils.c \
 		src/exec/exec_main.c \
+		src/exec/exec_util.c \
 		src/exec/heredoc_util.c \
 		src/exec/heredoc.c \
 		src/free/free_utils.c \
@@ -29,6 +38,7 @@ SRCS = main.c \
 		src/parse/util_split.c \
 		src/parse/util_token.c \
 		src/util/env.c \
+		src/util/ft_atoll.c \
 		src/util/ft_utils.c \
 		src/util/init.c \
 		src/util/print_error.c
