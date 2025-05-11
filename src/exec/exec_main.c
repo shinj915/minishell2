@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/11 19:58:14 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/11 21:18:49 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,13 @@ int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 		return (result);
 	if (is_builtin_command(cmd) && cmd->prev == NULL && cmd->next == NULL)
 	{
-		set_redirection(cmd);
+		if (set_redirection(cmd))
+		{
+			close(fd_backup[0]);
+			close(fd_backup[1]);
+			g_exit_status = 1;
+			return (1);
+		}
 		result = ft_exec_builtin(cmd, state);
 		*pid = -1;
 	}
