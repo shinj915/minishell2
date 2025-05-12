@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "minishell.h"
 
 static int is_valid_key(char *key)
 {
@@ -42,6 +42,7 @@ static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 	if (!is_valid_key(key))
 	{
 		print_error(cmd, env_str, ERROR_INVALID_IDENTIFIER);
+		g_exit_status = 1;
 		free(key);
 		free(value);
 		return (1);

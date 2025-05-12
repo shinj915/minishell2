@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "minishell.h"
 
 int builtin_execute_cd(t_cmd *cmd, t_state *state)
 {
@@ -23,6 +23,7 @@ int builtin_execute_cd(t_cmd *cmd, t_state *state)
 			print_error(cmd, NULL, ERROR_TOO_FEW_ARGS);
 		else
 			print_error(cmd, NULL, ERROR_TOO_MANY_ARGS);
+		g_exit_status = 1;
 		return (1);
 	}
 	if (chdir(cmd->argv[1]) != 0)
@@ -46,7 +47,6 @@ int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 	{
 		perror("getcwd failed");
 		ft_putendl_fd("getcwd: cannot access current directory", 2);
-		// 더 필요 없나...?
 	}
 	ft_putendl_fd(cwd, cmd->redir_fd_out);
 	ft_update_pwdenv(state);

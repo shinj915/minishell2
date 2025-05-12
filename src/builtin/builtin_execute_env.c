@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "minishell.h"
 
 int builtin_execute_env(t_cmd *cmd, t_state *state)
 {
@@ -21,6 +21,7 @@ int builtin_execute_env(t_cmd *cmd, t_state *state)
 	if (argc > 1)
 	{
 		print_error(cmd, cmd->argv[1], ERROR_CMD_NOT_FOUND);
+		g_exit_status = 127;
 		return (127);
 	}
 	env = state->env_list;
