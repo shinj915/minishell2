@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:38:08 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 19:23:27 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:28:40 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	is_valid_key(char *key)
 	return (1);
 }
 
-t_env	*find_tail_env(t_env *env_list)
+static t_env	*find_tail_env(t_env *env_list)
 {
 	t_env	*env;
 
@@ -42,7 +42,7 @@ t_env	*find_tail_env(t_env *env_list)
 	return (env);
 }
 
-t_env	*ft_find_env(char *env_str, t_env *env_list)
+static t_env	*ft_find_env(char *env_str, t_env *env_list)
 {
 	t_env	*env;
 	char	*key;

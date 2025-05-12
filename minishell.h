@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 19:02:13 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:30:25 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,10 +179,6 @@ int			execute_single_exit(t_cmd *cmd, t_state *state);
 
 /* Exec - Builtin utils */
 int			find_argc(char **argv);
-t_env		*find_tail_env(t_env *env_list);
-void		delete_env_node(t_env **env_list, t_env *pre, t_env *curr);
-char		*make_envchar(t_env *env);
-t_env		*ft_find_env(char *env_str, t_env *env_list);
 void		ft_update_pwdenv(t_state *state);
 t_env		*ft_find_return_env(char *key, t_env *env_list);
 

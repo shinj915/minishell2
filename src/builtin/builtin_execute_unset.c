@@ -6,13 +6,13 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:25:18 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 19:24:00 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:29:02 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	delete_env_node(t_env **env_list, t_env *pre, t_env *curr)
+static void	delete_env_node(t_env **env_list, t_env *pre, t_env *curr)
 {
 	if (pre == NULL)
 		*env_list = curr->next;
