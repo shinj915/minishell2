@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:20 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/11 19:08:59 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:22:05 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	is_negative(char *str, int *sign, int index)
 	return (index);
 }
 
-static int is_zero(char *str, int index)
+static int	is_zero(char *str, int index)
 {
 	while (str[index] == '0')
 		index++;

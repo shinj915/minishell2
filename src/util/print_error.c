@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:34:17 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/11 18:16:14 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:21:31 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_error_external(t_cmd *cmd, int err)
 	if (err == ERROR_ISDIR)
 	{
 		ft_putendl_fd(": Is a directory", 2);
-    	exit(126);
+		exit(126);
 	}
 	if (err == ERROR_CMD_NOT_FOUND)
 	{
@@ -53,4 +53,11 @@ void	print_error_syntax(t_cmd *cmd, int err)
 		ft_putendl_fd(": ambiguous redirect", 2);
 		g_exit_status = 1;
 	}
+}
+
+void	print_error_parsing(char *cmd_parse)
+{
+	ft_putendl_fd("minishell: failed command parsing", 2);
+	free(cmd_parse);
+	g_exit_status = 258;
 }

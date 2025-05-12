@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/11 19:16:30 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:13:21 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,16 +155,24 @@ void		prompt(t_cmd_list *cmd_list, t_state *state);
 int			set_pids(t_cmd_list *cmd_list, pid_t **pids);
 void		wait_for_processes(pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
+void		execute_child_processes(t_cmd *cmd, t_state *state, \
+									pid_t *pid, int fd_backup[2]);
+
+/* Exec - Pipe and Redirction */
+int			check_pipe_and_cmd(t_cmd **cmd);
+int			set_redirection(t_cmd *cmd);
+void		handle_pipe_and_redirection(t_cmd *cmd);
+void		close_fd(t_cmd *cmd, int fd_backup[2]);
 
 /* Exec - Builtin */
 int			is_builtin_command(t_cmd *cmd);
 int			ft_exec_builtin(t_cmd *cmd, t_state *state);
-int 		builtin_execute_echo(t_cmd *cmd, t_state *state);
-int 		builtin_execute_cd(t_cmd *cmd, t_state *state);
+int			builtin_execute_echo(t_cmd *cmd, t_state *state);
+int			builtin_execute_cd(t_cmd *cmd, t_state *state);
 int			builtin_execute_pwd(t_cmd *cmd, t_state *state);
 int			builtin_execute_export(t_cmd *cmd, t_state *state);
 int			builtin_execute_unset(t_cmd *cmd, t_state *state);
-int 		builtin_execute_env(t_cmd *cmd, t_state *state);
+int			builtin_execute_env(t_cmd *cmd, t_state *state);
 int			builtin_execute_exit(t_cmd *cmd, t_state *state);
 
 /* Exec - Builtin utils */
@@ -196,6 +204,7 @@ long long	ft_atoll(const char *str);
 /* Util - Print error message*/
 void		print_error_external(t_cmd *cmd, int err);
 void		print_error_syntax(t_cmd *cmd, int err);
+void		print_error_parsing(char *cmd_parse);
 
 /* Clean up - memory free functions */
 void		*free_2d_array(char **array);
@@ -207,12 +216,5 @@ void		free_cmd_node(t_cmd_list *cmd_list);
 void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
 void		unlink_tmp_file(t_cmd_list *cmd_lists);
-
-
-void print_toklist(t_token *tok_list);
-void print_toklist_ori(t_token *tok_list);
-void print_redir_list(t_cmd_redir *redir_list);
-void print_cmd(t_cmd *cmd);
-void traverse_and_print(t_cmd_list *cmd_list);
 
 #endif

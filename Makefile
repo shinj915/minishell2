@@ -4,7 +4,6 @@ LDFLAGS = -lreadline
 CC = cc
 
 SRCS = main.c \
-		test.c \
 		src/builtin/builtin_main.c \
 		src/builtin/builtin_execute.c \
 		src/builtin/builtin_execute_echo.c \
@@ -13,7 +12,9 @@ SRCS = main.c \
 		src/builtin/builtin_execute_env.c \
 		src/builtin/builtin_error.c \
 		src/builtin/builtin_utils.c \
+		src/exec/exec_child.c \
 		src/exec/exec_main.c \
+		src/exec/exec_pipe_redir.c \
 		src/exec/exec_util.c \
 		src/exec/heredoc_util.c \
 		src/exec/heredoc.c \

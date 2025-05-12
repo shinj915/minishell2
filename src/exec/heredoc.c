@@ -6,14 +6,14 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:17:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/09 11:20:18 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:20:34 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	heredoc_child(t_state *state, t_cmd_list *cmd_list, 
-						  char *del, int fd)
+static void	heredoc_child(t_state *state, t_cmd_list *cmd_list, \
+							char *del, int fd)
 {
 	char	*line;
 	t_env	*ptr;
@@ -53,7 +53,7 @@ static int	heredoc_parent(pid_t pid, int *fd, char *del)
 }
 
 static int	start_heredoc(t_state *state, t_cmd_list *cmd_list,
-				  char *del, t_cmd_redir *red)
+							char *del, t_cmd_redir *red)
 {
 	int		fd;
 	pid_t	pid;
@@ -75,16 +75,14 @@ static int	start_heredoc(t_state *state, t_cmd_list *cmd_list,
 		exit(0);
 	}
 	else
-	{
 		if (heredoc_parent(pid, &fd, del))
 			return (1);
-	}
 	close(fd);
 	return (0);
 }
 
-static int	redirect_heredoc(t_state *state, t_cmd_list *cmd_list,
-					 char *del, t_cmd_redir *red)
+static int	redirect_heredoc(t_state *state, t_cmd_list *cmd_list, \
+							char *del, t_cmd_redir *red)
 {
 	if (del == NULL)
 		return (1);
