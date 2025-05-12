@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:56 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/11 21:03:13 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:16:25 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	is_builtin_command(t_cmd *cmd)
 		ft_strcmp(cmd->exec_file_name, "pwd") == 0 || 
 		ft_strcmp(cmd->exec_file_name, "export") == 0 || 
 		ft_strcmp(cmd->exec_file_name, "unset") == 0 || 
-		ft_strcmp(cmd->exec_file_name, "env") == 0 || 
-		ft_strcmp(cmd->exec_file_name, "exit") == 0)
+		ft_strcmp(cmd->exec_file_name, "env") == 0)
 		return (1);
 	else
 		return (0);
