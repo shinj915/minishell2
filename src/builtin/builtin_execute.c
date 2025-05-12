@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "minishell.h"
 
 int builtin_execute_cd(t_cmd *cmd, t_state *state)
 {
@@ -23,13 +23,13 @@ int builtin_execute_cd(t_cmd *cmd, t_state *state)
 			print_error(cmd, NULL, ERROR_TOO_FEW_ARGS);
 		else
 			print_error(cmd, NULL, ERROR_TOO_MANY_ARGS);
+		g_exit_status = 1;
 		return (1);
 	}
 	if (chdir(cmd->argv[1]) != 0)
 	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(cmd->argv[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		print_error(cmd, cmd->argv[1], ERROR_CMD_NOT_FOUND);
+		g_exit_status = 1;
 		return (1);
 	}
 	ft_update_pwdenv(state); // PWD 환경변수를 지우면 변수를 새로 생성하지 않음... bash에서는 새로 생성됨...
@@ -45,7 +45,6 @@ int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 	{
 		perror("getcwd failed");
 		ft_putendl_fd("getcwd: cannot access current directory", 2);
-		// 더 필요 없나...?
 	}
 	ft_putendl_fd(cwd, cmd->redir_fd_out);
 	ft_update_pwdenv(state);
