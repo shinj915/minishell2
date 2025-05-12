@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:07:23 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/11 19:04:56 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:46:06 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int builtin_execute_echo(t_cmd *cmd, t_state *state)
 	i = 1;
 	n_flag = 0;
 	if (!cmd->argv[1])
+	{
+		write(1, "\n", 1);
 		return (0);
+	}
 	while (ft_isnflag(cmd->argv[i]))
 	{
 		i++;

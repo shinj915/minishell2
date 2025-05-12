@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:38:08 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/11 19:04:53 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 17:00:46 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,6 @@ static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 	return (0);
 }
 
-static int	print_export_env(t_cmd *cmd, t_state *state)
-{
-	t_env	*env;
-
-	env = state->env_list;
-	while (env)
-	{
-		ft_putstr_fd("declare -x ", cmd->redir_fd_out);
-		ft_putstr_fd(env->key, cmd->redir_fd_out);
-		ft_putstr_fd("=\"", cmd->redir_fd_out);
-		ft_putstr_fd(env->value, cmd->redir_fd_out);
-		ft_putendl_fd("\"", cmd->redir_fd_out);
-		env = env->next;
-	}
-	return (0);
-}
-
 int builtin_execute_export(t_cmd *cmd, t_state *state)
 {
 	int		i;
@@ -77,7 +60,10 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 	res = 0;
 	argc = find_argc(cmd->argv);
 	if (argc < 2)
-		return (print_export_env(cmd, state));
+	{
+		print_error(cmd, NULL, ERROR_TOO_FEW_ARGS);
+		return (1);
+	}
 	while (i < argc)
 	{
 		if (ft_strchr(cmd->argv[i], '='))

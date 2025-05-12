@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/11 19:05:13 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 17:20:09 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int builtin_execute_cd(t_cmd *cmd, t_state *state)
 	}
 	if (chdir(cmd->argv[1]) != 0)
 	{
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd(cmd->argv[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		perror(" ");
 		return (1);
 	}
 	ft_update_pwdenv(state); // PWD 환경변수를 지우면 변수를 새로 생성하지 않음... bash에서는 새로 생성됨...

@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 14:20:10 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 16:43:59 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	execute_child_processes(t_cmd *cmd, t_state *state, \
 		execute_child_cmd(cmd, state, envp);
 	}
 	else
+	{
 		close_fd(cmd, fd_backup);
-	free(envp);
+		free(envp);
+	}
 }
