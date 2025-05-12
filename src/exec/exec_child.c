@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 16:43:59 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 17:35:41 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,14 @@ static void	check_path_error(t_cmd *cmd, t_state *state, char **path)
 		print_error_external(cmd, ERROR_CMD_NOT_FOUND);
 }
 
-static void	execute_child_cmd(t_cmd *cmd, t_state *state, char **envp)
+static void	execute_child_cmd(t_cmd *cmd, t_state *state)
 {
 	char	*path;
 	int		result;
+	char	**envp;
 
 	path = cmd->exec_file_name;
+	envp = get_envp(state->env_list);
 	if (set_redirection(cmd))
 		exit(1);
 	handle_pipe_and_redirection(cmd);
@@ -100,15 +102,13 @@ static void	execute_child_cmd(t_cmd *cmd, t_state *state, char **envp)
 		exit(0);
 	execve(path, cmd->argv, envp);
 	perror("minishell: execve failed");
+	free(envp);
 	exit(127);
 }
 
 void	execute_child_processes(t_cmd *cmd, t_state *state, \
 								pid_t *pid, int fd_backup[2])
 {
-	char	**envp;
-
-	envp = get_envp(state->env_list);
 	*pid = fork();
 	if (*pid < 0)
 	{
@@ -119,11 +119,8 @@ void	execute_child_processes(t_cmd *cmd, t_state *state, \
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_IGN);
-		execute_child_cmd(cmd, state, envp);
+		execute_child_cmd(cmd, state);
 	}
 	else
-	{
 		close_fd(cmd, fd_backup);
-		free(envp);
-	}
 }
