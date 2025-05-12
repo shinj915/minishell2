@@ -30,15 +30,20 @@ static int is_valid_key(char *key)
 	return (1);
 }
 // export_env_vals
-static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
+static int	export_new_env(t_cmd *cmd, char *env_str, t_env *env_list)
 {
 	char	*key;
 	char	*value;
+	char	*temp;
 	t_env	*tail;
 
 	tail = find_tail_env(env_list);
-	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
-	value = ft_strdup(ft_strchr(env_str, '=') + 1);
+	temp = ft_strchr(env_str, '=');
+	key = ft_substr(env_str, 0, temp - env_str);
+	if (temp[1] != '\0')
+		value = ft_strdup(temp + 1);
+	else
+		value = ft_strdup("");
 	if (!is_valid_key(key))
 	{
 		print_error(cmd, env_str, ERROR_INVALID_IDENTIFIER);
@@ -59,12 +64,30 @@ static int	print_export_env(t_cmd *cmd, t_state *state)
 	{
 		ft_putstr_fd("declare -x ", cmd->fd_out);
 		ft_putstr_fd(env->key, cmd->fd_out);
-		ft_putstr_fd("=\"", cmd->fd_out);
-		ft_putstr_fd(env->value, cmd->fd_out);
-		ft_putendl_fd("\"", cmd->fd_out);
+		if (env->value)
+		{
+			ft_putstr_fd("=\"", cmd->fd_out);
+			ft_putstr_fd(env->value, cmd->fd_out);
+			ft_putendl_fd("\"", cmd->fd_out);
+		}
 		env = env->next;
 	}
 	return (0);
+}
+
+static void	create_nullvalue_env(t_state *state, char *key)
+{
+	t_env	*pre_env;
+	t_env	*new_env;
+
+	pre_env = find_tail_env(state->env_list);
+	new_env = (t_env *)malloc(sizeof(t_env));
+	if (!new_env)
+		return (NULL);
+	pre_env->next = new_env;
+	new_env->key = key;
+	new_env->value = NULL;
+	new_env->next = NULL;
 }
 
 int builtin_execute_export(t_cmd *cmd, t_state *state)
@@ -85,6 +108,8 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 			if (!ft_find_env(cmd->argv[i], state->env_list))
 				res += for_export_funtion(cmd, cmd->argv[i], state->env_list);
 		}
+		else
+			create_nullvalue_env(state, cmd->argv[i])
 		i++;
 	}
 	if (res > 0)

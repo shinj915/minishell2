@@ -60,23 +60,29 @@ char	*make_envchar(t_env *env)
 	return (envchar);
 }
 
-t_env	*ft_find_env(char *env_str, t_env *env_list)
+t_env	*find_update_env(char *env_str, t_env *env_list)
 {
 	t_env	*curr;
 	char	*key;
 	char	*value;
+	char	*temp;
 
 	if (!env_str)
 		return (NULL);
 	curr = env_list;
-	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
-	value = ft_strdup(ft_strchr(env_str, '=') + 1);
+	temp = ft_strchr(env_str, '=');
+	key = ft_substr(env_str, 0, temp - env_str);
+	if (temp[1] != '\0')
+		value = ft_strdup(temp + 1);
+	else
+		value = ft_strdup("");
 	while (curr && ft_strcmp(curr->key, key))
 		curr = curr->next;
 	if (curr)
+	{
+		free(curr->value);
 		curr->value = value;
-	free(key);
-	free(value);
+	}
 	return (curr);
 }
 
@@ -89,7 +95,7 @@ void	ft_update_pwdenv(t_state *state)
 	if (cwd == NULL)
 		perror("getcwd failed");
 	pwd_env_char = ft_strjoin("PWD=", cwd);
-	ft_find_env(pwd_env_char, state->env_list);
+	find_update_env(pwd_env_char, state->env_list);
 	free(pwd_env_char);
 	free(cwd);
 }

@@ -82,6 +82,30 @@
 
   * [X] unset z 후 export z=a 후 export z=b
 
+---
+
+끄아아아아아아앙ㄱ
+
+* [ ] export Z
+  -> env에 출력 X | export `declare -x Z` 출력됨
+* [ ] export Z=
+  -> env에 `Z=` 출력됨 | export `declare -x Z=""` 출력됨
+* [ ] export Z=z
+  -> env에 `Z=z` 출력됨 | export `declare -x Z="z"` 출력됨
+* [ ] export Z	**->**	export Z=
+  -> env에 `Z=` 출력됨 | export `declare -x Z=""` 출력됨
+* [ ] export Z	**->**	export Z=z
+  -> env에 `Z=z` 출력됨 | export `declare -x Z="z"` 출력됨
+* [ ] export Z=	**->**	export Z=z
+  -> env에 `Z=z` 출력됨 | export `declare -x Z="z"` 출력됨
+* [ ] export Z=	**->**	export Z
+  -> env에 `Z=` 출력됨 | export `declare -x Z=""` 출력됨
+* [ ] export Z=z	**->**	export Z
+  -> env에 `Z=z` 출력됨 | export `declare -x Z="z"` 출력됨
+* [ ] export Z=z	**->**	export Z=
+  -> env에 `Z=` 출력됨 | export `declare -x Z=""` 출력됨
+  ***즉, 처음 입력할 땐 다르지만 key가 입력되고 난 뒤에는 어떻게든 export에 출력되는 형식으로 바뀜***
+
 ### 5. unset
 
 * [X] unset -> 아무 동작 하지 않음

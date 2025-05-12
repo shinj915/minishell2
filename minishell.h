@@ -184,7 +184,7 @@ int			find_argc(char **argv);
 t_env		*find_tail_env(t_env *env_list);
 void		delete_env_node(t_env **env_list, t_env *pre, t_env *curr);
 char		*make_envchar(t_env *env);
-t_env		*ft_find_env(char *env_str, t_env *env_list);
+t_env		*find_update_env(char *env_str, t_env *env_list);
 void		ft_update_pwdenv(t_state *state);
 
 #endif
