@@ -6,18 +6,11 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 15:54:47 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:11:09 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	is_exit(t_cmd *cmd)
-{
-	if (strcmp(cmd->exec_file_name, "exit") == 0)
-		return (1);
-	return (0);
-}
 
 static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 {
@@ -30,14 +23,10 @@ static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 	if (result > 0)
 		return (result);
 	if (is_exit(cmd) && cmd->prev == NULL && cmd->next == NULL)
-	{
-		result = builtin_execute_exit(cmd, state);
-		g_exit_status = result;
-		if (g_exit_status != 1)
-			result = 4242;
-	}
+		result = execute_single_exit(cmd, state);
 	else if (is_builtin_command(cmd) && cmd->prev == NULL && cmd->next == NULL)
 	{
+		*pid = -1;
 		if (set_redirection(cmd))
 		{
 			close(fd_backup[0]);

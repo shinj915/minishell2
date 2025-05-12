@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 14:13:21 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:02:13 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ void		wait_for_processes(pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
 void		execute_child_processes(t_cmd *cmd, t_state *state, \
 									pid_t *pid, int fd_backup[2]);
+int			is_exit(t_cmd *cmd);
 
 /* Exec - Pipe and Redirction */
 int			check_pipe_and_cmd(t_cmd **cmd);
@@ -174,9 +175,9 @@ int			builtin_execute_export(t_cmd *cmd, t_state *state);
 int			builtin_execute_unset(t_cmd *cmd, t_state *state);
 int			builtin_execute_env(t_cmd *cmd, t_state *state);
 int			builtin_execute_exit(t_cmd *cmd, t_state *state);
+int			execute_single_exit(t_cmd *cmd, t_state *state);
 
 /* Exec - Builtin utils */
-void		print_error(t_cmd *cmd, char *env_str, int error);
 int			find_argc(char **argv);
 t_env		*find_tail_env(t_env *env_list);
 void		delete_env_node(t_env **env_list, t_env *pre, t_env *curr);
@@ -204,6 +205,7 @@ long long	ft_atoll(const char *str);
 
 /* Util - Print error message*/
 void		print_error_external(t_cmd *cmd, int err);
+void		print_error_builtin(t_cmd *cmd, char *env_str, int error);
 void		print_error_syntax(t_cmd *cmd, int err);
 void		print_error_parsing(char *cmd_parse);
 

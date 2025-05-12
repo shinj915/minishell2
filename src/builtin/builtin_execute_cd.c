@@ -1,36 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_execute_env.c                              :+:      :+:    :+:   */
+/*   builtin_execute_cd.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 12:45:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:20 by jishin           ###   ########.fr       */
+/*   Created: 2025/05/12 18:26:14 by jishin            #+#    #+#             */
+/*   Updated: 2025/05/12 18:59:17 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
-int builtin_execute_env(t_cmd *cmd, t_state *state)
+int builtin_execute_cd(t_cmd *cmd, t_state *state)
 {
-	int		argc;
-	t_env	*env;
-	
+	int	argc;
+
 	argc = find_argc(cmd->argv);
-	if (argc > 1)
+	if (argc != 2)
 	{
-		print_error_builtin(cmd, cmd->argv[1], ERROR_NO_SUCH_FILE_OF_DIR);
-		g_exit_status = 127;
-		return (127);
+		if (argc == 1)
+			print_error_builtin(cmd, NULL, ERROR_TOO_FEW_ARGS);
+		else
+			print_error_builtin(cmd, NULL, ERROR_TOO_MANY_ARGS);
+		g_exit_status = 1;
+		return (1);
 	}
-	env = state->env_list;
-	while (env)
+	if (chdir(cmd->argv[1]) != 0)
 	{
-		ft_putstr_fd(env->key, cmd->redir_fd_out);
-		ft_putchar_fd('=', cmd->redir_fd_out);
-		ft_putendl_fd(env->value, cmd->redir_fd_out);
-		env = env->next;
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(cmd->argv[1], 2);
+		perror(" ");
+		return (1);
 	}
+	ft_update_pwdenv(state);
 	return (0);
 }

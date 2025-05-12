@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:38:08 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 17:00:46 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 18:59:21 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,40 @@ static int is_valid_key(char *key)
 	}
 	return (1);
 }
-// export_env_vals
+
+t_env	*find_tail_env(t_env *env_list)
+{
+	t_env	*env;
+
+	if (env_list == NULL)
+		return (NULL);
+	env = env_list;
+	while (env->next != NULL)
+		env = env->next;
+	return (env);
+}
+
+t_env	*ft_find_env(char *env_str, t_env *env_list)
+{
+	t_env	*env;
+	char	*key;
+	char	*value;
+
+	if (!env_str)
+		return (NULL);	
+	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
+	value = ft_strdup(ft_strchr(env_str, '=') + 1);
+	env = ft_find_return_env(key, env_list);
+	if (env)
+	{
+		free(env->value);
+		env->value = value;
+	}
+	free(key);
+	free(value);
+	return (env);
+}
+
 static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 {
 	char	*key;
@@ -41,7 +74,7 @@ static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 	value = ft_strdup(ft_strchr(env_str, '=') + 1);
 	if (!is_valid_key(key))
 	{
-		print_error(cmd, env_str, ERROR_INVALID_IDENTIFIER);
+		print_error_builtin(cmd, env_str, ERROR_INVALID_IDENTIFIER);
 		g_exit_status = 1;
 		free(key);
 		free(value);
@@ -62,7 +95,7 @@ int builtin_execute_export(t_cmd *cmd, t_state *state)
 	argc = find_argc(cmd->argv);
 	if (argc < 2)
 	{
-		print_error(cmd, NULL, ERROR_TOO_FEW_ARGS);
+		print_error_builtin(cmd, NULL, ERROR_TOO_FEW_ARGS);
 		return (1);
 	}
 	while (i < argc)

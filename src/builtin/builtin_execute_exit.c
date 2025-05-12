@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:15:15 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 15:37:52 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 18:59:20 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,25 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 			return (ft_atoll(cmd->argv[1]));
 		else if (value == 1)
 		{
-			print_error(cmd, cmd->argv[1], ERROR_NUMERIC_REQUIRED);
+			print_error_builtin(cmd, cmd->argv[1], ERROR_NUMERIC_REQUIRED);
 			return (2);
 		}
 		else
 		{
-			print_error(cmd, NULL, ERROR_TOO_MANY_ARGS);
+			print_error_builtin(cmd, NULL, ERROR_TOO_MANY_ARGS);
 			return (1);
 		}
 	}
 	return (0);
+}
+
+int	execute_single_exit(t_cmd *cmd, t_state *state)
+{
+	int	result;
+
+	result = builtin_execute_exit(cmd, state);
+	g_exit_status = result;
+	if (g_exit_status != 1)
+		result = 4242;
+	return (result);
 }

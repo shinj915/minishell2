@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:32:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 15:55:13 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 18:59:26 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ int	is_full_of_space(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int	is_exit(t_cmd *cmd)
+{
+	if (strcmp(cmd->exec_file_name, "exit") == 0)
+		return (1);
+	return (0);
 }
 
 int	set_pids(t_cmd_list *cmd_list, pid_t **pids)

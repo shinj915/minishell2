@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:34:17 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 15:51:16 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 18:59:33 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,34 @@ void	print_error_external(t_cmd *cmd, int err)
 			exit(127);
 		if (errno == EACCES)
 			exit(126);
+	}
+}
+
+void	print_error_builtin(t_cmd *cmd, char *env_str, int error)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd->exec_file_name, 2);
+	if (error == ERROR_INVALID_IDENTIFIER)
+	{
+		ft_putstr_fd(": \'", 2);
+		ft_putstr_fd(env_str, 2);
+		ft_putendl_fd("\': not a valid identifier", 2);
+	}
+	if (error == ERROR_TOO_FEW_ARGS)
+		ft_putendl_fd(": too few arguments", 2);
+	if (error == ERROR_TOO_MANY_ARGS)
+		ft_putendl_fd(": too many arguments", 2);
+	if (error == ERROR_NO_SUCH_FILE_OF_DIR)
+	{
+		ft_putstr_fd(": \'", 2);
+		ft_putstr_fd(env_str, 2);
+		ft_putendl_fd("\': No such file or directory", 2);
+	}
+	if (error == ERROR_NUMERIC_REQUIRED)
+	{
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(env_str, 2);
+		ft_putendl_fd(": numeric argument required", 2);
 	}
 }
 

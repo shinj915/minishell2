@@ -4,13 +4,14 @@ LDFLAGS = -lreadline
 CC = cc
 
 SRCS = main.c \
-		src/builtin/builtin_main.c \
-		src/builtin/builtin_execute.c \
+		src/builtin/builtin_execute_cd.c \
 		src/builtin/builtin_execute_echo.c \
-		src/builtin/builtin_execute_export.c \
-		src/builtin/builtin_execute_exit.c \
 		src/builtin/builtin_execute_env.c \
-		src/builtin/builtin_error.c \
+		src/builtin/builtin_execute_exit.c \
+		src/builtin/builtin_execute_export.c \
+		src/builtin/builtin_execute_pwd.c \
+		src/builtin/builtin_execute_unset.c \
+		src/builtin/builtin_main.c \
 		src/builtin/builtin_utils.c \
 		src/exec/exec_child.c \
 		src/exec/exec_main.c \
