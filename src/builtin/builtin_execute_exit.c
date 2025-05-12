@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:15:15 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/11 20:55:02 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:37:52 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,16 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 
 	(void)state;
 	argc = find_argc(cmd->argv);
+	write(1, "exit\n", 5);
 	if (argc > 1)
 	{
 		value = is_exitdigit(cmd->argv[1]);
 		if (argc == 2 && value == 0)
-			exit(ft_atoll(cmd->argv[1]));
+			return (ft_atoll(cmd->argv[1]));
 		else if (value == 1)
 		{
 			print_error(cmd, cmd->argv[1], ERROR_NUMERIC_REQUIRED);
-			exit(2);
+			return (2);
 		}
 		else
 		{
@@ -83,7 +84,5 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 			return (1);
 		}
 	}
-	else
-		exit(0);
 	return (0);
 }

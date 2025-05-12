@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:32:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 13:28:37 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:55:13 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int	set_pids(t_cmd_list *cmd_list, pid_t **pids)
 	}
 	*pids = malloc(sizeof(pid_t) * (cmd_count));
 	if (!*pids)
-	{
-		g_exit_status = 1;
 		return (0);
-	}
 	return (1);
 }
 

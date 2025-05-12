@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:04:09 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 14:18:05 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:55:04 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	check_pipe_and_cmd(t_cmd **cmd)
 	if (pipe((*cmd)->pipe_fd) == -1)
 	{
 		ft_putendl_fd("minishell: Broken pipe", 2);
-		g_exit_status = 1;
 		return (1);
 	}
 	if ((*cmd)->argv[0] == NULL || (*cmd)->argv[0][0] == '\0')
@@ -90,7 +89,6 @@ int	check_pipe_and_cmd(t_cmd **cmd)
 		ft_putendl_fd("minishell: : command not found", 2);
 		set_redirection(*cmd);
 		(*cmd) = (*cmd)->next;
-		g_exit_status = 127;
 		return (127);
 	}
 	return (0);
