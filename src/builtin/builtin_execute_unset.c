@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:25:18 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:22 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:24:00 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static void	unset_env(t_env **env_list, char *input)
 	}
 }
 
-int builtin_execute_unset(t_cmd *cmd, t_state *state)
+int	builtin_execute_unset(t_cmd *cmd, t_state *state)
 {
 	int	i;
-	int argc;
+	int	argc;
 
 	i = 1;
 	argc = find_argc(cmd->argv);

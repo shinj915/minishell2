@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:07:23 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:18 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:22:30 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_isnflag(char *argv)
 	return (flag);
 }
 
-int builtin_execute_echo(t_cmd *cmd, t_state *state)
+int	builtin_execute_echo(t_cmd *cmd, t_state *state)
 {
 	int	i;
 	int	n_flag;
@@ -46,7 +46,7 @@ int builtin_execute_echo(t_cmd *cmd, t_state *state)
 	}
 	while (ft_isnflag(cmd->argv[++i]))
 		n_flag++;
-	while(cmd->argv[i])
+	while (cmd->argv[i])
 	{
 		ft_putstr_fd(cmd->argv[i], cmd->redir_fd_out);
 		if (cmd->argv[i + 1])

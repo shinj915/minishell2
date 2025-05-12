@@ -6,13 +6,13 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:38:08 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:21 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:23:27 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int is_valid_key(char *key)
+static int	is_valid_key(char *key)
 {
 	int	i;
 
@@ -49,7 +49,7 @@ t_env	*ft_find_env(char *env_str, t_env *env_list)
 	char	*value;
 
 	if (!env_str)
-		return (NULL);	
+		return (NULL);
 	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
 	value = ft_strdup(ft_strchr(env_str, '=') + 1);
 	env = ft_find_return_env(key, env_list);
@@ -84,7 +84,7 @@ static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 	return (0);
 }
 
-int builtin_execute_export(t_cmd *cmd, t_state *state)
+int	builtin_execute_export(t_cmd *cmd, t_state *state)
 {
 	int		i;
 	int		argc;

@@ -6,13 +6,13 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:42 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:24 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:24:30 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int find_argc(char **argv)
+int	find_argc(char **argv)
 {
 	int	argc;
 

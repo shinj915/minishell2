@@ -6,17 +6,17 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:45:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:20 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/12 19:22:47 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int builtin_execute_env(t_cmd *cmd, t_state *state)
+int	builtin_execute_env(t_cmd *cmd, t_state *state)
 {
 	int		argc;
 	t_env	*env;
-	
+
 	argc = find_argc(cmd->argv);
 	if (argc > 1)
 	{
