@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 18:26:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 19:21:55 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 14:21:04 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	builtin_execute_cd(t_cmd *cmd, t_state *state)
 			print_error_builtin(cmd, NULL, ERROR_TOO_FEW_ARGS);
 		else
 			print_error_builtin(cmd, NULL, ERROR_TOO_MANY_ARGS);
-		g_exit_status = 1;
 		return (1);
 	}
 	if (chdir(cmd->argv[1]) != 0)

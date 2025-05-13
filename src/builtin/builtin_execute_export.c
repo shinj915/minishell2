@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:38:08 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 19:28:40 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 14:21:34 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 	if (!is_valid_key(key))
 	{
 		print_error_builtin(cmd, env_str, ERROR_INVALID_IDENTIFIER);
-		g_exit_status = 1;
 		free(key);
 		free(value);
 		return (1);

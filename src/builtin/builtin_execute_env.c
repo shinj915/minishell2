@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:45:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 19:22:47 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 14:21:12 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	builtin_execute_env(t_cmd *cmd, t_state *state)
 	if (argc > 1)
 	{
 		print_error_builtin(cmd, cmd->argv[1], ERROR_NO_SUCH_FILE_OF_DIR);
-		g_exit_status = 127;
 		return (127);
 	}
 	env = state->env_list;
