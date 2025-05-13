@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 15:55:44 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:54:32 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 {
-	
 	int	result;
 
-	result = check_pipe_and_cmd(&cmd);
+	result = check_pipe(&cmd);
 	if (result > 0)
 		return (result);
 	if (is_exit(cmd) && cmd->prev == NULL && cmd->next == NULL)
@@ -34,6 +33,31 @@ static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 	return (result);
 }
 
+static int	loop_cmd_list(t_cmd **cmd, t_state *state, pid_t *pids, int *i)
+{
+	int	result;
+
+	result = 0;
+	while ((*cmd) != NULL)
+	{
+		if ((*cmd)->argv == NULL || (*cmd)->argv[0] == NULL || \
+			(*cmd)->argv[0][0] == '\0')
+		{
+			if (!(*cmd)->redir_list)
+				ft_putendl_fd("minishell: : command not found", 2);
+			set_redirection(*cmd);
+			pids[*i] = -1;
+			(*i)++;
+			(*cmd) = (*cmd)->next;
+			continue ;
+		}
+		result = get_cmd_exit_code(*cmd, state, &pids[*i]);
+		(*cmd) = (*cmd)->next;
+		(*i)++;
+	}
+	return (result);
+}
+
 static int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
 {
 	pid_t			*pids;
@@ -46,17 +70,7 @@ static int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
 	if (!set_pids(cmd_list, &pids))
 		return (1);
 	cmd = cmd_list->head;
-	while (cmd != NULL)
-	{
-		result = get_cmd_exit_code(cmd, state, &pids[i]);
-		if (result != 0)
-		{
-			free(pids);
-			return (result);
-		}
-		cmd = cmd->next;
-		i++;
-	}
+	result = loop_cmd_list(&cmd, state, pids, &i);
 	wait_for_processes(pids, i);
 	free(pids);
 	return (result);
@@ -111,9 +125,9 @@ void	prompt(t_cmd_list *cmd_list, t_state *state)
 		}
 		free(state->cmd_line);
 		state->cmd_line = NULL;
-		if (result != 0 && result != 4242)
-			g_exit_status = result;
-		if (result == 4242)
+		if (result == EXIT_MINISHELL)
 			return ;
+		else if (result != 0)
+			g_exit_status = result;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:15:15 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 19:22:56 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:49:15 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ int	execute_single_exit(t_cmd *cmd, t_state *state)
 	result = builtin_execute_exit(cmd, state);
 	g_exit_status = result;
 	if (g_exit_status != 1)
-		result = 4242;
+		result = EXIT_MINISHELL;
 	return (result);
 }

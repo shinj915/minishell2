@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 15:55:37 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:49:05 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@
 # define ERROR_TOO_FEW_ARGS 52
 # define ERROR_CMD_NOT_FOUND 127
 # define ERROR_NUMERIC_REQUIRED 255
+
+# define EXIT_MINISHELL 4242
 
 extern int	g_exit_status;
 
@@ -159,7 +161,7 @@ void		execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid);
 int			is_exit(t_cmd *cmd);
 
 /* Exec - Pipe and Redirction */
-int			check_pipe_and_cmd(t_cmd **cmd);
+int			check_pipe(t_cmd **cmd);
 int			set_redirection(t_cmd *cmd);
 void		handle_pipe_and_redirection(t_cmd *cmd);
 void		close_fd(t_cmd *cmd, int fd_backup[2]);
