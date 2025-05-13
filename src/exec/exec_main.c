@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 19:11:09 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 15:55:44 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 {
-	int	fd_backup[2];
+	
 	int	result;
 
-	fd_backup[0] = dup(STDIN_FILENO);
-	fd_backup[1] = dup(STDOUT_FILENO);
 	result = check_pipe_and_cmd(&cmd);
 	if (result > 0)
 		return (result);
@@ -28,15 +26,11 @@ static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 	{
 		*pid = -1;
 		if (set_redirection(cmd))
-		{
-			close(fd_backup[0]);
-			close(fd_backup[1]);
 			return (1);
-		}
 		result = ft_exec_builtin(cmd, state);
 	}
 	else
-		execute_child_processes(cmd, state, pid, fd_backup);
+		execute_child_processes(cmd, state, pid);
 	return (result);
 }
 

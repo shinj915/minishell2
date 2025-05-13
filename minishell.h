@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 19:30:25 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 15:55:37 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,7 @@ void		prompt(t_cmd_list *cmd_list, t_state *state);
 int			set_pids(t_cmd_list *cmd_list, pid_t **pids);
 void		wait_for_processes(pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
-void		execute_child_processes(t_cmd *cmd, t_state *state, \
-									pid_t *pid, int fd_backup[2]);
+void		execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid);
 int			is_exit(t_cmd *cmd);
 
 /* Exec - Pipe and Redirction */

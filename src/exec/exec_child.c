@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:24 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 15:55:06 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,12 @@ static void	execute_child_cmd(t_cmd *cmd, t_state *state)
 	exit(127);
 }
 
-void	execute_child_processes(t_cmd *cmd, t_state *state, \
-								pid_t *pid, int fd_backup[2])
+void	execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid)
 {
+	int	fd_backup[2];
+
+	fd_backup[0] = dup(STDIN_FILENO);
+	fd_backup[1] = dup(STDOUT_FILENO);
 	*pid = fork();
 	if (*pid < 0)
 	{
