@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 15:59:00 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:49:05 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@
 # define ERROR_TOO_FEW_ARGS 52
 # define ERROR_CMD_NOT_FOUND 127
 # define ERROR_NUMERIC_REQUIRED 255
+
+# define EXIT_MINISHELL 4242
 
 extern int	g_exit_status;
 
