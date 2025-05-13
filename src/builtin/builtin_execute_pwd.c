@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   builtin_execute_pwd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/13 19:04:13 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/23 16:11:31 by jishin           ###   ########.fr       */
+/*   Created: 2025/05/12 18:26:54 by jishin            #+#    #+#             */
+/*   Updated: 2025/05/12 19:23:34 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	*free_2d_array(char **array)
+int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 {
-	int	idx;
+	char	*cwd;
 
-	idx = 0;
-	if (!array)
-		return (NULL);
-	while (array[idx] != NULL)
-		free(array[idx++]);
-	free(array);
-	return (NULL);
-}
-
-void	*free_multiple_array(void *s1, void *s2, void *s3, void *s4)
-{
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-	if (s3)
-		free(s3);
-	if (s4)
-		free(s4);
-	return (NULL);
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		perror("getcwd failed");
+	ft_putendl_fd(cwd, cmd->redir_fd_out);
+	ft_update_pwdenv(state);
+	free(cwd);
+	return (0);
 }

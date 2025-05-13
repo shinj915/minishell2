@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin_execute_env.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 15:49:28 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/23 16:12:17 by jishin           ###   ########.fr       */
+/*   Created: 2025/05/09 12:45:46 by eunam             #+#    #+#             */
+/*   Updated: 2025/05/13 14:21:12 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_exit_status;
-
-int	main(int argc, char **argv, char **envp)
+int	builtin_execute_env(t_cmd *cmd, t_state *state)
 {
-	t_state		*state;
-	t_cmd_list	*cmd_list;
+	int		argc;
+	t_env	*env;
 
-	state = init_minishell(&argc, &argv, envp);
-	if (!state)
-		return (TYPE_FAIL);
-	cmd_list = (t_cmd_list *)malloc(sizeof(t_cmd_list));
-	if (!cmd_list)
+	argc = find_argc(cmd->argv);
+	if (argc > 1)
 	{
-		free(state);
-		return (TYPE_FAIL);
+		print_error_builtin(cmd, cmd->argv[1], ERROR_NO_SUCH_FILE_OF_DIR);
+		return (127);
 	}
-	state->cmd_list = cmd_list;
-	prompt(cmd_list, state);
-	free(cmd_list);
-	free_state(state);
-	return (g_exit_status);
+	env = state->env_list;
+	while (env)
+	{
+		ft_putstr_fd(env->key, cmd->redir_fd_out);
+		ft_putchar_fd('=', cmd->redir_fd_out);
+		ft_putendl_fd(env->value, cmd->redir_fd_out);
+		env = env->next;
+	}
+	return (0);
 }

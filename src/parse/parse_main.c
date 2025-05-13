@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:20:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/04/17 18:27:33 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/05 14:22:52 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ t_cmd_list	*parse(char *cmd, t_state *state)
 	if (!token_list)
 		return (NULL);
 	if (token_list->token_type == TYPE_SYNTAX_ERROR || \
-		token_list->token_type == TYPE_AMBIGOUS_ERROR)
+		token_list->token_type == TYPE_AMBIGUOUS_ERROR)
 		return (handle_syntax_error(token_list));
 	result = tokens_to_cmd_list(token_list);
 	free_token_list(token_list);
+	if (!result)
+		return (NULL);
 	return (result);
 }
