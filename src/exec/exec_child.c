@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 15:55:06 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:24:42 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid)
 	if (*pid < 0)
 	{
 		perror("fork");
+		g_exit_status = 1;
 		return ;
 	}
 	if (*pid == 0)
