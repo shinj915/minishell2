@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 16:54:32 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/17 13:26:46 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 	result = check_pipe(&cmd);
 	if (result > 0)
 		return (result);
+	*pid = -1;
 	if (is_exit(cmd) && cmd->prev == NULL && cmd->next == NULL)
 		result = execute_single_exit(cmd, state);
 	else if (is_builtin_command(cmd) && cmd->prev == NULL && cmd->next == NULL)
 	{
-		*pid = -1;
 		if (set_redirection(cmd))
 			return (1);
 		result = ft_exec_builtin(cmd, state);

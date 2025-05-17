@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:32:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:26 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/17 13:25:46 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	wait_for_processes(pid_t *pids, int cmd_count)
 				write(1, "\n", 1);
 				last_status = 128 + WTERMSIG(status);
 			}
+			g_exit_status = last_status;
 		}
 		i++;
 	}
-	g_exit_status = last_status;
 	signal(SIGINT, ft_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
