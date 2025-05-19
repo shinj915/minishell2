@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:17:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 14:20:34 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:36:38 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,13 @@ static void	heredoc_child(t_state *state, t_cmd_list *cmd_list, \
 							char *del, int fd)
 {
 	char	*line;
-	t_env	*ptr;
 
 	line = NULL;
 	heredoc_prompt(del, fd, line, state);
 	free_cmd_list(cmd_list);
 	free(state->cmd_parse);
 	free(state->cmd_line);
-	while (state->env_list)
-	{
-		ptr = state->env_list;
-		free(state->env_list->key);
-		free(state->env_list->value);
-		state->env_list = state->env_list->next;
-		free(ptr);
-	}
-	free(state);
+	free_state(state);
 }
 
 static int	heredoc_parent(pid_t pid, int *fd, char *del)

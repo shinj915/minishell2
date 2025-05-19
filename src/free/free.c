@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:22:31 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/09 11:13:55 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:40:09 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	free_state(t_state *state)
 		state->env_list = state->env_list->next;
 		free(ptr);
 	}
-	free(state->env_list);
 	free(state);
 }
 
