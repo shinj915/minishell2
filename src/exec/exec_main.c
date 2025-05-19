@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/17 13:26:46 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:44:47 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	execute_prompt(t_cmd_list *cmd_list, t_state *state)
 	if (!cmd_list)
 	{
 		print_error_parsing(state->cmd_parse);
-		return (1);
+		return (258);
 	}
 	if (!is_full_of_space(state->cmd_parse) && !has_heredoc(cmd_list, state))
 	{
