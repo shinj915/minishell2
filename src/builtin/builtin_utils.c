@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:42 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/13 17:13:20 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/20 11:30:02 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,10 @@ t_env	*ft_find_env(char *env_str, t_env *env_list)
 	{
 		free(env->value);
 		env->value = value;
+	}
+	else
+	{
+		free(value);
 	}
 	free(key);
 	return (env);

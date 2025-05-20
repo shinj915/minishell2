@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:38:08 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/13 14:21:34 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/20 11:29:50 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	print_export_envs(t_cmd *cmd, t_env *env_list)
 
 static int	make_env(t_cmd *cmd, int i, t_env *env_list)
 {
-	int 	res;
+	int		res;
 	t_env	*env;
 
 	res = 0;
@@ -89,7 +89,8 @@ static int	make_env(t_cmd *cmd, int i, t_env *env_list)
 		{
 			if (!is_valid_key(cmd->argv[i]))
 			{
-				print_error_builtin(cmd, cmd->argv[i], ERROR_INVALID_IDENTIFIER);
+				print_error_builtin(cmd, cmd->argv[i], \
+									ERROR_INVALID_IDENTIFIER);
 				return (1);
 			}
 			add_nullvalue_env(cmd->argv[i], env_list);
