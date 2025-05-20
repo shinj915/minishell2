@@ -182,7 +182,7 @@ int			execute_single_exit(t_cmd *cmd, t_state *state);
 int			find_argc(char **argv);
 void		ft_update_pwdenv(t_state *state);
 t_env		*ft_find_return_env(char *key, t_env *env_list);
-void		add_nullvalue_env(char *key, t_env *env_list)l
+void		add_nullvalue_env(char *key, t_env *env_list);
 t_env		*ft_find_env(char *env_str, t_env *env_list);
 
 /* Heredoc */
