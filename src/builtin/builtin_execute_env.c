@@ -26,9 +26,12 @@ int	builtin_execute_env(t_cmd *cmd, t_state *state)
 	env = state->env_list;
 	while (env)
 	{
-		ft_putstr_fd(env->key, cmd->redir_fd_out);
-		ft_putchar_fd('=', cmd->redir_fd_out);
-		ft_putendl_fd(env->value, cmd->redir_fd_out);
+		if (env->value)
+		{
+			ft_putstr_fd(env->key, cmd->redir_fd_out);
+			ft_putchar_fd('=', cmd->redir_fd_out);
+			ft_putendl_fd(env->value, cmd->redir_fd_out);
+		}
 		env = env->next;
 	}
 	return (0);
