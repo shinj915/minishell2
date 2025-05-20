@@ -182,6 +182,8 @@ int			execute_single_exit(t_cmd *cmd, t_state *state);
 int			find_argc(char **argv);
 void		ft_update_pwdenv(t_state *state);
 t_env		*ft_find_return_env(char *key, t_env *env_list);
+void		add_nullvalue_env(char *key, t_env *env_list);
+t_env		*ft_find_env(char *env_str, t_env *env_list);
 
 /* Heredoc */
 int			has_heredoc(t_cmd_list *cmd_list, t_state *state);
@@ -194,6 +196,7 @@ t_env		*create_new_env(char *key, char *value);
 t_env		*add_env(t_env *env, char *key, char *value);
 char		*ft_getenv(t_state *state, char *key);
 char		**get_envp(t_env *env_list);
+t_env		*find_tail_env(t_env *env_list);
 
 /* Util - Minishell ft_utils */
 char		*ft_strndup(const char *s, size_t n);
