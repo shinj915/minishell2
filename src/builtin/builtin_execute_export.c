@@ -30,39 +30,6 @@ static int	is_valid_key(char *key)
 	return (1);
 }
 
-static t_env	*find_tail_env(t_env *env_list)
-{
-	t_env	*env;
-
-	if (env_list == NULL)
-		return (NULL);
-	env = env_list;
-	while (env->next != NULL)
-		env = env->next;
-	return (env);
-}
-
-static t_env	*ft_find_env(char *env_str, t_env *env_list)
-{
-	t_env	*env;
-	char	*key;
-	char	*value;
-
-	if (!env_str)
-		return (NULL);
-	key = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
-	value = ft_strdup(ft_strchr(env_str, '=') + 1);
-	env = ft_find_return_env(key, env_list);
-	if (env)
-	{
-		free(env->value);
-		env->value = value;
-	}
-	free(key);
-	free(value);
-	return (env);
-}
-
 static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 {
 	char	*key;
@@ -83,6 +50,54 @@ static int	for_export_funtion(t_cmd *cmd, char *env_str, t_env *env_list)
 	return (0);
 }
 
+static void	print_export_envs(t_cmd *cmd, t_env *env_list)
+{
+	t_env	*env;
+
+	env = env_list;
+	while (env)
+	{
+		ft_putstr_fd("declare -x ", cmd->redir_fd_out);
+		if (env->value)
+		{
+			ft_putstr_fd(env->key, cmd->redir_fd_out);
+			ft_putstr_fd("=\"", cmd->redir_fd_out);
+			ft_putstr_fd(env->value, cmd->redir_fd_out);
+			ft_putendl_fd("\"", cmd->redir_fd_out);
+		}
+		else
+			ft_putendl_fd(env->key, cmd->redir_fd_out);
+		env = env->next;
+	}
+}
+
+static int	make_env(t_cmd *cmd, int i, t_env *env_list)
+{
+	int 	res;
+	t_env	*env;
+
+	res = 0;
+	if (ft_strchr(cmd->argv[i], '='))
+	{
+		if (!ft_find_env(cmd->argv[i], env_list))
+			res += for_export_funtion(cmd, cmd->argv[i], env_list);
+	}
+	else
+	{
+		env = ft_find_return_env(cmd->argv[i], env_list);
+		if (!env)
+		{
+			if (!is_valid_key(cmd->argv[i]))
+			{
+				print_error_builtin(cmd, cmd->argv[i], ERROR_INVALID_IDENTIFIER);
+				return (1);
+			}
+			add_nullvalue_env(cmd->argv[i], env_list);
+		}
+	}
+	return (res);
+}
+
 int	builtin_execute_export(t_cmd *cmd, t_state *state)
 {
 	int		i;
@@ -93,17 +108,10 @@ int	builtin_execute_export(t_cmd *cmd, t_state *state)
 	res = 0;
 	argc = find_argc(cmd->argv);
 	if (argc < 2)
-	{
-		print_error_builtin(cmd, NULL, ERROR_TOO_FEW_ARGS);
-		return (1);
-	}
+		print_export_envs(cmd, state->env_list);
 	while (i < argc)
 	{
-		if (ft_strchr(cmd->argv[i], '='))
-		{
-			if (!ft_find_env(cmd->argv[i], state->env_list))
-				res += for_export_funtion(cmd, cmd->argv[i], state->env_list);
-		}
+		res += make_env(cmd, i, state->env_list);
 		i++;
 	}
 	if (res > 0)
