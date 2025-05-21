@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 17:24:42 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/21 15:09:29 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void	execute_child_cmd(t_cmd *cmd, t_state *state)
 		exit(0);
 	execve(path, cmd->argv, envp);
 	perror("minishell: execve failed");
-	free(envp);
+	free_2d_array(envp);
 	exit(127);
 }
 

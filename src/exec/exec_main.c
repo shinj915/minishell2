@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/19 12:44:47 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/21 16:55:58 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,6 @@ static int	execute_prompt(t_cmd_list *cmd_list, t_state *state)
 	result = 0;
 	state->cmd_parse = ft_strdup(state->cmd_line);
 	cmd_list = parse(state->cmd_line, state);
-	if (!cmd_list)
-	{
-		print_error_parsing(state->cmd_parse);
-		return (258);
-	}
 	if (!is_full_of_space(state->cmd_parse) && !has_heredoc(cmd_list, state))
 	{
 		if (cmd_list->cmd_status == TYPE_SYNTAX_ERROR)
@@ -127,7 +122,5 @@ void	prompt(t_cmd_list *cmd_list, t_state *state)
 		state->cmd_line = NULL;
 		if (result == EXIT_MINISHELL)
 			return ;
-		else if (result != 0)
-			g_exit_status = result;
 	}
 }
