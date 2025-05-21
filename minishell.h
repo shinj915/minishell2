@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 16:49:05 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/20 14:15:05 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int			has_heredoc(t_cmd_list *cmd_list, t_state *state);
 void		heredoc_prompt(char *del, int fd, char *line, t_state *state);
 char		*get_heredoc_delimeter(t_cmd_redir *red, int idx);
 int			is_fd_valid(int fd);
+void		heredoc_sigint(int signo);
 
 /* Util - Environment variables */
 t_env		*create_new_env(char *key, char *value);

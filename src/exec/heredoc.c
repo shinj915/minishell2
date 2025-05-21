@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:17:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/19 13:36:38 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/20 14:26:37 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static int	heredoc_parent(pid_t pid, int *fd, char *del)
 {
 	int	status;
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, heredoc_sigint);
 	waitpid(pid, &status, 0);
-	signal(SIGINT, ft_sigint);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
+		signal(SIGINT, ft_sigint);
 		close(*fd);
 		free(del);
 		return (1);

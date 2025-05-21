@@ -6,11 +6,20 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:35:34 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/09 11:35:00 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/20 14:26:37 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	heredoc_sigint(int signo)
+{
+	if (signo == SIGINT)
+	{
+		write(1, "^C\n", 3);
+		g_exit_status = 128 + signo;
+	}
+}
 
 char	*get_heredoc_delimeter(t_cmd_redir *red, int idx)
 {
