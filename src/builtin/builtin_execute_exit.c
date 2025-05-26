@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:15:15 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/17 13:58:02 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/26 14:27:42 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ int	execute_single_exit(t_cmd *cmd, t_state *state)
 
 	result = builtin_execute_exit(cmd, state);
 	if (result == -1)
+	{
+		g_exit_status = 1;
 		return (1);
+	}
 	else
 	{
 		g_exit_status = result;

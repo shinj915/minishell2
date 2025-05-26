@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:27:56 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/21 16:57:30 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/26 14:28:06 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ int	ft_exec_builtin(t_cmd *cmd, t_state *state)
 	else if (ft_strcmp(cmd->exec_file_name, "env") == 0)
 		res = builtin_execute_env(cmd, state);
 	else if (ft_strcmp(cmd->exec_file_name, "exit") == 0)
+	{
 		res = builtin_execute_exit(cmd, state);
+		if (res == -1)
+			res = 1;
+	}
 	g_exit_status = res;
 	return (res);
 }
