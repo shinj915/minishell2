@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:17:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/20 14:26:37 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:09:49 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	heredoc_child(t_state *state, t_cmd_list *cmd_list, \
 	line = NULL;
 	heredoc_prompt(del, fd, line, state);
 	free_cmd_list(cmd_list);
-	free(state->cmd_parse);
 	free(state->cmd_line);
 	free_state(state);
 }

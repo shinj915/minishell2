@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:34:17 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/19 12:44:35 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:10:39 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,4 @@ void	print_error_syntax(t_cmd *cmd, int err)
 		ft_putendl_fd(": ambiguous redirect", 2);
 		g_exit_status = 1;
 	}
-}
-
-void	print_error_parsing(char *cmd_parse)
-{
-	ft_putendl_fd("minishell: failed command parsing", 2);
-	free(cmd_parse);
 }

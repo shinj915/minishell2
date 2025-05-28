@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/21 16:55:58 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:07:25 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ static int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
 	return (result);
 }
 
-static int	execute_prompt(t_cmd_list *cmd_list, t_state *state)
+static int	execute_prompt(t_state *state)
 {
-	int	result;
+	int			result;
+	t_cmd_list	*cmd_list;
 
 	result = 0;
-	state->cmd_parse = ft_strdup(state->cmd_line);
 	cmd_list = parse(state->cmd_line, state);
-	if (!is_full_of_space(state->cmd_parse) && !has_heredoc(cmd_list, state))
+	if (!is_full_of_space(state->cmd_line) && !has_heredoc(cmd_list, state))
 	{
 		if (cmd_list->cmd_status == TYPE_SYNTAX_ERROR)
 			print_error_syntax(cmd_list->head, TYPE_SYNTAX_ERROR);
@@ -94,12 +94,11 @@ static int	execute_prompt(t_cmd_list *cmd_list, t_state *state)
 	}
 	unlink_tmp_file(cmd_list);
 	free_cmd_list(cmd_list);
-	free(state->cmd_parse);
 	add_history(state->cmd_line);
 	return (result);
 }
 
-void	prompt(t_cmd_list *cmd_list, t_state *state)
+void	prompt(t_state *state)
 {
 	int	result;
 
@@ -110,7 +109,7 @@ void	prompt(t_cmd_list *cmd_list, t_state *state)
 		if (state->cmd_line)
 		{
 			if (state->cmd_line[0] != '\0')
-				result = execute_prompt(cmd_list, state);
+				result = execute_prompt(state);
 		}
 		else
 		{

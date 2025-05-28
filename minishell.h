@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 16:01:12 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:08:02 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ typedef struct s_state
 {
 	t_env		*env_list;
 	char		*cmd_line;
-	char		*cmd_parse;
-	t_cmd_list	*cmd_list;
 }	t_state;
 
 /* Init minishell */
@@ -146,7 +144,7 @@ t_cmd_redir	*add_cmd_redir(t_cmd *cmd, int type, char *file);
 void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 
 /* Exec */
-void		prompt(t_cmd_list *cmd_list, t_state *state);
+void		prompt(t_state *state);
 int			set_pids(t_cmd_list *cmd_list, pid_t **pids);
 void		wait_for_processes(pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
@@ -209,7 +207,7 @@ void		*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
 void		free_state(t_state *state);
 void		free_token(t_token *token);
 void		free_token_list(t_token *token_list);
-void		free_cmd_node(t_cmd_list *cmd_list);
+void		free_cmd_node(t_cmd *cmd);
 void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
 void		unlink_tmp_file(t_cmd_list *cmd_lists);
