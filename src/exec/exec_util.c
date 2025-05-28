@@ -6,11 +6,17 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:32:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/21 16:57:00 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:31:11 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	exit_child_process(char **envp, int exit_code)
+{
+	free_2d_array(envp);
+	exit(exit_code);
+}
 
 int	is_full_of_space(char *str)
 {

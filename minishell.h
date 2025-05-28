@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 16:08:02 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:31:29 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,10 +196,9 @@ int			ft_strcmp(char const *s1, char const *s2);
 long long	ft_atoll(const char *str);
 
 /* Util - Print error message*/
-void		print_error_external(t_cmd *cmd, int err);
+void		print_error_external(t_cmd *cmd, char **envp, int err);
 void		print_error_builtin(t_cmd *cmd, char *env_str, int error);
 void		print_error_syntax(t_cmd *cmd, int err);
-void		print_error_parsing(char *cmd_parse);
 
 /* Clean up - memory free functions */
 void		*free_2d_array(char **array);
@@ -211,5 +210,6 @@ void		free_cmd_node(t_cmd *cmd);
 void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
 void		unlink_tmp_file(t_cmd_list *cmd_lists);
+void		exit_child_process(char **envp, int exit_code);
 
 #endif
