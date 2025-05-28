@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:15:15 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/26 14:27:42 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:44:01 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 	int	argc;
 	int	value;
 
-	(void)state;
 	argc = find_argc(cmd->argv);
 	write(1, "exit\n", 5);
 	if (argc > 1)
@@ -84,6 +83,8 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 			return (-1);
 		}
 	}
+	if (state->exit_signal)
+		return (g_exit_status);
 	return (0);
 }
 

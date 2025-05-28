@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:32:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 16:31:11 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:17:39 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,13 @@ int	set_pids(t_cmd_list *cmd_list, pid_t **pids)
 	return (1);
 }
 
-void	wait_for_processes(pid_t *pids, int cmd_count)
+void	wait_for_processes(t_state *state, pid_t *pids, int cmd_count)
 {
 	int	i;
 	int	status;
 	int	last_status;
 
 	i = 0;
-	last_status = 0;
 	while (i < cmd_count)
 	{
 		if (pids[i] > 0)
@@ -75,6 +74,7 @@ void	wait_for_processes(pid_t *pids, int cmd_count)
 				last_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
+				state->exit_signal = 1;
 				write(1, "\n", 1);
 				last_status = 128 + WTERMSIG(status);
 			}

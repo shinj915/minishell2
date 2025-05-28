@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 16:07:25 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:19:57 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
 		return (1);
 	cmd = cmd_list->head;
 	result = loop_cmd_list(&cmd, state, pids, &i);
-	wait_for_processes(pids, i);
+	wait_for_processes(state, pids, i);
 	free(pids);
 	return (result);
 }

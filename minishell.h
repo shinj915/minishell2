@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 16:31:29 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:35:08 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_state
 {
 	t_env		*env_list;
 	char		*cmd_line;
+	int			exit_signal;
 }	t_state;
 
 /* Init minishell */
@@ -146,7 +147,7 @@ void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 /* Exec */
 void		prompt(t_state *state);
 int			set_pids(t_cmd_list *cmd_list, pid_t **pids);
-void		wait_for_processes(pid_t *pids, int cmd_count);
+void		wait_for_processes(t_state *state, pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
 void		execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid);
 int			is_exit(t_cmd *cmd);
