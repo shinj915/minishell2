@@ -6,14 +6,17 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:32:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 17:17:39 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:47:55 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	exit_child_process(char **envp, int exit_code)
+void	exit_child_process(t_state *state, char **envp, int exit_code)
 {
+	free(state->pids);
+	free_cmd_list(state->cmd_list);
+	free_state(state);
 	free_2d_array(envp);
 	exit(exit_code);
 }
@@ -39,13 +42,13 @@ int	is_exit(t_cmd *cmd)
 	return (0);
 }
 
-int	set_pids(t_cmd_list *cmd_list, pid_t **pids)
+int	set_pids(t_state *state, pid_t **pids)
 {
 	t_cmd	*cmd_ptr;
 	int		cmd_count;
 
 	cmd_count = 0;
-	cmd_ptr = cmd_list->head;
+	cmd_ptr = state->cmd_list->head;
 	while (cmd_ptr != NULL)
 	{
 		cmd_count++;
@@ -54,6 +57,7 @@ int	set_pids(t_cmd_list *cmd_list, pid_t **pids)
 	*pids = malloc(sizeof(pid_t) * (cmd_count));
 	if (!*pids)
 		return (0);
+	state->pids = *pids;
 	return (1);
 }
 

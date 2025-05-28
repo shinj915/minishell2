@@ -6,33 +6,33 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:34:17 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 16:34:38 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:39:47 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	print_error_external(t_cmd *cmd, char **envp, int err)
+void	print_error_external(t_state *state, t_cmd *cmd, char **envp, int err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd->exec_file_name, 2);
 	if (err == ERROR_ISDIR)
 	{
 		ft_putendl_fd(": Is a directory", 2);
-		exit_child_process(envp, 126);
+		exit_child_process(state, envp, 126);
 	}
 	if (err == ERROR_CMD_NOT_FOUND)
 	{
 		ft_putendl_fd(": command not found", 2);
-		exit_child_process(envp, 127);
+		exit_child_process(state, envp, 127);
 	}
 	if (err == ERROR_SYSTEM)
 	{
 		perror(": ");
 		if (errno == ENOENT)
-			exit_child_process(envp, 127);
+			exit_child_process(state, envp, 127);
 		if (errno == EACCES)
-			exit_child_process(envp, 126);
+			exit_child_process(state, envp, 126);
 	}
 }
 

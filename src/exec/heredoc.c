@@ -6,21 +6,19 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:17:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 17:27:29 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:08:56 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	heredoc_child(t_state *state, t_cmd_list *cmd_list, \
-							char *del, int fd)
+static void	heredoc_child(t_state *state, char *del, int fd)
 {
 	char	*line;
 
 	line = NULL;
 	heredoc_prompt(del, fd, line, state);
-	free_cmd_list(cmd_list);
-	free(state->cmd_line);
+	free_cmd_list(state->cmd_list);
 	free_state(state);
 }
 
@@ -43,8 +41,7 @@ static int	heredoc_parent(t_state *state, pid_t pid, int *fd, char *del)
 	return (0);
 }
 
-static int	start_heredoc(t_state *state, t_cmd_list *cmd_list,
-							char *del, t_cmd_redir *red)
+static int	start_heredoc(t_state *state, char *del, t_cmd_redir *red)
 {
 	int		fd;
 	pid_t	pid;
@@ -62,7 +59,7 @@ static int	start_heredoc(t_state *state, t_cmd_list *cmd_list,
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_IGN);
-		heredoc_child(state, cmd_list, del, fd);
+		heredoc_child(state, del, fd);
 		exit(0);
 	}
 	else
@@ -72,13 +69,12 @@ static int	start_heredoc(t_state *state, t_cmd_list *cmd_list,
 	return (0);
 }
 
-static int	redirect_heredoc(t_state *state, t_cmd_list *cmd_list, \
-							char *del, t_cmd_redir *red)
+static int	redirect_heredoc(t_state *state, char *del, t_cmd_redir *red)
 {
 	if (del == NULL)
 		return (1);
 	red->redir_type = TYPE_AFTER_HEREDOC;
-	if (start_heredoc(state, cmd_list, del, red))
+	if (start_heredoc(state, del, red))
 		return (1);
 	free(del);
 	return (0);
@@ -101,7 +97,7 @@ int	has_heredoc(t_cmd_list *cmd_list, t_state *state)
 			if (red->redir_type == TYPE_TOKEN_IO_LL)
 			{
 				del = get_heredoc_delimeter(red, i++);
-				if (redirect_heredoc(state, cmd_list, del, red))
+				if (redirect_heredoc(state, del, red))
 					return (1);
 			}
 			red = red->next;

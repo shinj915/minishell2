@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 17:19:57 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:47:39 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
 
 	result = 0;
 	i = 0;
-	if (!set_pids(cmd_list, &pids))
+	if (!set_pids(state, &pids))
 		return (1);
 	cmd = cmd_list->head;
 	result = loop_cmd_list(&cmd, state, pids, &i);
@@ -83,6 +83,7 @@ static int	execute_prompt(t_state *state)
 
 	result = 0;
 	cmd_list = parse(state->cmd_line, state);
+	state->cmd_list = cmd_list;
 	if (!is_full_of_space(state->cmd_line) && !has_heredoc(cmd_list, state))
 	{
 		if (cmd_list->cmd_status == TYPE_SYNTAX_ERROR)

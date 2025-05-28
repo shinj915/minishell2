@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 16:34:16 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:01:50 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ static void	check_path_error(t_cmd *cmd, t_state *state, \
 	if (ft_strchr((*path), '/'))
 	{
 		if (stat((*path), &st) == 0 && S_ISDIR(st.st_mode))
-			print_error_external(cmd, envp, ERROR_ISDIR);
+			print_error_external(state, cmd, envp, ERROR_ISDIR);
 		if (access((*path), X_OK))
-			print_error_external(cmd, envp, ERROR_SYSTEM);
+			print_error_external(state, cmd, envp, ERROR_SYSTEM);
 	}
 	else
 		(*path) = get_exec_path(cmd, state);
 	if (!(*path))
-		print_error_external(cmd, envp, ERROR_CMD_NOT_FOUND);
+		print_error_external(state, cmd, envp, ERROR_CMD_NOT_FOUND);
 }
 
 static void	execute_child_cmd(t_cmd *cmd, t_state *state)
@@ -93,17 +93,17 @@ static void	execute_child_cmd(t_cmd *cmd, t_state *state)
 	path = cmd->exec_file_name;
 	envp = get_envp(state->env_list);
 	if (set_redirection(cmd))
-		exit_child_process(envp, 1);
+		exit_child_process(state, envp, 1);
 	handle_pipe_and_redirection(cmd);
 	result = ft_exec_builtin(cmd, state);
 	if (result != -1)
-		exit_child_process(envp, result);
+		exit_child_process(state, envp, result);
 	check_path_error(cmd, state, envp, &path);
 	if (!is_executable(path))
-		exit_child_process(envp, 0);
+		exit_child_process(state, envp, 0);
 	execve(path, cmd->argv, envp);
 	perror("minishell: execve failed");
-	exit_child_process(envp, 127);
+	exit_child_process(state, envp, 127);
 }
 
 void	execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid)

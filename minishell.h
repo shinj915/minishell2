@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 17:35:08 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:58:28 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ typedef struct s_env
 typedef struct s_state
 {
 	t_env		*env_list;
+	t_cmd_list	*cmd_list;
 	char		*cmd_line;
 	int			exit_signal;
+	pid_t		*pids;
 }	t_state;
 
 /* Init minishell */
@@ -146,7 +148,7 @@ void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 
 /* Exec */
 void		prompt(t_state *state);
-int			set_pids(t_cmd_list *cmd_list, pid_t **pids);
+int			set_pids(t_state *state, pid_t **pids);
 void		wait_for_processes(t_state *state, pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
 void		execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid);
@@ -197,7 +199,8 @@ int			ft_strcmp(char const *s1, char const *s2);
 long long	ft_atoll(const char *str);
 
 /* Util - Print error message*/
-void		print_error_external(t_cmd *cmd, char **envp, int err);
+void		print_error_external(t_state *state, t_cmd *cmd, \
+									char **envp, int err);
 void		print_error_builtin(t_cmd *cmd, char *env_str, int error);
 void		print_error_syntax(t_cmd *cmd, int err);
 
@@ -211,6 +214,6 @@ void		free_cmd_node(t_cmd *cmd);
 void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
 void		unlink_tmp_file(t_cmd_list *cmd_lists);
-void		exit_child_process(char **envp, int exit_code);
+void		exit_child_process(t_state *state, char **envp, int exit_code);
 
 #endif
