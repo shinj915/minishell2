@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/20 14:15:05 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:01:12 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,11 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <string.h>
 # include <errno.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
 # include <fcntl.h>
-# include <dirent.h>
 # include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/ioctl.h>
-# include <termios.h>
-# include <curses.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
