@@ -6,143 +6,100 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/08 13:25:31 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:47:39 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*get_exec_path(t_cmd *cmd, t_state *state)
+static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 {
-	char	*path;
-	char	*temp_path;
-	char	**path_list;
-	int		i;
+	int	result;
 
-	path_list = ft_split(ft_getenv(state, "PATH"), ':');
-	if (!path_list)
-		return (NULL);
-	i = 0;
-	while (path_list[i])
+	result = check_pipe(&cmd);
+	if (result > 0)
+		return (result);
+	*pid = -1;
+	if (is_exit(cmd) && cmd->prev == NULL && cmd->next == NULL)
+		result = execute_single_exit(cmd, state);
+	else if (is_builtin_command(cmd) && cmd->prev == NULL && cmd->next == NULL)
 	{
-		temp_path = ft_strjoin(path_list[i], "/");
-		path = ft_strjoin(temp_path, cmd->exec_file_name);
-		free(temp_path);
-		if (access(path, F_OK) == 0)
-		{
-			free_2d_array(path_list);
-			return (path);
-		}
-		free(path);
-		i++;
-	}
-	free_2d_array(path_list);
-	return (NULL);
-}
-
-int	execute_external_cmd(t_cmd *cmd, t_state *state)
-{
-	pid_t		pid;
-	int			status;
-	char		*path;
-	char		**envp;
-	struct stat	st;
-	int			result;
-
-	path = NULL;
-	envp = get_envp(state->env_list);
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		return (1);
-	}
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_IGN);
-		path = cmd->exec_file_name;
-		if (ft_strchr(cmd->exec_file_name, '/'))
-		{
-			if (stat(cmd->exec_file_name, &st) == 0 && S_ISDIR(st.st_mode))
-				print_error_external(cmd, ERROR_ISDIR);
-			if (access(cmd->exec_file_name, X_OK))
-				print_error_external(cmd, ERROR_SYSTEM);
-		}
-		else
-			path = get_exec_path(cmd, state);
-		if (!path)
-			print_error_external(cmd, ERROR_CMD_NOT_FOUND);
-		execve(path, cmd->argv, envp);
-		perror("minishell: execve failed");
-		exit(127);
+		if (set_redirection(cmd))
+			return (1);
+		result = ft_exec_builtin(cmd, state);
 	}
 	else
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		if (WIFSIGNALED(status))
-		{
-			write(1, "\n", 1);
-			g_exit_status = 128 + WTERMSIG(status); //result는 각 명령어의 종료 코드, g_exit_status는 전체 쉘의 상태와 종료 코드임. 추후 구분하여 수정
-		}
-		else
-			g_exit_status = WEXITSTATUS(status);
-		result = g_exit_status;
-		signal(SIGINT, ft_sigint);
-	}
-	free_2d_array(envp);
+		execute_child_processes(cmd, state, pid);
 	return (result);
 }
 
-int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
+static int	loop_cmd_list(t_cmd **cmd, t_state *state, pid_t *pids, int *i)
 {
-	t_cmd	*cmd;
-	int		result;
+	int	result;
 
-	cmd = cmd_list->head;
 	result = 0;
-	while (cmd != NULL)
+	while ((*cmd) != NULL)
 	{
-		result = execute_external_cmd(cmd, state);
-		cmd = cmd->next;
+		if ((*cmd)->argv == NULL || (*cmd)->argv[0] == NULL || \
+			(*cmd)->argv[0][0] == '\0')
+		{
+			if (!(*cmd)->redir_list)
+				ft_putendl_fd("minishell: : command not found", 2);
+			set_redirection(*cmd);
+			pids[*i] = -1;
+			(*i)++;
+			(*cmd) = (*cmd)->next;
+			continue ;
+		}
+		result = get_cmd_exit_code(*cmd, state, &pids[*i]);
+		(*cmd) = (*cmd)->next;
+		(*i)++;
 	}
 	return (result);
 }
 
-int	is_full_of_space(char *str)
+static int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
 {
-	int	i;
+	pid_t			*pids;
+	t_cmd			*cmd;
+	int				result;
+	int				i;
 
+	result = 0;
 	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] != ' ' && str[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
+	if (!set_pids(state, &pids))
+		return (1);
+	cmd = cmd_list->head;
+	result = loop_cmd_list(&cmd, state, pids, &i);
+	wait_for_processes(state, pids, i);
+	free(pids);
+	return (result);
 }
 
-void	execute_prompt(t_cmd_list *cmd_list, t_state *state, int *result)
+static int	execute_prompt(t_state *state)
 {
-	state->cmd_parse = ft_strdup(state->cmd_line);
+	int			result;
+	t_cmd_list	*cmd_list;
+
+	result = 0;
 	cmd_list = parse(state->cmd_line, state);
-	if (cmd_list && !is_full_of_space(state->cmd_parse))
+	state->cmd_list = cmd_list;
+	if (!is_full_of_space(state->cmd_line) && !has_heredoc(cmd_list, state))
 	{
 		if (cmd_list->cmd_status == TYPE_SYNTAX_ERROR)
 			print_error_syntax(cmd_list->head, TYPE_SYNTAX_ERROR);
 		else if (cmd_list->cmd_status == TYPE_AMBIGUOUS_ERROR)
 			print_error_syntax(cmd_list->head, TYPE_AMBIGUOUS_ERROR);
 		else
-			*result = execute_cmd(cmd_list, state);
+			result = execute_cmd(cmd_list, state);
 	}
+	unlink_tmp_file(cmd_list);
 	free_cmd_list(cmd_list);
-	free(state->cmd_parse);
 	add_history(state->cmd_line);
+	return (result);
 }
 
-void	prompt(t_cmd_list *cmd_list, t_state *state)
+void	prompt(t_state *state)
 {
 	int	result;
 
@@ -153,7 +110,7 @@ void	prompt(t_cmd_list *cmd_list, t_state *state)
 		if (state->cmd_line)
 		{
 			if (state->cmd_line[0] != '\0')
-				execute_prompt(cmd_list, state, &result);
+				result = execute_prompt(state);
 		}
 		else
 		{
@@ -163,5 +120,7 @@ void	prompt(t_cmd_list *cmd_list, t_state *state)
 		}
 		free(state->cmd_line);
 		state->cmd_line = NULL;
+		if (result == EXIT_MINISHELL)
+			return ;
 	}
 }

@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   builtin_execute_pwd.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: eunam <eunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 16:33:06 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/20 13:28:24 by jishin           ###   ########.fr       */
+/*   Created: 2025/05/12 18:26:54 by jishin            #+#    #+#             */
+/*   Updated: 2025/05/27 15:24:20 by eunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../minishell.h"
 
-size_t	ft_strlen(const char *s)
+int	builtin_execute_pwd(t_cmd *cmd, t_state *state)
 {
-	size_t	len;
+	char	*cwd;
 
-	if (s == NULL)
-		return (0);
-	len = 0;
-	while (*s++)
-		len++;
-	return (len);
+	(void)state;
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		perror("getcwd failed");
+	ft_putendl_fd(cwd, cmd->redir_fd_out);
+	free(cwd);
+	return (0);
 }
