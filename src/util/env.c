@@ -90,3 +90,15 @@ char	**get_envp(t_env *env_list)
 	envp[i] = NULL;
 	return (envp);
 }
+
+t_env	*find_tail_env(t_env *env_list)
+{
+	t_env	*env;
+
+	if (env_list == NULL)
+		return (NULL);
+	env = env_list;
+	while (env->next != NULL)
+		env = env->next;
+	return (env);
+}

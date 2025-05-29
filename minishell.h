@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 16:49:05 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:58:28 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,11 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <string.h>
 # include <errno.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
 # include <fcntl.h>
-# include <dirent.h>
 # include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/ioctl.h>
-# include <termios.h>
-# include <curses.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
@@ -108,9 +101,10 @@ typedef struct s_env
 typedef struct s_state
 {
 	t_env		*env_list;
-	char		*cmd_line;
-	char		*cmd_parse;
 	t_cmd_list	*cmd_list;
+	char		*cmd_line;
+	int			exit_signal;
+	pid_t		*pids;
 }	t_state;
 
 /* Init minishell */
@@ -153,9 +147,9 @@ t_cmd_redir	*add_cmd_redir(t_cmd *cmd, int type, char *file);
 void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 
 /* Exec */
-void		prompt(t_cmd_list *cmd_list, t_state *state);
-int			set_pids(t_cmd_list *cmd_list, pid_t **pids);
-void		wait_for_processes(pid_t *pids, int cmd_count);
+void		prompt(t_state *state);
+int			set_pids(t_state *state, pid_t **pids);
+void		wait_for_processes(t_state *state, pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
 void		execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid);
 int			is_exit(t_cmd *cmd);
@@ -182,18 +176,22 @@ int			execute_single_exit(t_cmd *cmd, t_state *state);
 int			find_argc(char **argv);
 void		ft_update_pwdenv(t_state *state);
 t_env		*ft_find_return_env(char *key, t_env *env_list);
+void		add_nullvalue_env(char *key, t_env *env_list);
+t_env		*ft_find_env(char *env_str, t_env *env_list);
 
 /* Heredoc */
 int			has_heredoc(t_cmd_list *cmd_list, t_state *state);
 void		heredoc_prompt(char *del, int fd, char *line, t_state *state);
 char		*get_heredoc_delimeter(t_cmd_redir *red, int idx);
 int			is_fd_valid(int fd);
+void		heredoc_sigint(int signo);
 
 /* Util - Environment variables */
 t_env		*create_new_env(char *key, char *value);
 t_env		*add_env(t_env *env, char *key, char *value);
 char		*ft_getenv(t_state *state, char *key);
 char		**get_envp(t_env *env_list);
+t_env		*find_tail_env(t_env *env_list);
 
 /* Util - Minishell ft_utils */
 char		*ft_strndup(const char *s, size_t n);
@@ -201,10 +199,10 @@ int			ft_strcmp(char const *s1, char const *s2);
 long long	ft_atoll(const char *str);
 
 /* Util - Print error message*/
-void		print_error_external(t_cmd *cmd, int err);
+void		print_error_external(t_state *state, t_cmd *cmd, \
+									char **envp, int err);
 void		print_error_builtin(t_cmd *cmd, char *env_str, int error);
 void		print_error_syntax(t_cmd *cmd, int err);
-void		print_error_parsing(char *cmd_parse);
 
 /* Clean up - memory free functions */
 void		*free_2d_array(char **array);
@@ -212,9 +210,10 @@ void		*free_multiple_array(void *s1, void *s2, void *s3, void *s4);
 void		free_state(t_state *state);
 void		free_token(t_token *token);
 void		free_token_list(t_token *token_list);
-void		free_cmd_node(t_cmd_list *cmd_list);
+void		free_cmd_node(t_cmd *cmd);
 void		*free_cmd_list(t_cmd_list *cmd_list);
 void		free_cmd_redir(t_cmd *cmd);
 void		unlink_tmp_file(t_cmd_list *cmd_lists);
+void		exit_child_process(t_state *state, char **envp, int exit_code);
 
 #endif

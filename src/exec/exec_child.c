@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 17:24:42 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:49:51 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,22 @@ static int	is_executable(char *path)
 	int		fd;
 	char	elf[4];
 	char	shebang[2];
+	int		n;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
-	read(fd, elf, 4);
-	if (ft_strncmp(elf, "\177ELF", 4) == 0)
+	ft_memset(elf, 0, 4);
+	ft_memset(shebang, 0, 2);
+	n = read(fd, elf, 4);
+	if (n == 4 && ft_strncmp(elf, "\177ELF", 4) == 0)
 	{
 		close(fd);
 		return (1);
 	}
 	lseek(fd, 0, SEEK_SET);
-	read(fd, shebang, 2);
-	if (ft_strncmp(shebang, "#!", 2) == 0)
+	n = read(fd, shebang, 2);
+	if (n == 2 && ft_strncmp(shebang, "#!", 2) == 0)
 	{
 		close(fd);
 		return (1);
@@ -66,21 +69,22 @@ static char	*get_exec_path(t_cmd *cmd, t_state *state)
 	return (NULL);
 }
 
-static void	check_path_error(t_cmd *cmd, t_state *state, char **path)
+static void	check_path_error(t_cmd *cmd, t_state *state, \
+								char **envp, char **path)
 {
 	struct stat	st;
 
 	if (ft_strchr((*path), '/'))
 	{
 		if (stat((*path), &st) == 0 && S_ISDIR(st.st_mode))
-			print_error_external(cmd, ERROR_ISDIR);
+			print_error_external(state, cmd, envp, ERROR_ISDIR);
 		if (access((*path), X_OK))
-			print_error_external(cmd, ERROR_SYSTEM);
+			print_error_external(state, cmd, envp, ERROR_SYSTEM);
 	}
 	else
 		(*path) = get_exec_path(cmd, state);
 	if (!(*path))
-		print_error_external(cmd, ERROR_CMD_NOT_FOUND);
+		print_error_external(state, cmd, envp, ERROR_CMD_NOT_FOUND);
 }
 
 static void	execute_child_cmd(t_cmd *cmd, t_state *state)
@@ -92,18 +96,18 @@ static void	execute_child_cmd(t_cmd *cmd, t_state *state)
 	path = cmd->exec_file_name;
 	envp = get_envp(state->env_list);
 	if (set_redirection(cmd))
-		exit(1);
+		exit_child_process(state, envp, 1);
 	handle_pipe_and_redirection(cmd);
 	result = ft_exec_builtin(cmd, state);
 	if (result != -1)
-		exit(result);
-	check_path_error(cmd, state, &path);
+		exit_child_process(state, envp, result);
+	check_path_error(cmd, state, envp, &path);
 	if (!is_executable(path))
-		exit(0);
+		exit_child_process(state, envp, 0);
 	execve(path, cmd->argv, envp);
 	perror("minishell: execve failed");
-	free(envp);
-	exit(127);
+	free(path);
+	exit_child_process(state, envp, 127);
 }
 
 void	execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid)

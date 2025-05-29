@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:15:15 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/13 16:49:15 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:44:01 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,13 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 	int	argc;
 	int	value;
 
-	(void)state;
 	argc = find_argc(cmd->argv);
 	write(1, "exit\n", 5);
 	if (argc > 1)
 	{
 		value = is_exitdigit(cmd->argv[1]);
 		if (argc == 2 && value == 0)
-			return (ft_atoll(cmd->argv[1]));
+			return ((unsigned long long)ft_atoll(cmd->argv[1]) % 256);
 		else if (value == 1)
 		{
 			print_error_builtin(cmd, cmd->argv[1], ERROR_NUMERIC_REQUIRED);
@@ -81,9 +80,11 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 		else
 		{
 			print_error_builtin(cmd, NULL, ERROR_TOO_MANY_ARGS);
-			return (1);
+			return (-1);
 		}
 	}
+	if (state->exit_signal)
+		return (g_exit_status);
 	return (0);
 }
 
@@ -92,8 +93,14 @@ int	execute_single_exit(t_cmd *cmd, t_state *state)
 	int	result;
 
 	result = builtin_execute_exit(cmd, state);
-	g_exit_status = result;
-	if (g_exit_status != 1)
-		result = EXIT_MINISHELL;
-	return (result);
+	if (result == -1)
+	{
+		g_exit_status = 1;
+		return (1);
+	}
+	else
+	{
+		g_exit_status = result;
+		return (EXIT_MINISHELL);
+	}
 }

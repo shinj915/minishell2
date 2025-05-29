@@ -33,7 +33,10 @@ static void	unset_env(t_env **env_list, char *input)
 	while (curr)
 	{
 		if (ft_strcmp(curr->key, input) == 0)
+		{
 			delete_env_node(env_list, pre, curr);
+			break ;
+		}
 		pre = curr;
 		curr = curr->next;
 	}

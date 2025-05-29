@@ -6,33 +6,33 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:34:17 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/12 18:59:33 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:39:47 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	print_error_external(t_cmd *cmd, int err)
+void	print_error_external(t_state *state, t_cmd *cmd, char **envp, int err)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd->exec_file_name, 2);
 	if (err == ERROR_ISDIR)
 	{
 		ft_putendl_fd(": Is a directory", 2);
-		exit(126);
+		exit_child_process(state, envp, 126);
 	}
 	if (err == ERROR_CMD_NOT_FOUND)
 	{
 		ft_putendl_fd(": command not found", 2);
-		exit(127);
+		exit_child_process(state, envp, 127);
 	}
 	if (err == ERROR_SYSTEM)
 	{
 		perror(": ");
 		if (errno == ENOENT)
-			exit(127);
+			exit_child_process(state, envp, 127);
 		if (errno == EACCES)
-			exit(126);
+			exit_child_process(state, envp, 126);
 	}
 }
 
@@ -81,11 +81,4 @@ void	print_error_syntax(t_cmd *cmd, int err)
 		ft_putendl_fd(": ambiguous redirect", 2);
 		g_exit_status = 1;
 	}
-}
-
-void	print_error_parsing(char *cmd_parse)
-{
-	ft_putendl_fd("minishell: failed command parsing", 2);
-	free(cmd_parse);
-	g_exit_status = 258;
 }
