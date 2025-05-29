@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 20:01:50 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:49:51 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,22 @@ static int	is_executable(char *path)
 	int		fd;
 	char	elf[4];
 	char	shebang[2];
+	int		n;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
-	read(fd, elf, 4);
-	if (ft_strncmp(elf, "\177ELF", 4) == 0)
+	ft_memset(elf, 0, 4);
+	ft_memset(shebang, 0, 2);
+	n = read(fd, elf, 4);
+	if (n == 4 && ft_strncmp(elf, "\177ELF", 4) == 0)
 	{
 		close(fd);
 		return (1);
 	}
 	lseek(fd, 0, SEEK_SET);
-	read(fd, shebang, 2);
-	if (ft_strncmp(shebang, "#!", 2) == 0)
+	n = read(fd, shebang, 2);
+	if (n == 2 && ft_strncmp(shebang, "#!", 2) == 0)
 	{
 		close(fd);
 		return (1);
@@ -103,6 +106,7 @@ static void	execute_child_cmd(t_cmd *cmd, t_state *state)
 		exit_child_process(state, envp, 0);
 	execve(path, cmd->argv, envp);
 	perror("minishell: execve failed");
+	free(path);
 	exit_child_process(state, envp, 127);
 }
 
