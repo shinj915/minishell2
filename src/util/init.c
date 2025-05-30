@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:04:14 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 20:06:46 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 12:12:04 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_state	*init_minishell(int *argc, char ***argv, char **envp)
 		return (NULL);
 	state->pids = NULL;
 	state->env_list = get_env_list(envp);
-	state->exit_signal = TYPE_INITIAL_STATUS;
 	return (state);
 }
 

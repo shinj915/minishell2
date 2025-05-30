@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/30 11:14:34 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 12:14:42 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct s_state
 	t_env		*env_list;
 	t_cmd_list	*cmd_list;
 	char		*cmd_line;
-	int			exit_signal;
 	pid_t		*pids;
 }	t_state;
 
@@ -149,7 +148,7 @@ void		*add_cmd_argv(t_cmd *cmd, char *str, int idx);
 /* Exec */
 void		prompt(t_state *state);
 int			set_pids(t_state *state, pid_t **pids);
-void		wait_for_processes(t_state *state, pid_t *pids, int cmd_count);
+void		wait_for_processes(pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
 void		execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid);
 void		handle_empty_cmd(t_cmd *cmd, pid_t *pids, int *i);
@@ -170,8 +169,8 @@ int			builtin_execute_export(t_cmd *cmd, t_state *state);
 int			builtin_execute_unset(t_cmd *cmd, t_state *state);
 int			builtin_execute_env(t_cmd *cmd, t_state *state);
 int			is_exit(t_cmd *cmd);
-int			builtin_execute_exit(t_cmd *cmd, t_state *state);
-int			execute_single_exit(t_cmd *cmd, t_state *state);
+int			builtin_execute_exit(t_cmd *cmd);
+int			execute_single_exit(t_cmd *cmd);
 
 /* Exec - Builtin utils */
 int			find_argc(char **argv);

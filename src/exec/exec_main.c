@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/30 11:13:56 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 12:14:49 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 	result = 0;
 	*pid = -1;
 	if (is_exit(cmd) && cmd->prev == NULL && cmd->next == NULL)
-		result = execute_single_exit(cmd, state);
+		result = execute_single_exit(cmd);
 	else if (is_builtin_command(cmd) && cmd->prev == NULL && cmd->next == NULL)
 	{
 		if (set_redirection(cmd))
@@ -67,7 +67,7 @@ static int	execute_cmd(t_cmd_list *cmd_list, t_state *state)
 		return (1);
 	cmd = cmd_list->head;
 	result = loop_cmd_list(&cmd, state, pids, &i);
-	wait_for_processes(state, pids, i);
+	wait_for_processes(pids, i);
 	free(pids);
 	return (result);
 }

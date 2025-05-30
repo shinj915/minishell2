@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:15:15 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/30 11:08:21 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 12:14:26 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	is_exitdigit(char *input)
 	return (0);
 }
 
-int	builtin_execute_exit(t_cmd *cmd, t_state *state)
+int	builtin_execute_exit(t_cmd *cmd)
 {
 	int	argc;
 	int	value;
@@ -83,9 +83,7 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 			return (-1);
 		}
 	}
-	if (state->exit_signal)
-		return (g_exit_status);
-	return (0);
+	return (g_exit_status);
 }
 
 int	is_exit(t_cmd *cmd)
@@ -95,11 +93,11 @@ int	is_exit(t_cmd *cmd)
 	return (0);
 }
 
-int	execute_single_exit(t_cmd *cmd, t_state *state)
+int	execute_single_exit(t_cmd *cmd)
 {
 	int	result;
 
-	result = builtin_execute_exit(cmd, state);
+	result = builtin_execute_exit(cmd);
 	if (result == -1)
 	{
 		g_exit_status = 1;

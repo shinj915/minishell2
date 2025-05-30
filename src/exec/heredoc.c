@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:17:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 20:08:56 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 12:16:14 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	heredoc_child(t_state *state, char *del, int fd)
 	free_state(state);
 }
 
-static int	heredoc_parent(t_state *state, pid_t pid, int *fd, char *del)
+static int	heredoc_parent(pid_t pid, int *fd, char *del)
 {
 	int	status;
 
@@ -32,7 +32,7 @@ static int	heredoc_parent(t_state *state, pid_t pid, int *fd, char *del)
 		g_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
-		state->exit_signal = 1;
+		g_exit_status = 128 + WTERMSIG(status);
 		signal(SIGINT, ft_sigint);
 		close(*fd);
 		free(del);
@@ -63,7 +63,7 @@ static int	start_heredoc(t_state *state, char *del, t_cmd_redir *red)
 		exit(0);
 	}
 	else
-		if (heredoc_parent(state, pid, &fd, del))
+		if (heredoc_parent(pid, &fd, del))
 			return (1);
 	close(fd);
 	return (0);

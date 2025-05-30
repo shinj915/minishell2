@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:32:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/30 11:14:03 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 12:14:06 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	handle_empty_cmd(t_cmd *cmd, pid_t *pids, int *i)
 	pids[(*i)++] = -1;
 }
 
-void	wait_for_processes(t_state *state, pid_t *pids, int cmd_count)
+void	wait_for_processes(pid_t *pids, int cmd_count)
 {
 	int	i;
 	int	status;
@@ -83,7 +83,6 @@ void	wait_for_processes(t_state *state, pid_t *pids, int cmd_count)
 				last_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
-				state->exit_signal = 1;
 				write(1, "\n", 1);
 				last_status = 128 + WTERMSIG(status);
 			}
