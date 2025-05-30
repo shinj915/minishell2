@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 12:45:46 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/13 14:21:12 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 10:50:36 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	builtin_execute_env(t_cmd *cmd, t_state *state)
 	{
 		if (env->value)
 		{
-			ft_putstr_fd(env->key, cmd->redir_fd_out);
-			ft_putchar_fd('=', cmd->redir_fd_out);
-			ft_putendl_fd(env->value, cmd->redir_fd_out);
+			ft_putstr_fd(env->key, cmd->fd_out);
+			ft_putchar_fd('=', cmd->fd_out);
+			ft_putendl_fd(env->value, cmd->fd_out);
 		}
 		env = env->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 19:58:28 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 10:51:07 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ typedef struct s_cmd
 {
 	int				cmd_type;
 	int				pipe_fd[2];
-	int				redir_fd_in;
-	int				redir_fd_out;
+	int				fd_in;
+	int				fd_out;
 	char			*exec_file_name;
 	char			**argv;
 	t_cmd_redir		*redir_list;

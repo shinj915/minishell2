@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:38:08 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/20 11:29:50 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 10:50:36 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,16 @@ static void	print_export_envs(t_cmd *cmd, t_env *env_list)
 	env = env_list;
 	while (env)
 	{
-		ft_putstr_fd("declare -x ", cmd->redir_fd_out);
+		ft_putstr_fd("declare -x ", cmd->fd_out);
 		if (env->value)
 		{
-			ft_putstr_fd(env->key, cmd->redir_fd_out);
-			ft_putstr_fd("=\"", cmd->redir_fd_out);
-			ft_putstr_fd(env->value, cmd->redir_fd_out);
-			ft_putendl_fd("\"", cmd->redir_fd_out);
+			ft_putstr_fd(env->key, cmd->fd_out);
+			ft_putstr_fd("=\"", cmd->fd_out);
+			ft_putstr_fd(env->value, cmd->fd_out);
+			ft_putendl_fd("\"", cmd->fd_out);
 		}
 		else
-			ft_putendl_fd(env->key, cmd->redir_fd_out);
+			ft_putendl_fd(env->key, cmd->fd_out);
 		env = env->next;
 	}
 }

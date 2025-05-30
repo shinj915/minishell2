@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:07:23 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/12 19:22:30 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 10:50:36 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	builtin_execute_echo(t_cmd *cmd, t_state *state)
 		n_flag++;
 	while (cmd->argv[i])
 	{
-		ft_putstr_fd(cmd->argv[i], cmd->redir_fd_out);
+		ft_putstr_fd(cmd->argv[i], cmd->fd_out);
 		if (cmd->argv[i + 1])
-			ft_putstr_fd(" ", cmd->redir_fd_out);
+			ft_putstr_fd(" ", cmd->fd_out);
 		i++;
 	}
 	if (!n_flag)
-		ft_putstr_fd("\n", cmd->redir_fd_out);
+		ft_putstr_fd("\n", cmd->fd_out);
 	return (0);
 }
