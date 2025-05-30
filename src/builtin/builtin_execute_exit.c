@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:15:15 by eunam             #+#    #+#             */
-/*   Updated: 2025/05/28 17:44:01 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 11:08:21 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,13 @@ int	builtin_execute_exit(t_cmd *cmd, t_state *state)
 	}
 	if (state->exit_signal)
 		return (g_exit_status);
+	return (0);
+}
+
+int	is_exit(t_cmd *cmd)
+{
+	if (strcmp(cmd->exec_file_name, "exit") == 0)
+		return (1);
 	return (0);
 }
 

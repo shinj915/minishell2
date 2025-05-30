@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:32:15 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 19:47:55 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 11:14:03 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@ int	is_full_of_space(char *str)
 	return (1);
 }
 
-int	is_exit(t_cmd *cmd)
-{
-	if (strcmp(cmd->exec_file_name, "exit") == 0)
-		return (1);
-	return (0);
-}
-
 int	set_pids(t_state *state, pid_t **pids)
 {
 	t_cmd	*cmd_ptr;
@@ -59,6 +52,18 @@ int	set_pids(t_state *state, pid_t **pids)
 		return (0);
 	state->pids = *pids;
 	return (1);
+}
+
+void	handle_empty_cmd(t_cmd *cmd, pid_t *pids, int *i)
+{
+	if (!cmd->redir_list)
+	{
+		ft_putendl_fd("minishell: : command not found", 2);
+		g_exit_status = 127;
+	}
+	set_redirection(cmd);
+	close_fd(cmd, NULL);
+	pids[(*i)++] = -1;
 }
 
 void	wait_for_processes(t_state *state, pid_t *pids, int cmd_count)

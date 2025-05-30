@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:49:48 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/30 10:51:07 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 11:14:34 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int			set_pids(t_state *state, pid_t **pids);
 void		wait_for_processes(t_state *state, pid_t *pids, int cmd_count);
 int			is_full_of_space(char *str);
 void		execute_child_processes(t_cmd *cmd, t_state *state, pid_t *pid);
-int			is_exit(t_cmd *cmd);
+void		handle_empty_cmd(t_cmd *cmd, pid_t *pids, int *i);
 
 /* Exec - Pipe and Redirction */
 int			check_pipe(t_cmd **cmd);
@@ -169,6 +169,7 @@ int			builtin_execute_pwd(t_cmd *cmd, t_state *state);
 int			builtin_execute_export(t_cmd *cmd, t_state *state);
 int			builtin_execute_unset(t_cmd *cmd, t_state *state);
 int			builtin_execute_env(t_cmd *cmd, t_state *state);
+int			is_exit(t_cmd *cmd);
 int			builtin_execute_exit(t_cmd *cmd, t_state *state);
 int			execute_single_exit(t_cmd *cmd, t_state *state);
 

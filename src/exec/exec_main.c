@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/30 08:49:19 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 11:13:56 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,7 @@ static int	loop_cmd_list(t_cmd **cmd, t_state *state, pid_t *pids, int *i)
 		if ((*cmd)->argv == NULL || (*cmd)->argv[0] == NULL || \
 			(*cmd)->argv[0][0] == '\0')
 		{
-			if (!(*cmd)->redir_list)
-				ft_putendl_fd("minishell: : command not found", 2);
-			set_redirection(*cmd);
-			close_fd(*cmd, NULL);
-			pids[*i] = -1;
-			(*i)++;
+			handle_empty_cmd(*cmd, pids, i);
 			(*cmd) = (*cmd)->next;
 			continue ;
 		}
