@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:59:38 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/29 15:49:51 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 10:01:26 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ static void	execute_child_cmd(t_cmd *cmd, t_state *state)
 		exit_child_process(state, envp, result);
 	check_path_error(cmd, state, envp, &path);
 	if (!is_executable(path))
+	{
+		free(path);
 		exit_child_process(state, envp, 0);
+	}
 	execve(path, cmd->argv, envp);
 	perror("minishell: execve failed");
 	free(path);
