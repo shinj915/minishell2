@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:04:09 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/13 15:59:32 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 08:48:54 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 
 void	close_fd(t_cmd *cmd, int fd_backup[2])
 {
-	if (cmd->prev != NULL)
+	if (cmd->prev != NULL && cmd->prev->pipe_fd[0] > -1)
 		close(cmd->prev->pipe_fd[0]);
-	close(cmd->pipe_fd[1]);
-	if (cmd->next == NULL)
+	if (cmd->pipe_fd[1] > -1)
+		close(cmd->pipe_fd[1]);
+	if (cmd->next == NULL && cmd->pipe_fd[0] > -1)
 		close(cmd->pipe_fd[0]);
-	if (cmd->redir_fd_in != 0)
+	if (cmd->redir_fd_in > 0)
 		close(cmd->redir_fd_in);
-	if (cmd->redir_fd_out != 1)
+	if (cmd->redir_fd_out > 1)
 		close(cmd->redir_fd_out);
-	dup2(fd_backup[0], 0);
-	dup2(fd_backup[1], 1);
-	close(fd_backup[0]);
-	close(fd_backup[1]);
+	if (fd_backup)
+	{
+		dup2(fd_backup[0], 0);
+		dup2(fd_backup[1], 1);
+		close(fd_backup[0]);
+		close(fd_backup[1]);
+	}
 }
 
 void	handle_pipe_and_redirection(t_cmd *cmd)
 {
 	if (cmd->next != NULL)
-	{
-		close(cmd->pipe_fd[0]);
 		dup2(cmd->pipe_fd[1], 1);
-	}
 	if (cmd->prev != NULL)
 	{
 		dup2(cmd->prev->pipe_fd[0], 0);

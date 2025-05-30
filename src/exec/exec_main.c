@@ -6,7 +6,7 @@
 /*   By: jishin <jishin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:33:30 by jishin            #+#    #+#             */
-/*   Updated: 2025/05/28 19:47:39 by jishin           ###   ########.fr       */
+/*   Updated: 2025/05/30 08:49:19 by jishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ static int	get_cmd_exit_code(t_cmd *cmd, t_state *state, pid_t *pid)
 {
 	int	result;
 
-	result = check_pipe(&cmd);
-	if (result > 0)
-		return (result);
+	result = 0;
 	*pid = -1;
 	if (is_exit(cmd) && cmd->prev == NULL && cmd->next == NULL)
 		result = execute_single_exit(cmd, state);
@@ -37,15 +35,18 @@ static int	loop_cmd_list(t_cmd **cmd, t_state *state, pid_t *pids, int *i)
 {
 	int	result;
 
-	result = 0;
 	while ((*cmd) != NULL)
 	{
+		result = check_pipe(cmd);
+		if (result > 0)
+			return (result);
 		if ((*cmd)->argv == NULL || (*cmd)->argv[0] == NULL || \
 			(*cmd)->argv[0][0] == '\0')
 		{
 			if (!(*cmd)->redir_list)
 				ft_putendl_fd("minishell: : command not found", 2);
 			set_redirection(*cmd);
+			close_fd(*cmd, NULL);
 			pids[*i] = -1;
 			(*i)++;
 			(*cmd) = (*cmd)->next;
